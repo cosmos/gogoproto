@@ -195,10 +195,10 @@ type TestClient interface {
 }
 
 type testClient struct {
-	cc *grpc.ClientConn
+	cc ClientConn
 }
 
-func NewTestClient(cc *grpc.ClientConn) TestClient {
+func NewTestClient(cc ClientConn) TestClient {
 	return &testClient{cc}
 }
 
@@ -336,7 +336,7 @@ func (*UnimplementedTestServer) Bidi(srv Test_BidiServer) error {
 	return status.Errorf(codes.Unimplemented, "method Bidi not implemented")
 }
 
-func RegisterTestServer(s *grpc.Server, srv TestServer) {
+func RegisterTestServer(s Server, srv TestServer) {
 	s.RegisterService(&_Test_serviceDesc, srv)
 }
 
