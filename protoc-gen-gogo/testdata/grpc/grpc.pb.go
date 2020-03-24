@@ -194,6 +194,11 @@ type TestClient interface {
 	Bidi(ctx context.Context, opts ...grpc.CallOption) (Test_BidiClient, error)
 }
 
+type ClientConn interface {
+	Invoke(ctx context.Context, method string, args, reply interface{}, opts ...grpc.CallOption) error
+	NewStream(ctx context.Context, desc *grpc.StreamDesc, method string, opts ...grpc.CallOption) (grpc.ClientStream, error)
+}
+
 type testClient struct {
 	cc ClientConn
 }
@@ -334,6 +339,10 @@ func (*UnimplementedTestServer) Upstream(srv Test_UpstreamServer) error {
 }
 func (*UnimplementedTestServer) Bidi(srv Test_BidiServer) error {
 	return status.Errorf(codes.Unimplemented, "method Bidi not implemented")
+}
+
+type Server interface {
+	RegisterService(sd *grpc.ServiceDesc, ss interface{})
 }
 
 func RegisterTestServer(s Server, srv TestServer) {
