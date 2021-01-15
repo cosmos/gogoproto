@@ -4721,10 +4721,7 @@ func (m *FloatingPoint) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthMapsproto2
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthMapsproto2
 			}
 			if (iNdEx + skippy) > l {
@@ -4888,7 +4885,7 @@ func (m *CustomMap) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5018,7 +5015,7 @@ func (m *CustomMap) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5148,7 +5145,7 @@ func (m *CustomMap) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5278,7 +5275,7 @@ func (m *CustomMap) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5295,10 +5292,7 @@ func (m *CustomMap) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthMapsproto2
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthMapsproto2
 			}
 			if (iNdEx + skippy) > l {
@@ -5438,7 +5432,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5544,7 +5538,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5643,7 +5637,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5742,7 +5736,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5841,7 +5835,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -5940,7 +5934,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6045,7 +6039,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6150,7 +6144,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6231,7 +6225,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6312,7 +6306,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6393,7 +6387,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6474,7 +6468,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6577,7 +6571,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6704,7 +6698,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6832,7 +6826,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6945,7 +6939,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7074,7 +7068,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7091,10 +7085,7 @@ func (m *AllMaps) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthMapsproto2
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthMapsproto2
 			}
 			if (iNdEx + skippy) > l {
@@ -7234,7 +7225,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7340,7 +7331,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7439,7 +7430,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7538,7 +7529,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7637,7 +7628,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7736,7 +7727,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7841,7 +7832,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -7946,7 +7937,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8027,7 +8018,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8108,7 +8099,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8189,7 +8180,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8270,7 +8261,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8373,7 +8364,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8500,7 +8491,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8628,7 +8619,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8741,7 +8732,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8870,7 +8861,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthMapsproto2
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8887,10 +8878,7 @@ func (m *AllMapsOrdered) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthMapsproto2
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthMapsproto2
 			}
 			if (iNdEx + skippy) > l {
