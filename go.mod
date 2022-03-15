@@ -1,4 +1,4 @@
-module github.com/gogo/protobuf
+module github.com/cosmos/gogoproto
 
 go 1.17
 
