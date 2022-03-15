@@ -34,9 +34,12 @@ BENCHLIST?=all
 # https://github.com/gogo/protobuf/issues/448
 SKIPISSUE:="/jsonpb|/test/casttype/|/test/oneof/combos/"
 
-.PHONY: nuke regenerate tests clean install gofmt vet contributors
+.PHONY: nuke regenerate tests clean install gofmt vet contributors build
 
 all: clean install regenerate install tests errcheck vet
+
+build:
+	go build ./...
 
 buildserverall: clean install regenerate install tests vet js purego
 
