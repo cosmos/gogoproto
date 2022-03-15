@@ -5,8 +5,8 @@ package gogoproto
 
 import (
 	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+	proto "github.com/cosmos/gogoproto/proto"
+	descriptor "github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor"
 	math "math"
 )
 

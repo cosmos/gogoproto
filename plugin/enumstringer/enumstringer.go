@@ -1,7 +1,7 @@
 // Protocol Buffers for Go with Gadgets
 //
 // Copyright (c) 2013, The GoGo Authors. All rights reserved.
-// http://github.com/gogo/protobuf
+// http://github.com/cosmos/gogoproto
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -40,8 +40,8 @@ This package is subject to change.
 package enumstringer
 
 import (
-	"github.com/gogo/protobuf/gogoproto"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
+	"github.com/cosmos/gogoproto/gogoproto"
+	"github.com/cosmos/gogoproto/protoc-gen-gogo/generator"
 )
 
 type enumstringer struct {

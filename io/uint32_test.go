@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gogo/protobuf/test"
-	example "github.com/gogo/protobuf/test/example"
+	"github.com/cosmos/gogoproto/test"
+	example "github.com/cosmos/gogoproto/test/example"
 
-	"github.com/gogo/protobuf/io"
+	"github.com/cosmos/gogoproto/io"
 )
 
 func BenchmarkUint32DelimWriterMarshaller(b *testing.B) {

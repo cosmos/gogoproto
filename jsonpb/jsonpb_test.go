@@ -40,10 +40,10 @@ import (
 	"strings"
 	"testing"
 
-	pb "github.com/gogo/protobuf/jsonpb/jsonpb_test_proto"
-	"github.com/gogo/protobuf/proto"
-	proto3pb "github.com/gogo/protobuf/proto/proto3_proto"
-	"github.com/gogo/protobuf/types"
+	pb "github.com/cosmos/gogoproto/jsonpb/jsonpb_test_proto"
+	"github.com/cosmos/gogoproto/proto"
+	proto3pb "github.com/cosmos/gogoproto/proto/proto3_proto"
+	"github.com/cosmos/gogoproto/types"
 )
 
 var (

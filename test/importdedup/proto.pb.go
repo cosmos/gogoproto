@@ -5,10 +5,10 @@ package importdedup
 
 import (
 	fmt "fmt"
-	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_test_importdedup_subpkg "github.com/gogo/protobuf/test/importdedup/subpkg"
-	subpkg "github.com/gogo/protobuf/test/importdedup/subpkg"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
+	github_com_gogo_protobuf_test_importdedup_subpkg "github.com/cosmos/gogoproto/test/importdedup/subpkg"
+	subpkg "github.com/cosmos/gogoproto/test/importdedup/subpkg"
 	math "math"
 )
 
@@ -24,7 +24,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Object struct {
-	CustomField          *github_com_gogo_protobuf_test_importdedup_subpkg.CustomType `protobuf:"bytes,1,opt,name=CustomField,customtype=github.com/gogo/protobuf/test/importdedup/subpkg.CustomType" json:"CustomField,omitempty"`
+	CustomField          *github_com_gogo_protobuf_test_importdedup_subpkg.CustomType `protobuf:"bytes,1,opt,name=CustomField,customtype=github.com/cosmos/gogoproto/test/importdedup/subpkg.CustomType" json:"CustomField,omitempty"`
 	SubObject            *subpkg.SubObject                                            `protobuf:"bytes,2,opt,name=SubObject" json:"SubObject,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                                                     `json:"-"`
 	XXX_unrecognized     []byte                                                       `json:"-"`

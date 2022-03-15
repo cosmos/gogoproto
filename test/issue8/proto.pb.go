@@ -6,9 +6,9 @@ package proto
 import (
 	bytes "bytes"
 	fmt "fmt"
-	_ "github.com/gogo/protobuf/gogoproto"
-	github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
-	proto "github.com/gogo/protobuf/proto"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	github_com_gogo_protobuf_proto "github.com/cosmos/gogoproto/proto"
+	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 )
