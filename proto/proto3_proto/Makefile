@@ -1,5 +1,4 @@
 regenerate:
-	go install github.com/cosmos/gogoproto/protoc-min-version
 	protoc-min-version --version="3.0.0" --gogo_out=\
 	Mtest_proto/test.proto=github.com/cosmos/gogoproto/proto/test_proto,\
 	Mgoogle/protobuf/any.proto=github.com/cosmos/gogoproto/types:. \

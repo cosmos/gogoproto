@@ -27,8 +27,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	go install github.com/cosmos/gogoproto/protoc-gen-combo
-	go install github.com/cosmos/gogoproto/protoc-gen-gogo
 	cp header.proto theproto3.proto
 	cat maps.proto >> theproto3.proto
 	cat footer.proto >> theproto3.proto

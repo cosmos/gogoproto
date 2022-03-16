@@ -28,8 +28,6 @@
 
 regenerate:
 	rm -rf combos
-	go install github.com/cosmos/gogoproto/protoc-gen-combo
-	go install github.com/cosmos/gogoproto/protoc-gen-gogo
 	protoc-min-version --version="3.0.0" --gogo_out=. --proto_path=../../protobuf/:../../../../../:. castvalue.proto
 	protoc-gen-combo --default=false --version="3.0.0" --gogo_out=. --proto_path=../../protobuf/:../../../../../:. castvalue.proto
 	cp mytypes.go ./combos/both/ || true

@@ -27,8 +27,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	go install github.com/cosmos/gogoproto/protoc-gen-combo
-	go install github.com/cosmos/gogoproto/protoc-gen-gogo
 	cp header.proto mapsproto2.proto
 	cat ../theproto3/maps.proto >> mapsproto2.proto
 	find combos -type d -not -name combos -exec cp mapsproto2_test.go.in {}/mapsproto2_test.go \;

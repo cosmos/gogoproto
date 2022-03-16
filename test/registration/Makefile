@@ -27,7 +27,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 test:
-	go install github.com/cosmos/gogoproto/protoc-gen-gogo
 	(protoc --proto_path=../../../../../:../../protobuf/:. --gogo_out=. registration.proto)
 	cp registration_test.go.in registration_test.go
 	go test ./...

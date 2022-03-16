@@ -27,7 +27,5 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	go install github.com/cosmos/gogoproto/protoc-min-version
-	go install github.com/cosmos/gogoproto/protoc-gen-gogo
 	protoc-min-version --version="3.0.0" --gogo_out=. \
 	--proto_path=../../../../../:../../protobuf/:. data.proto

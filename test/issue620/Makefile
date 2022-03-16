@@ -27,5 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	go install github.com/cosmos/gogoproto/protoc-gen-gogo
 	protoc --proto_path=../../../../../:../../protobuf/:. --gogo_out=. issue620.proto

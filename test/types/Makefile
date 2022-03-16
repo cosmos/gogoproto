@@ -27,8 +27,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	go install github.com/cosmos/gogoproto/protoc-gen-combo
-	go install github.com/cosmos/gogoproto/protoc-gen-gogo
 	protoc-gen-combo --version="3.0.0" --gogo_out=\
 	Mgoogle/protobuf/any.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/duration.proto=github.com/cosmos/gogoproto/types,\
