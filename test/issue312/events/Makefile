@@ -1,3 +1,3 @@
 regenerate:
-	protoc --proto_path=.:$(GOPATH)/src/:$(GOPATH)/src/github.com/cosmos/gogoproto/protobuf/ \
+	protoc --proto_path=.:../../../../../.. \
 	--gogo_out=. events.proto 

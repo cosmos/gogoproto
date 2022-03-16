@@ -27,6 +27,5 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc-min-version --version="3.0.0" --proto_path=\
-	.:$(GOPATH)/src/:$(GOPATH)/src/github.com/cosmos/gogoproto/protobuf/ \
+	protoc-min-version --version="3.0.0" --proto_path=.:../../../../..  \
 	--gogofast_out=. issue498.proto
