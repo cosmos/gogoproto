@@ -67,7 +67,7 @@ gofmt:
 	gofmt -l -s -w .
 
 # Make sure to install all binaries before running regenerate
-regenerate: install
+regenerate: # install
 	# make -C protoc-gen-gogo regenerate
 	# make -C gogoproto regenerate
 	# make -C proto/test_proto regenerate

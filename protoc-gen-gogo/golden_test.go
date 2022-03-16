@@ -143,7 +143,7 @@ func TestParameters(t *testing.T) {
 		wantPackageB: "test_beta",
 		wantImportsA: map[string]bool{
 			"github.com/cosmos/gogoproto/proto": true,
-			"beta":                           true,
+			"beta":                              true,
 		},
 	}, {
 		parameters: "import_prefix=prefix",
@@ -156,7 +156,7 @@ func TestParameters(t *testing.T) {
 		wantImportsA: map[string]bool{
 			// This really doesn't seem like useful behavior.
 			"prefixgithub.com/cosmos/gogoproto/proto": true,
-			"prefixbeta":                           true,
+			"prefixbeta": true,
 		},
 	}, {
 		// import_path only affects the 'package' line.
