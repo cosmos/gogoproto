@@ -39,7 +39,7 @@ import "google/protobuf/wrappers.proto";
 
 package jsonpb;
 
-import weak "gogoproto/gogo.proto";
+import weak "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
 
 // Test message for holding primitive types.
 message Simple {
@@ -62,19 +62,18 @@ message Simple {
   optional double o_double_str = 17;
   optional string o_string = 18;
   optional bytes o_bytes = 19;
-  optional bytes o_cast_bytes = 20 [(gogoproto.casttype) = "Bytes"];
+  optional bytes o_cast_bytes = 20 [ (gogoproto.casttype) = "Bytes" ];
 }
 
 // Test message for holding special non-finites primitives.
 message NonFinites {
-    optional float f_nan = 1;
-    optional float f_pinf = 2;
-    optional float f_ninf = 3;
-    optional double d_nan = 4;
-    optional double d_pinf = 5;
-    optional double d_ninf = 6;
+  optional float f_nan = 1;
+  optional float f_pinf = 2;
+  optional float f_ninf = 3;
+  optional double d_nan = 4;
+  optional double d_pinf = 5;
+  optional double d_ninf = 6;
 }
-
 
 // Test message for holding repeated primitives.
 message Repeats {
@@ -128,14 +127,10 @@ message Real {
   extensions 100 to max;
 }
 
-extend Real {
-  optional string name = 124;
-}
+extend Real { optional string name = 124; }
 
 message Complex {
-  extend Real {
-    optional Complex real_extension = 123;
-  }
+  extend Real { optional Complex real_extension = 123; }
   optional double imaginary = 1;
   extensions 100 to max;
 }
@@ -160,9 +155,7 @@ message KnownTypes {
 }
 
 // Test messages for marshaling/unmarshaling required fields.
-message MsgWithRequired {
-  required string str = 1;
-}
+message MsgWithRequired { required string str = 1; }
 
 message MsgWithIndirectRequired {
   optional MsgWithRequired subm = 1;
@@ -170,14 +163,8 @@ message MsgWithIndirectRequired {
   repeated MsgWithRequired slice_field = 3;
 }
 
-message MsgWithRequiredBytes {
-  required bytes byts = 1;
-}
+message MsgWithRequiredBytes { required bytes byts = 1; }
 
-message MsgWithRequiredWKT {
-  required google.protobuf.StringValue str = 1;
-}
+message MsgWithRequiredWKT { required google.protobuf.StringValue str = 1; }
 
-extend Real {
-  optional MsgWithRequired extm = 125;
-}
+extend Real { optional MsgWithRequired extm = 125; }

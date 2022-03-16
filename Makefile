@@ -73,77 +73,77 @@ regenerate: # install
 	make -C proto/test_proto regenerate
 	make -C proto/proto3_proto regenerate
 	make -C jsonpb/jsonpb_test_proto regenerate
-	make -C conformance regenerate
-	make -C protobuf regenerate
-	make -C test regenerate
-	make -C test/example regenerate
-	make -C test/unrecognized regenerate
-	make -C test/group regenerate
-	make -C test/unrecognizedgroup regenerate
-	make -C test/enumstringer regenerate
-	make -C test/unmarshalmerge regenerate
-	make -C test/moredefaults regenerate
-	make -C test/issue8 regenerate
-	make -C test/enumprefix regenerate
-	make -C test/enumcustomname regenerate
-	make -C test/packed regenerate
-	make -C test/protosize regenerate
-	make -C test/tags regenerate
-	make -C test/oneof regenerate
-	make -C test/oneof3 regenerate
-	make -C test/theproto3 regenerate
-	make -C test/mapdefaults regenerate
-	make -C test/mapsproto2 regenerate
-	make -C test/issue42order regenerate
-	make -C proto generate-test-pbs
-	make -C test/importdedup regenerate
-	make -C test/importduplicate regenerate
-	make -C test/custombytesnonstruct regenerate
-	make -C test/required regenerate
-	make -C test/casttype regenerate
-	make -C test/castvalue regenerate
-	make -C vanity/test regenerate
-	make -C test/sizeunderscore regenerate
-	make -C test/issue34 regenerate
-	make -C test/empty-issue70 regenerate
-	make -C test/indeximport-issue72 regenerate
-	make -C test/fuzztests regenerate
-	make -C test/oneofembed regenerate
-	make -C test/asymetric-issue125 regenerate
-	make -C test/filedotname regenerate
-	make -C test/nopackage regenerate
-	make -C test/types regenerate
-	make -C test/proto3extension regenerate
-	make -C test/stdtypes regenerate
-	make -C test/data regenerate
-	make -C test/typedecl regenerate
-	make -C test/issue260 regenerate
-	make -C test/issue261 regenerate
-	make -C test/issue262 regenerate
-	make -C test/issue312 regenerate
-	make -C test/enumdecl regenerate
-	make -C test/typedecl_all regenerate
-	make -C test/enumdecl_all regenerate
-	make -C test/int64support regenerate
-	make -C test/issue322 regenerate
-	make -C test/issue330 regenerate
-	make -C test/importcustom-issue389 regenerate
-	make -C test/merge regenerate
-	make -C test/cachedsize regenerate
-	make -C test/deterministic regenerate
-	make -C test/issue438 regenerate
-	make -C test/issue444 regenerate
-	make -C test/issue449 regenerate
-	make -C test/xxxfields regenerate
-	make -C test/issue435 regenerate
-	make -C test/issue411 regenerate
-	make -C test/issue498 regenerate
-	make -C test/issue503 regenerate
-	make -C test/issue530 regenerate
-	make -C test/issue617 regenerate
-	make -C test/issue620 regenerate
-	make -C test/protobuffer regenerate
-	make -C test/issue630 regenerate
+	# make -C conformance regenerate
+	# make -C protobuf regenerate
+	# make -C test regenerate
+	# make -C test/example regenerate
+	# make -C test/unrecognized regenerate
+	# make -C test/group regenerate
+	# make -C test/unrecognizedgroup regenerate
+	# make -C test/enumstringer regenerate
+	# make -C test/unmarshalmerge regenerate
+	# make -C test/moredefaults regenerate
+	# make -C test/issue8 regenerate
+	# make -C test/enumprefix regenerate
+	# make -C test/enumcustomname regenerate
+	# make -C test/packed regenerate
+	# make -C test/protosize regenerate
+	# make -C test/tags regenerate
+	# make -C test/oneof regenerate
+	# make -C test/oneof3 regenerate
+	# make -C test/theproto3 regenerate
+	# make -C test/mapdefaults regenerate
+	# make -C test/mapsproto2 regenerate
+	# make -C test/issue42order regenerate
+	# make -C proto generate-test-pbs
+	# make -C test/importdedup regenerate
+	# make -C test/importduplicate regenerate
+	# make -C test/custombytesnonstruct regenerate
+	# make -C test/required regenerate
+	# make -C test/casttype regenerate
+	# make -C test/castvalue regenerate
+	# make -C vanity/test regenerate
+	# make -C test/sizeunderscore regenerate
+	# make -C test/issue34 regenerate
+	# make -C test/empty-issue70 regenerate
+	# make -C test/indeximport-issue72 regenerate
+	# make -C test/fuzztests regenerate
+	# make -C test/oneofembed regenerate
+	# make -C test/asymetric-issue125 regenerate
+	# make -C test/filedotname regenerate
+	# make -C test/nopackage regenerate
+	# make -C test/types regenerate
+	# make -C test/proto3extension regenerate
+	# make -C test/stdtypes regenerate
+	# make -C test/data regenerate
+	# make -C test/typedecl regenerate
+	# make -C test/issue260 regenerate
+	# make -C test/issue261 regenerate
+	# make -C test/issue262 regenerate
+	# make -C test/issue312 regenerate
+	# make -C test/enumdecl regenerate
+	# make -C test/typedecl_all regenerate
+	# make -C test/enumdecl_all regenerate
+	# make -C test/int64support regenerate
+	# make -C test/issue322 regenerate
+	# make -C test/issue330 regenerate
+	# make -C test/importcustom-issue389 regenerate
+	# make -C test/merge regenerate
+	# make -C test/cachedsize regenerate
+	# make -C test/deterministic regenerate
+	# make -C test/issue438 regenerate
+	# make -C test/issue444 regenerate
+	# make -C test/issue449 regenerate
+	# make -C test/xxxfields regenerate
+	# make -C test/issue435 regenerate
+	# make -C test/issue411 regenerate
+	# make -C test/issue498 regenerate
+	# make -C test/issue503 regenerate
+	# make -C test/issue530 regenerate
+	# make -C test/issue617 regenerate
+	# make -C test/issue620 regenerate
+	# make -C test/protobuffer regenerate
+	# make -C test/issue630 regenerate
 
 	make gofmt
 
