@@ -5,7 +5,7 @@ package vanity
 
 import (
 	fmt "fmt"
-	github_com_gogo_protobuf_proto "github.com/cosmos/gogoproto/proto"
+	github_com_cosmos_gogoproto_proto "github.com/cosmos/gogoproto/proto"
 	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
@@ -120,7 +120,7 @@ func (m *A) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Int == nil {
-		return 0, github_com_gogo_protobuf_proto.NewRequiredNotSetError("Int")
+		return 0, github_com_cosmos_gogoproto_proto.NewRequiredNotSetError("Int")
 	} else {
 		i = encodeVarintVanity(dAtA, i, uint64(*m.Int))
 		i--
@@ -273,7 +273,7 @@ func (m *A) Unmarshal(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("Int")
+		return github_com_cosmos_gogoproto_proto.NewRequiredNotSetError("Int")
 	}
 
 	if iNdEx > l {
