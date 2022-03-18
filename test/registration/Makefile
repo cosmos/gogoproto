@@ -1,7 +1,7 @@
 # Protocol Buffers for Go with Gadgets
 #
 # Copyright (c) 2017, The GoGo Authors. All rights reserved.
-# http://github.com/gogo/protobuf
+# http://github.com/cosmos/gogoproto
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -27,7 +27,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 test:
-	go install github.com/gogo/protobuf/protoc-gen-gogo
 	(protoc --proto_path=../../../../../:../../protobuf/:. --gogo_out=. registration.proto)
 	cp registration_test.go.in registration_test.go
 	go test ./...

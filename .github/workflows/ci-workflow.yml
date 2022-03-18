@@ -13,14 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go_version: [1.15.x, 1.12.x]
-        protobuf_version: [3.14.0, 3.0.2, 2.6.1]
+        go_version: [1.17.x]
+        protobuf_version: [3.19.4, 3.0.2, 2.6.1]
       fail-fast: false
     steps:
       - name: Checkout branch
         uses: actions/checkout@v1
         with:
-          path: gopath/src/github.com/gogo/protobuf
+          path: gopath/src/github.com/cosmos/gogoproto
           fetch-depth: 5
 
       - name: Setup go

@@ -1,7 +1,7 @@
 // Protocol Buffers for Go with Gadgets
 //
 // Copyright (c) 2019, The GoGo Authors. All rights reserved.
-// http://github.com/gogo/protobuf
+// http://github.com/cosmos/gogoproto
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -32,7 +32,7 @@ import (
 	"bytes"
 	"testing"
 
-	proto "github.com/gogo/protobuf/proto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 func TestProtoBufferMarshal12(t *testing.T) {

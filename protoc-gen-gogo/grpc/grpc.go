@@ -39,8 +39,8 @@ import (
 	"strconv"
 	"strings"
 
-	pb "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
+	pb "github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor"
+	"github.com/cosmos/gogoproto/protoc-gen-gogo/generator"
 )
 
 // generatedCodeVersion indicates a version of the generated code.
@@ -56,7 +56,7 @@ const (
 	grpcPkgPath     = "google.golang.org/grpc"
 	codePkgPath     = "google.golang.org/grpc/codes"
 	statusPkgPath   = "google.golang.org/grpc/status"
-	gogoGrpcPkgPath = "github.com/gogo/protobuf/grpc"
+	gogoGrpcPkgPath = "github.com/cosmos/gogoproto/grpc"
 )
 
 func init() {

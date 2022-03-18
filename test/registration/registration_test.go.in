@@ -1,7 +1,7 @@
 // Protocol Buffers for Go with Gadgets
 //
 // Copyright (c) 2017, The GoGo Authors. All rights reserved.
-// http://github.com/gogo/protobuf
+// http://github.com/cosmos/gogoproto
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -31,7 +31,7 @@ package registration
 import (
 	"testing"
 
-	gogoproto "github.com/gogo/protobuf/proto"
+	gogoproto "github.com/cosmos/gogoproto/proto"
 	golangproto "github.com/golang/protobuf/proto"
 )
 
@@ -54,10 +54,10 @@ func TestEnumRegistered(t *testing.T) {
 	for k, want := range wantMap {
 		got, ok := gotMap[k]
 		if !ok {
-			t.Errorf("Enum value %q was not registered with gogo/protobuf", k)
+			t.Errorf("Enum value %q was not registered with cosmos/gogoproto", k)
 		}
 		if got != want {
-			t.Errorf("Enum value %q was different with gogo/protobuf: want %v, got %v", k, want, got)
+			t.Errorf("Enum value %q was different with cosmos/gogoproto: want %v, got %v", k, want, got)
 		}
 	}
 }
@@ -69,7 +69,7 @@ func TestMessageRegistered(t *testing.T) {
 	}
 	got = gogoproto.MessageType("registration.AMessage")
 	if got == nil {
-		t.Error(`Message "AMessage" was not registered with gogo/protobuf`)
+		t.Error(`Message "AMessage" was not registered with cosmos/gogoproto`)
 	}
 }
 
@@ -80,6 +80,6 @@ func TestFileRegistered(t *testing.T) {
 	}
 	got = gogoproto.FileDescriptor("registration.proto")
 	if got == nil {
-		t.Error(`File "registration.proto" was not registered with gogo/protobuf`)
+		t.Error(`File "registration.proto" was not registered with cosmos/gogoproto`)
 	}
 }

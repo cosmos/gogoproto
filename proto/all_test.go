@@ -45,11 +45,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gogo/protobuf/jsonpb"
-	. "github.com/gogo/protobuf/proto"
-	pb3 "github.com/gogo/protobuf/proto/proto3_proto"
-	. "github.com/gogo/protobuf/proto/test_proto"
-	descriptorpb "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+	"github.com/cosmos/gogoproto/jsonpb"
+	. "github.com/cosmos/gogoproto/proto"
+	pb3 "github.com/cosmos/gogoproto/proto/proto3_proto"
+	. "github.com/cosmos/gogoproto/proto/test_proto"
+	descriptorpb "github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor"
 )
 
 var globalO *Buffer
