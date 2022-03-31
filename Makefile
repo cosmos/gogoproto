@@ -55,6 +55,7 @@ install:
 	go install ./protoc-gen-gostring
 	go install ./protoc-min-version
 	go install ./protoc-gen-combo
+	go install ./protoc-gen-gocosmos
 	go install ./gogoreplace
 
 clean:
