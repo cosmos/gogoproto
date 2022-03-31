@@ -1,7 +1,6 @@
 package main
 
 import (
-	_ "github.com/cosmos/gogoproto/interfacetype"
 	"github.com/cosmos/gogoproto/vanity"
 	"github.com/cosmos/gogoproto/vanity/command"
 )

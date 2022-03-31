@@ -75,7 +75,6 @@ regenerate: install
 	make -C jsonpb/jsonpb_test_proto regenerate
 	make -C conformance regenerate
 	make -C protobuf regenerate
-	make -C options regenerate
 	make -C test regenerate
 	make -C test/example regenerate
 	make -C test/unrecognized regenerate
