@@ -3,4 +3,3 @@ regenerate:
 	Mtest_proto/test.proto=github.com/cosmos/gogoproto/proto/test_proto,\
 	Mgoogle/protobuf/any.proto=github.com/cosmos/gogoproto/types:. \
 	--proto_path=../../protobuf:../:. proto3.proto
-	
