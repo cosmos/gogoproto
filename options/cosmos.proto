@@ -1,0 +1,14 @@
+syntax = "proto3";
+package options;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/cosmos/gogoproto/options";
+
+extend google.protobuf.MessageOptions {
+  string interface_type = 93001;
+
+  string implements_interface = 93002;
+}
+
+extend google.protobuf.FieldOptions { string accepts_interface = 93001; }
