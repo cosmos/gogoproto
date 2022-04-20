@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go_version: [1.17.x]
+        go_version: [1.18.x]
         protobuf_version: [3.19.4, 3.0.2, 2.6.1]
       fail-fast: false
     steps:
