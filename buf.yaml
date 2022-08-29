@@ -4,6 +4,15 @@ name: buf.build/cosmos/gogo-proto
 breaking:
   use:
     - FILE
+build:
+  excludes:
+    - test
+    - jsonpb
+    - protobuf
+    - conformance
+    - proto
+    - protoc-gen-gogo
+    - vanity
 lint:
   use:
     - DEFAULT
