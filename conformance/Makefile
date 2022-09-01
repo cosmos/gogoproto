@@ -49,11 +49,11 @@ test:
 	./test.sh $(PROTOBUF_ROOT)
 
 regenerate:
-	protoc-min-version --version="3.0.0" --proto_path=$(GOPATH)/src:$(GOPATH)/src/github.com/cosmos/gogoproto/protobuf:. --gogo_out=\
+	protoc-min-version --version="3.0.0" --proto_path=../gogoproto:. --gogo_out=\
 	Mgoogle/protobuf/any.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/duration.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/struct.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/timestamp.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/wrappers.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/field_mask.proto=github.com/cosmos/gogoproto/types\
-	:. ./internal/conformance_proto/conformance.proto
+	:. ./internal/conformance_proto/conformance.proto -I ../gogoproto -I ../protobuf
