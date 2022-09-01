@@ -56,4 +56,5 @@ regenerate:
 	Mgoogle/protobuf/timestamp.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/wrappers.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/field_mask.proto=github.com/cosmos/gogoproto/types\
-	:. ./internal/conformance_proto/conformance.proto -I ../gogoproto -I ../protobuf
+	:. ./internal/conformance_proto/conformance.proto\
+	 -I ../gogoproto -I ../protobuf
