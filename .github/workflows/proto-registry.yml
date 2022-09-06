@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - "gogoproto/**"
+      - ".github/workflows/proto-registry.yml"
 
 jobs:
   push:
@@ -16,5 +17,4 @@ jobs:
       - uses: bufbuild/buf-setup-action@v1.7.0
       - uses: bufbuild/buf-push-action@v1
         with:
-          input: "gogoproto"
           buf_token: ${{ secrets.BUF_TOKEN }}
