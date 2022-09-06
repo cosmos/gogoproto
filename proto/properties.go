@@ -608,3 +608,15 @@ func RegisterFile(filename string, fileDescriptor []byte) {
 
 // FileDescriptor returns the compressed FileDescriptorProto for a .proto file.
 func FileDescriptor(filename string) []byte { return protoFiles[filename] }
+
+// AllFileDescriptors returns all the file descriptors registered with gogoproto
+// as a map of the full file name of the .proto file to its gzip compressed
+// FileDescriptorProto.
+func AllFileDescriptors() map[string][]byte {
+	// we clone the map to prevent the caller from mutating it
+	cloned := map[string][]byte{}
+	for file, bz := range protoFiles {
+		cloned[file] = bz
+	}
+	return cloned
+}
