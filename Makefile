@@ -164,7 +164,7 @@ errcheck:
 
 drone:
 	sudo apt-get install protobuf-compiler
-	(cd $(GOPATH)/src/github.com/cosmos/gogoproto && make buildserverall)
+	(cd ./gogoproto && make buildserverall)
 
 testall:
 	go get -u github.com/golang/protobuf/proto
