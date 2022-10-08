@@ -2,12 +2,10 @@ module github.com/cosmos/gogoproto
 
 go 1.18
 
-require (
-	github.com/golang/protobuf v1.5.2
-	google.golang.org/grpc v1.49.0
-)
+require google.golang.org/grpc v1.50.0
 
 require (
+	github.com/golang/protobuf v1.5.2 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
 	golang.org/x/sys v0.0.0-20220315194320-039c03cc5b86 // indirect
 	golang.org/x/text v0.3.7 // indirect
