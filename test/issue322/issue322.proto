@@ -1,7 +1,7 @@
 syntax = "proto2";
 package test;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.gostring_all) = true;
 option (gogoproto.populate_all) = true;
@@ -10,7 +10,5 @@ option (gogoproto.testgen_all) = true;
 option (gogoproto.compare_all) = true;
 
 message OneofTest {
-    oneof union {
-        int32 i = 1 [default = 4];
-    }
+  oneof union { int32 i = 1 [ default = 4 ]; }
 }

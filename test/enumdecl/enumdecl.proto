@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package enumdecl;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
@@ -16,12 +16,10 @@ option (gogoproto.unsafe_marshaler_all) = false;
 option (gogoproto.unsafe_unmarshaler_all) = false;
 
 enum MyEnum {
-    option (gogoproto.enumdecl) = false;
-    option (gogoproto.goproto_enum_prefix) = false;
-    A = 0;
-    B = 1;
+  option (gogoproto.enumdecl) = false;
+  option (gogoproto.goproto_enum_prefix) = false;
+  A = 0;
+  B = 1;
 }
 
-message Message {
-    MyEnum enumerated_field = 1;
-}
+message Message { MyEnum enumerated_field = 1; }

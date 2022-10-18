@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package issue438;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 import "google/protobuf/any.proto";
 import "google/protobuf/api.proto";
 import "google/protobuf/duration.proto";
@@ -49,5 +49,3 @@ message Types {
   google.protobuf.StringValue str = 29;
   google.protobuf.BytesValue bytes = 30;
 }
-
-

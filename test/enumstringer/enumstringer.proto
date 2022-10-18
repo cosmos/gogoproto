@@ -29,7 +29,7 @@
 syntax = "proto2";
 package enumstringer;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.goproto_enum_stringer_all) = false;
 
@@ -40,23 +40,19 @@ option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
 
 enum TheTestEnum {
-    A = 0;
-    B = 1;
-    C = 2;
+  A = 0;
+  B = 1;
+  C = 2;
 }
 
 message NidOptEnum {
-	optional TheTestEnum Field1 = 1 [(gogoproto.nullable) = false];
+  optional TheTestEnum Field1 = 1 [ (gogoproto.nullable) = false ];
 }
 
-message NinOptEnum {
-	optional TheTestEnum Field1 = 1;
-}
+message NinOptEnum { optional TheTestEnum Field1 = 1; }
 
 message NidRepEnum {
-	repeated TheTestEnum Field1 = 1 [(gogoproto.nullable) = false];
+  repeated TheTestEnum Field1 = 1 [ (gogoproto.nullable) = false ];
 }
 
-message NinRepEnum {
-	repeated TheTestEnum Field1 = 1;
-}
+message NinRepEnum { repeated TheTestEnum Field1 = 1; }

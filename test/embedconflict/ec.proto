@@ -28,13 +28,11 @@
 
 package embedconflict;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 message A {
-	optional int64 Field1 = 1;
-	optional B B = 2 [(gogoproto.embed) = true];
+  optional int64 Field1 = 1;
+  optional B B = 2 [ (gogoproto.embed) = true ];
 }
 
-message B {
-	optional double Field1 = 1;
-}
+message B { optional double Field1 = 1; }

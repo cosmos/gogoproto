@@ -30,13 +30,11 @@ syntax = "proto2";
 
 package proto;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;
 
-message Foo {
-  required uint64 bar = 1;
-}
+message Foo { required uint64 bar = 1; }

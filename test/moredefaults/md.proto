@@ -30,24 +30,21 @@ syntax = "proto2";
 
 package moredefaults;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
-import "github.com/cosmos/gogoproto/test/example/example.proto";
+import "gogoproto/gogo.proto";
+import "example/example.proto";
 
 option (gogoproto.goproto_getters_all) = true;
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;
 
-message MoreDefaultsB {
-	optional string Field1 = 1;
-}
+message MoreDefaultsB { optional string Field1 = 1; }
 
 message MoreDefaultsA {
-	optional int64 Field1 = 1 [default=1234];
-	optional int64 Field2 = 2 [(gogoproto.nullable) = false];
-	optional MoreDefaultsB B1 = 3;
-	optional MoreDefaultsB B2 = 4 [(gogoproto.nullable) = false];
-	optional test.A A1 = 5;
-	optional test.A A2 = 6 [(gogoproto.nullable) = false];
+  optional int64 Field1 = 1 [ default = 1234 ];
+  optional int64 Field2 = 2 [ (gogoproto.nullable) = false ];
+  optional MoreDefaultsB B1 = 3;
+  optional MoreDefaultsB B2 = 4 [ (gogoproto.nullable) = false ];
+  optional test.A A1 = 5;
+  optional test.A A2 = 6 [ (gogoproto.nullable) = false ];
 }
-

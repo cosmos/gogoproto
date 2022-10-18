@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Bug Fixes
+
+- [#14](https://github.com/cosmos/gogoproto/pull/14) Fix `make regenerate`.
+
 ## [v1.4.2](https://github.com/cosmos/gogoproto/releases/tag/v1.4.2) - 2022-09-14
 
 ### Features

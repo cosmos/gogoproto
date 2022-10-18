@@ -29,14 +29,14 @@
 syntax = "proto2";
 package embedconflict;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 message C {
-	optional int64 Field1 = 1;
-	optional D D = 2 [(gogoproto.embed) = true];
+  optional int64 Field1 = 1;
+  optional D D = 2 [ (gogoproto.embed) = true ];
 }
 
 message D {
-	option (gogoproto.marshaler) = true;
-	optional double Field2 = 2;
+  option (gogoproto.marshaler) = true;
+  optional double Field2 = 2;
 }

@@ -145,7 +145,7 @@ func TestUnsafeExtension(t *testing.T) {
 	check(t, m, fieldA, E_FieldA)
 }
 
-//See another version of this test in proto/extensions_test.go
+// See another version of this test in proto/extensions_test.go
 func TestGetExtensionStability(t *testing.T) {
 	check := func(m *NoExtensionsMap) bool {
 		ext1, err := proto.GetExtension(m, E_FieldB1)

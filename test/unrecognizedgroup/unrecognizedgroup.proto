@@ -30,7 +30,7 @@ syntax = "proto2";
 
 package unrecognizedgroup;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -46,32 +46,31 @@ option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
 
 message NewNoGroup {
-	option (gogoproto.unmarshaler) = true;
-	option (gogoproto.marshaler) = true;
-	option (gogoproto.sizer) = true;
-	optional int64 Field1 = 1;
-	repeated double Field3 = 3;
-	optional A A = 5;
+  option (gogoproto.unmarshaler) = true;
+  option (gogoproto.marshaler) = true;
+  option (gogoproto.sizer) = true;
+  optional int64 Field1 = 1;
+  repeated double Field3 = 3;
+  optional A A = 5;
 }
 
 message A {
-	option (gogoproto.unmarshaler) = true;
-	option (gogoproto.marshaler) = true;
-	option (gogoproto.sizer) = true;
-	optional int64 AField = 1;
+  option (gogoproto.unmarshaler) = true;
+  option (gogoproto.marshaler) = true;
+  option (gogoproto.sizer) = true;
+  optional int64 AField = 1;
 }
 
 message OldWithGroup {
-	optional int64 Field1 = 1;
-	optional group Group1 = 2 {
-    	optional int64 Field1 = 1;
-    	optional int32 Field2 = 2;
-    	repeated double Field3 = 3;
-  	}
-	repeated double Field3 = 3;
-	optional group Group2 = 4 {
-    	optional int64 Field1 = 1;
-    	repeated double Field2 = 2;
-  	}
+  optional int64 Field1 = 1;
+  optional group Group1 = 2 {
+    optional int64 Field1 = 1;
+    optional int32 Field2 = 2;
+    repeated double Field3 = 3;
+  }
+  repeated double Field3 = 3;
+  optional group Group2 = 4 {
+    optional int64 Field1 = 1;
+    repeated double Field2 = 2;
+  }
 }
-

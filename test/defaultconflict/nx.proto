@@ -29,13 +29,8 @@
 syntax = "proto2";
 package defaultcheck;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
-message A {
-	extensions 1 to max;
-}
+message A { extensions 1 to max; }
 
-extend A {
-	optional int64 Field1 = 1 [(gogoproto.nullable) = false];
-}
-
+extend A { optional int64 Field1 = 1 [ (gogoproto.nullable) = false ]; }

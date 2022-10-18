@@ -29,7 +29,7 @@
 syntax = "proto2";
 package cachedsize;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.verbose_equal_all) = true;
 option (gogoproto.equal_all) = true;
@@ -39,10 +39,6 @@ option (gogoproto.sizer_all) = true;
 
 option (gogoproto.enum_stringer_all) = true;
 
-message Foo {
-	optional Bar field1 = 1;
-}
+message Foo { optional Bar field1 = 1; }
 
-message Bar {
-	optional bool field2 = 1 [(gogoproto.nullable) = false];
-	}
+message Bar { optional bool field2 = 1 [ (gogoproto.nullable) = false ]; }

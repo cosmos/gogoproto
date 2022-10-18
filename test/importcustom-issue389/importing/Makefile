@@ -1,2 +1,2 @@
 regenerate:
-	protoc-min-version --version="3.0.0" --proto_path=../../../../../../:../../../protobuf/:. --gogo_out=. c.proto
+	protoc-min-version --version="3.0.0" --proto_path=../../../:../../../protobuf/:. --gogo_out=Mtest/importcustom-issue389/imported/a.proto=github.com/cosmos/gogoproto/test/importcustom-issue389/imported:. c.proto

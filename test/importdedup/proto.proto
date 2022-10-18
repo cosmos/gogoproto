@@ -30,11 +30,12 @@ syntax = "proto2";
 
 package importdedup;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
-
-import "github.com/cosmos/gogoproto/test/importdedup/subpkg/subproto.proto";
+import "gogoproto/gogo.proto";
+import "test/importdedup/subpkg/subproto.proto";
 
 message Object {
-    optional bytes CustomField = 1 [(gogoproto.customtype) = "github.com/cosmos/gogoproto/test/importdedup/subpkg.CustomType"];
-    optional subpkg.SubObject SubObject = 2;
+  optional bytes CustomField = 1
+      [ (gogoproto.customtype) =
+            "github.com/cosmos/gogoproto/test/importdedup/subpkg.CustomType" ];
+  optional subpkg.SubObject SubObject = 2;
 }

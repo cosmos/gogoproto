@@ -28,14 +28,14 @@
 
 regenerate:
 	protoc --gogofast_out=./fast/ vanity.proto
-	protoc --proto_path=../../:../../../../../:../../protobuf/:. --gogofast_out=./fast/ gogovanity.proto
-	protoc-min-version -version="3.0.0" --proto_path=../../:../../../../../:../../protobuf/:. --gogofast_out=./fast/ proto3.proto
+	protoc --proto_path=../../:../../:../../protobuf/:. --gogofast_out=./fast/ gogovanity.proto
+	protoc-min-version -version="3.0.0" --proto_path=../../:../../:../../protobuf/:. --gogofast_out=./fast/ proto3.proto
 	protoc --gogofaster_out=./faster/ vanity.proto
-	protoc --proto_path=../../:../../../../../:../../protobuf/:. --gogofaster_out=./faster/ gogovanity.proto
-	protoc-min-version -version="3.0.0" --proto_path=../../:../../../../../:../../protobuf/:. --gogofaster_out=./faster/ proto3.proto
+	protoc --proto_path=../../:../../:../../protobuf/:. --gogofaster_out=./faster/ gogovanity.proto
+	protoc-min-version -version="3.0.0" --proto_path=../../:../../:../../protobuf/:. --gogofaster_out=./faster/ proto3.proto
 	protoc --gogoslick_out=./slick/ vanity.proto
-	protoc --proto_path=../../:../../../../../:../../protobuf/:. --gogoslick_out=./slick/ gogovanity.proto
-	protoc-min-version -version="3.0.0" --proto_path=../../:../../../../../:../../protobuf/:. --gogoslick_out=./slick/ proto3.proto
+	protoc --proto_path=../../:../../:../../protobuf/:. --gogoslick_out=./slick/ gogovanity.proto
+	protoc-min-version -version="3.0.0" --proto_path=../../:../../:../../protobuf/:. --gogoslick_out=./slick/ proto3.proto
 
 test:
 	protoc --gofast_out=./gofast/ vanity.proto

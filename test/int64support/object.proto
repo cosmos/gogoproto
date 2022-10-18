@@ -1,6 +1,6 @@
 package int64support;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option go_package = "int64support";
 option (gogoproto.benchgen_all) = true;
@@ -14,11 +14,9 @@ option (gogoproto.gostring_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.sizer_all) = true;
-option (gogoproto.stringer_all) =  true;
+option (gogoproto.stringer_all) = true;
 option (gogoproto.testgen_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.verbose_equal_all) = true;
 
-message Object {
-  optional int64 optional_number = 1;
-}
+message Object { optional int64 optional_number = 1; }

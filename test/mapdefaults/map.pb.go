@@ -5,9 +5,11 @@
 Package mapdefaults is a generated protocol buffer package.
 
 It is generated from these files:
+
 	map.proto
 
 It has these top-level messages:
+
 	MapTest
 */
 package mapdefaults

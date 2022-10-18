@@ -29,14 +29,11 @@
 syntax = "proto2";
 package defaultcheck;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 enum E {
-	P = 10;
-	Q = 11;
+  P = 10;
+  Q = 11;
 }
 
-message A {
-	optional E Field1 = 1 [(gogoproto.nullable) = false];
-}
-
+message A { optional E Field1 = 1 [ (gogoproto.nullable) = false ]; }

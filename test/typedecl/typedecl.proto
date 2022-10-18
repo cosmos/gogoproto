@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package typedecl;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
@@ -17,19 +17,19 @@ option (gogoproto.unsafe_unmarshaler_all) = false;
 option (gogoproto.goproto_unrecognized_all) = false;
 
 message Dropped {
-    option (gogoproto.typedecl) = false;
-    string name = 1;
-    int32 age = 2;
+  option (gogoproto.typedecl) = false;
+  string name = 1;
+  int32 age = 2;
 }
 
 message DroppedWithoutGetters {
-    option (gogoproto.typedecl) = false;
-    option (gogoproto.goproto_getters) = false;
-    int64 height = 1;
-    int64 width = 2;
+  option (gogoproto.typedecl) = false;
+  option (gogoproto.goproto_getters) = false;
+  int64 height = 1;
+  int64 width = 2;
 }
 
 message Kept {
-    string name = 1;
-    int32 age = 2;
+  string name = 1;
+  int32 age = 2;
 }

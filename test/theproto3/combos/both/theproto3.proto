@@ -38,9 +38,9 @@ syntax = "proto3";
 
 package theproto3;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
-import "github.com/cosmos/gogoproto/test/combos/both/thetest.proto";
+import "test/combos/both/thetest.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -90,9 +90,7 @@ message Message {
   map<int64, test.NinOptEnum> proto2_value = 13;
 }
 
-message Nested {
-  string bunny = 1;
-}
+message Nested { string bunny = 1; }
 
 enum MapEnum {
   MA = 0;

@@ -30,7 +30,7 @@ syntax = "proto2";
 
 package filedotname;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -56,7 +56,4 @@ option (gogoproto.enum_stringer_all) = true;
 option (gogoproto.unsafe_marshaler_all) = false;
 option (gogoproto.unsafe_unmarshaler_all) = false;
 
-message M {
-	optional string a = 1;
-}
-
+message M { optional string a = 1; }

@@ -30,7 +30,7 @@ syntax = "proto3";
 
 package registration;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.goproto_registration) = true;
 

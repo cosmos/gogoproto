@@ -135,6 +135,7 @@ type M struct {
 	// Field using a type in the same Go package, but a different source file.
 	M2 *M2 `protobuf:"bytes,1,opt,name=m2" json:"m2,omitempty"`
 	// Types that are valid to be assigned to OneofField:
+	//
 	//	*M_OneofInt32
 	//	*M_OneofInt64
 	OneofField           isM_OneofField `protobuf_oneof:"oneof_field"`
@@ -275,6 +276,7 @@ func (m *M_Grouping) GetGroupField() string {
 
 type M_Submessage struct {
 	// Types that are valid to be assigned to SubmessageOneofField:
+	//
 	//	*M_Submessage_SubmessageOneofInt32
 	//	*M_Submessage_SubmessageOneofInt64
 	SubmessageOneofField isM_Submessage_SubmessageOneofField `protobuf_oneof:"submessage_oneof_field"`

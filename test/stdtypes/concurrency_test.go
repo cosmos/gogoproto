@@ -14,6 +14,7 @@ func TestConcurrentTextMarshal(t *testing.T) {
 
 	std := StdTypes{}
 	var wg sync.WaitGroup
+	errs := make(chan error)
 
 	tm := proto.TextMarshaler{}
 
@@ -21,11 +22,20 @@ func TestConcurrentTextMarshal(t *testing.T) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			err := tm.Marshal(ioutil.Discard, &std)
-			if err != nil {
-				t.Fatal(err)
+			if err := tm.Marshal(ioutil.Discard, &std); err != nil {
+				errs <- err
 			}
 		}()
 	}
-	wg.Wait()
+
+	go func() {
+		wg.Wait()
+		close(errs)
+	}()
+
+	for err := range errs {
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
 }

@@ -29,64 +29,64 @@
 syntax = "proto2";
 package test;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;
 
 message NativeWithSizeCache {
-    option (gogoproto.goproto_unrecognized) = false;
-    option (gogoproto.goproto_unkeyed) = false;
-	optional double Field1 = 1;
-	optional float Field2 = 2;
-	optional int32 Field3 = 3;
-	optional int64 Field4 = 4;
-	optional fixed64 Field11 = 11 [(gogoproto.nullable) = false];
-	optional bool Field13 = 13;
-	optional string Field14 = 14;
-    optional bytes Field15 = 15;
+  option (gogoproto.goproto_unrecognized) = false;
+  option (gogoproto.goproto_unkeyed) = false;
+  optional double Field1 = 1;
+  optional float Field2 = 2;
+  optional int32 Field3 = 3;
+  optional int64 Field4 = 4;
+  optional fixed64 Field11 = 11 [ (gogoproto.nullable) = false ];
+  optional bool Field13 = 13;
+  optional string Field14 = 14;
+  optional bytes Field15 = 15;
 }
 
 message StructWithSizeCache {
-    option (gogoproto.goproto_unrecognized) = false;
-    option (gogoproto.goproto_unkeyed) = false;
-	optional double Field1 = 1 [(gogoproto.nullable) = false];
-	optional float Field2 = 2 [(gogoproto.nullable) = false];
-	optional NativeWithSizeCache Field3 = 3 [(gogoproto.nullable) = false];
-	optional uint64 Field6 = 6 ;
-	optional sint32 Field7 = 7 [(gogoproto.nullable) = false];
-	optional NativeWithoutSizeCache Field8 = 8 [(gogoproto.nullable) = false];
-	repeated bool Field13 = 13;
-	optional string Field14 = 14;
-	optional bytes Field15 = 15 [(gogoproto.nullable) = false];
+  option (gogoproto.goproto_unrecognized) = false;
+  option (gogoproto.goproto_unkeyed) = false;
+  optional double Field1 = 1 [ (gogoproto.nullable) = false ];
+  optional float Field2 = 2 [ (gogoproto.nullable) = false ];
+  optional NativeWithSizeCache Field3 = 3 [ (gogoproto.nullable) = false ];
+  optional uint64 Field6 = 6;
+  optional sint32 Field7 = 7 [ (gogoproto.nullable) = false ];
+  optional NativeWithoutSizeCache Field8 = 8 [ (gogoproto.nullable) = false ];
+  repeated bool Field13 = 13;
+  optional string Field14 = 14;
+  optional bytes Field15 = 15 [ (gogoproto.nullable) = false ];
 }
 
 message NativeWithoutSizeCache {
-    option (gogoproto.goproto_unrecognized) = false;
-    option (gogoproto.goproto_unkeyed) = false;
-    option (gogoproto.goproto_sizecache) = false;
-	optional double Field1 = 1;
-	optional float Field2 = 2;
-	optional int32 Field3 = 3;
-	optional int64 Field4 = 4;
-	optional fixed64 Field11 = 11 [(gogoproto.nullable) = false];
-	optional bool Field13 = 13;
-	optional string Field14 = 14;
-    optional bytes Field15 = 15;
+  option (gogoproto.goproto_unrecognized) = false;
+  option (gogoproto.goproto_unkeyed) = false;
+  option (gogoproto.goproto_sizecache) = false;
+  optional double Field1 = 1;
+  optional float Field2 = 2;
+  optional int32 Field3 = 3;
+  optional int64 Field4 = 4;
+  optional fixed64 Field11 = 11 [ (gogoproto.nullable) = false ];
+  optional bool Field13 = 13;
+  optional string Field14 = 14;
+  optional bytes Field15 = 15;
 }
 
 message StructWithoutSizeCache {
-    option (gogoproto.goproto_unrecognized) = false;
-    option (gogoproto.goproto_unkeyed) = false;
-    option (gogoproto.goproto_sizecache) = false;
-	optional double Field1 = 1 [(gogoproto.nullable) = false];
-	optional float Field2 = 2 [(gogoproto.nullable) = false];
-	optional NativeWithSizeCache Field3 = 3 [(gogoproto.nullable) = false];
-	optional uint64 Field6 = 6;
-	optional sint32 Field7 = 7 [(gogoproto.nullable) = false];
-	optional NativeWithoutSizeCache Field8 = 8 [(gogoproto.nullable) = false];
-	repeated bool Field13 = 13;
-	optional string Field14 = 14;
-	optional bytes Field15 = 15 [(gogoproto.nullable) = false];
+  option (gogoproto.goproto_unrecognized) = false;
+  option (gogoproto.goproto_unkeyed) = false;
+  option (gogoproto.goproto_sizecache) = false;
+  optional double Field1 = 1 [ (gogoproto.nullable) = false ];
+  optional float Field2 = 2 [ (gogoproto.nullable) = false ];
+  optional NativeWithSizeCache Field3 = 3 [ (gogoproto.nullable) = false ];
+  optional uint64 Field6 = 6;
+  optional sint32 Field7 = 7 [ (gogoproto.nullable) = false ];
+  optional NativeWithoutSizeCache Field8 = 8 [ (gogoproto.nullable) = false ];
+  repeated bool Field13 = 13;
+  optional string Field14 = 14;
+  optional bytes Field15 = 15 [ (gogoproto.nullable) = false ];
 }

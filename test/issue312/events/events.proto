@@ -2,8 +2,8 @@ syntax = "proto2";
 
 package issue312.events;
 
-import "github.com/cosmos/gogoproto/test/issue312/issue312.proto";
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "test/issue312/issue312.proto";
+import "gogoproto/gogo.proto";
 
 option go_package = "events";
 option (gogoproto.gostring_all) = true;
@@ -11,7 +11,4 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;
 option (gogoproto.testgen_all) = true;
 
-message Subtype {
-  optional issue312.TaskState state = 4;
-}
-
+message Subtype { optional issue312.TaskState state = 4; }

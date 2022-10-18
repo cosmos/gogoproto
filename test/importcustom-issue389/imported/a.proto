@@ -1,7 +1,7 @@
 syntax = "proto3";
 package imported;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -10,6 +10,4 @@ option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;
 
-message A {
-    string f1 = 1;
-}
+message A { string f1 = 1; }

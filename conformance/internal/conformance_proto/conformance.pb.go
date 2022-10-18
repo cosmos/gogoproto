@@ -110,14 +110,15 @@ func (TestAllTypes_NestedEnum) EnumDescriptor() ([]byte, []int) {
 
 // Represents a single test case's input.  The testee should:
 //
-//   1. parse this proto (which should always succeed)
-//   2. parse the protobuf or JSON payload in "payload" (which may fail)
-//   3. if the parse succeeded, serialize the message in the requested format.
+//  1. parse this proto (which should always succeed)
+//  2. parse the protobuf or JSON payload in "payload" (which may fail)
+//  3. if the parse succeeded, serialize the message in the requested format.
 type ConformanceRequest struct {
 	// The payload (whether protobuf of JSON) is always for a TestAllTypes proto
 	// (see below).
 	//
 	// Types that are valid to be assigned to Payload:
+	//
 	//	*ConformanceRequest_ProtobufPayload
 	//	*ConformanceRequest_JsonPayload
 	Payload isConformanceRequest_Payload `protobuf_oneof:"payload"`
@@ -205,6 +206,7 @@ func (*ConformanceRequest) XXX_OneofWrappers() []interface{} {
 // Represents a single test case's output.
 type ConformanceResponse struct {
 	// Types that are valid to be assigned to Result:
+	//
 	//	*ConformanceResponse_ParseError
 	//	*ConformanceResponse_SerializeError
 	//	*ConformanceResponse_RuntimeError
@@ -401,6 +403,7 @@ type TestAllTypes struct {
 	MapStringNestedEnum     map[string]TestAllTypes_NestedEnum     `protobuf:"bytes,73,rep,name=map_string_nested_enum,json=mapStringNestedEnum,proto3" json:"map_string_nested_enum,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3,enum=conformance.TestAllTypes_NestedEnum"`
 	MapStringForeignEnum    map[string]ForeignEnum                 `protobuf:"bytes,74,rep,name=map_string_foreign_enum,json=mapStringForeignEnum,proto3" json:"map_string_foreign_enum,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3,enum=conformance.ForeignEnum"`
 	// Types that are valid to be assigned to OneofField:
+	//
 	//	*TestAllTypes_OneofUint32
 	//	*TestAllTypes_OneofNestedMessage
 	//	*TestAllTypes_OneofString

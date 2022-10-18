@@ -30,14 +30,10 @@ syntax = "proto2";
 
 package issue34;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.unmarshaler_all) = true;
 
-message Foo {
-  optional bytes bar = 1;
-}
+message Foo { optional bytes bar = 1; }
 
-message FooWithRepeated {
-  repeated bytes bar = 1;
-}
+message FooWithRepeated { repeated bytes bar = 1; }

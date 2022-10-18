@@ -2,10 +2,11 @@ syntax = "proto3";
 
 package issue261;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 import "google/protobuf/duration.proto";
 
 message MapStdTypes {
-	map<int32,google.protobuf.Duration> nullableDuration = 3 [(gogoproto.stdduration) = true];
+  map<int32, google.protobuf.Duration> nullableDuration = 3
+      [ (gogoproto.stdduration) = true ];
 }
