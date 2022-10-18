@@ -152,7 +152,7 @@ regenerate: install
 tests:
 	go build ./test/enumprefix
 	go test ./...
-	# (cd test/stdtypes && make test) # flaky tests present on gogo/protobuf
+	(cd test/stdtypes && make test)
 
 vet:
 	go get golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow

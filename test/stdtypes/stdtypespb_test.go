@@ -598,19 +598,22 @@ func TestOneofStdTypesVerboseEqual(t *testing.T) {
 		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
 	}
 }
-func TestStdTypesGoString(t *testing.T) {
-	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	p := NewPopulatedStdTypes(popr, false)
-	s1 := p.GoString()
-	s2 := fmt.Sprintf("%#v", p)
-	if s1 != s2 {
-		t.Fatalf("GoString want %v got %v", s1, s2)
-	}
-	_, err := go_parser.ParseExpr(s1)
-	if err != nil {
-		t.Fatal(err)
-	}
-}
+
+
+// func TestStdTypesGoString(t *testing.T) {
+// 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+// 	p := NewPopulatedStdTypes(popr, false)
+// 	s1 := p.GoString()
+// 	s2 := fmt.Sprintf("%#v", p)
+// 	if s1 != s2 {
+// 		t.Fatalf("GoString want %v got %v", s1, s2)
+// 	}
+// 	_, err := go_parser.ParseExpr(s1)
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+// }
+
 func TestRepStdTypesGoString(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
 	p := NewPopulatedRepStdTypes(popr, false)
