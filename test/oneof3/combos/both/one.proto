@@ -30,7 +30,7 @@ syntax = "proto3";
 
 package one;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -56,9 +56,7 @@ option (gogoproto.unsafe_unmarshaler_all) = false;
 
 option (gogoproto.compare_all) = true;
 
-message Subby {
-	string sub = 1;
-}
+message Subby { string sub = 1; }
 
 message SampleOneOf {
   oneof test_oneof {
@@ -80,5 +78,3 @@ message SampleOneOf {
     Subby sub_message = 16;
   }
 }
-
-

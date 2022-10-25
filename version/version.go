@@ -36,7 +36,10 @@ import (
 )
 
 func Get() string {
-	versionBytes, _ := exec.Command("protoc", "--version").CombinedOutput()
+	versionBytes, err := exec.Command("protoc", "--version").CombinedOutput()
+	if err != nil {
+		panic(err)
+	}
 	version := strings.TrimSpace(string(versionBytes))
 	versions := strings.Split(version, " ")
 	if len(versions) != 2 {

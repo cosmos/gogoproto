@@ -29,7 +29,7 @@
 syntax = "proto2";
 package protosize;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.protosizer_all) = true;
@@ -39,8 +39,8 @@ option (gogoproto.testgen_all) = true;
 option (gogoproto.equal_all) = true;
 
 message SizeMessage {
-	optional int64 size = 1;
-	optional int64 proto_size = 2;
-	optional bool Equal = 3;
-	optional string String = 4;
+  optional int64 size = 1;
+  optional int64 proto_size = 2;
+  optional bool Equal = 3;
+  optional string String = 4;
 }

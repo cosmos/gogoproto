@@ -30,18 +30,15 @@ syntax = "proto3";
 
 package issue617;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
-option (gogoproto.marshaler_all)   = true;
+option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
-option (gogoproto.sizer_all)       = false;
-option (gogoproto.protosizer_all)  = true;
+option (gogoproto.sizer_all) = false;
+option (gogoproto.protosizer_all) = true;
 
 message Foo {
-  message Bar {
-  }
+  message Bar {}
 
-  oneof details {
-    Bar bar = 1;
-  }
+  oneof details { Bar bar = 1; }
 }

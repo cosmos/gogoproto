@@ -29,7 +29,7 @@
 syntax = "proto2";
 package setextensionbytes;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.equal_all) = true;
 option (gogoproto.unsafe_marshaler_all) = true;
@@ -40,15 +40,11 @@ option (gogoproto.goproto_getters_all) = false;
 option (gogoproto.goproto_stringer_all) = false;
 
 message MyExtendable {
-	option (gogoproto.gostring) = false;
-	option (gogoproto.goproto_extensions_map) = false;
-	extensions 1 to 10;
+  option (gogoproto.gostring) = false;
+  option (gogoproto.goproto_extensions_map) = false;
+  extensions 1 to 10;
 }
 
-extend MyExtendable {
-	optional Foo Foos = 2;
-}
+extend MyExtendable { optional Foo Foos = 2; }
 
-message Foo {
-	optional int64 intFoo = 1 [(gogoproto.nullable) = false];
-}
+message Foo { optional int64 intFoo = 1 [ (gogoproto.nullable) = false ]; }

@@ -38,7 +38,7 @@ syntax = "proto2";
 
 package proto2.maps;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -64,13 +64,20 @@ option (gogoproto.enum_stringer_all) = true;
 option (gogoproto.unsafe_marshaler_all) = false;
 option (gogoproto.unsafe_unmarshaler_all) = false;
 
-message FloatingPoint {
-  optional double f = 1;
-}
+message FloatingPoint { optional double f = 1; }
 
 message CustomMap {
-  map<string, bytes> Nullable128s = 1 [(gogoproto.customtype)="github.com/cosmos/gogoproto/test/custom.Uint128"];
-  map<string, bytes> Uint128s = 2 [(gogoproto.customtype)="github.com/cosmos/gogoproto/test/custom.Uint128", (gogoproto.nullable)=false];
-  map<string, bytes> NullableIds = 3 [(gogoproto.customtype)="github.com/cosmos/gogoproto/test.Uuid"];
-  map<string, bytes> Ids = 4 [(gogoproto.customtype)="github.com/cosmos/gogoproto/test.Uuid", (gogoproto.nullable)=false];
+  map<string, bytes> Nullable128s = 1
+      [ (gogoproto.customtype) =
+            "github.com/cosmos/gogoproto/test/custom.Uint128" ];
+  map<string, bytes> Uint128s = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/gogoproto/test/custom.Uint128",
+    (gogoproto.nullable) = false
+  ];
+  map<string, bytes> NullableIds = 3
+      [ (gogoproto.customtype) = "github.com/cosmos/gogoproto/test.Uuid" ];
+  map<string, bytes> Ids = 4 [
+    (gogoproto.customtype) = "github.com/cosmos/gogoproto/test.Uuid",
+    (gogoproto.nullable) = false
+  ];
 }

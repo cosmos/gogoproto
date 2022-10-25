@@ -29,11 +29,11 @@
 syntax = "proto2";
 package custombytesnonstruct;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.unmarshaler_all) = true;
 
 message Object {
-    optional bytes CustomField1 = 1 [(gogoproto.customtype) = "CustomType"];
-    repeated bytes CustomField2 = 2 [(gogoproto.customtype) = "CustomType"];
+  optional bytes CustomField1 = 1 [ (gogoproto.customtype) = "CustomType" ];
+  repeated bytes CustomField2 = 2 [ (gogoproto.customtype) = "CustomType" ];
 }

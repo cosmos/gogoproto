@@ -165,7 +165,7 @@ func TestVarintNoClose(t *testing.T) {
 	}
 }
 
-//issue 32
+// issue 32
 func TestVarintMaxSize(t *testing.T) {
 	buf := newBuffer()
 	writer := io.NewDelimitedWriter(buf)

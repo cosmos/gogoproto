@@ -194,10 +194,10 @@ func (Reply_Entry_Game) EnumDescriptor() ([]byte, []int) {
 // This is a message that might be sent somewhere.
 type Request struct {
 	Key []int64 `protobuf:"varint,1,rep,name=key" json:"key,omitempty"`
-	//  optional imp.ImportedMessage imported_message = 2;
+	// optional imp.ImportedMessage imported_message = 2;
 	Hue *Request_Color `protobuf:"varint,3,opt,name=hue,enum=my.test.Request_Color" json:"hue,omitempty"`
 	Hat *HatType       `protobuf:"varint,4,opt,name=hat,enum=my.test.HatType,def=1" json:"hat,omitempty"`
-	//  optional imp.ImportedMessage.Owner owner = 6;
+	// optional imp.ImportedMessage.Owner owner = 6;
 	Deadline  *float32           `protobuf:"fixed32,7,opt,name=deadline,def=inf" json:"deadline,omitempty"`
 	Somegroup *Request_SomeGroup `protobuf:"group,8,opt,name=SomeGroup,json=somegroup" json:"somegroup,omitempty"`
 	// This is a map field. It will generate map[int32]string.
@@ -698,6 +698,7 @@ type Communique struct {
 	// This is a oneof, called "union".
 	//
 	// Types that are valid to be assigned to Union:
+	//
 	//	*Communique_Number
 	//	*Communique_Name
 	//	*Communique_Data

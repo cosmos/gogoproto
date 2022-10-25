@@ -36,7 +36,7 @@ import (
 )
 
 func TestPopulateWarning(t *testing.T) {
-	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../../../../:../../protobuf/:.", "a/a1.proto")
+	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../:../../protobuf/:.", "a/a1.proto")
 	data, err := cmd.CombinedOutput()
 	dataStr := string(data)
 	t.Logf("received error = %v and output = %v", err, dataStr)

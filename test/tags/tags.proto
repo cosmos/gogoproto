@@ -30,18 +30,28 @@ syntax = "proto2";
 
 package tags;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.populate_all) = true;
 
 message Outside {
-	optional Inside Inside = 1 [(gogoproto.embed) = true, (gogoproto.jsontag) = ""];
-	optional string Field2 = 2 [(gogoproto.jsontag) = "MyField2", (gogoproto.moretags) = "xml:\",comment\""];
-	oneof filed {
-		string Field3 = 3 [(gogoproto.jsontag) = "MyField3", (gogoproto.moretags) = "xml:\",comment\""];
-	}
+  optional Inside Inside = 1
+      [ (gogoproto.embed) = true, (gogoproto.jsontag) = "" ];
+  optional string Field2 = 2 [
+    (gogoproto.jsontag) = "MyField2",
+    (gogoproto.moretags) = "xml:\",comment\""
+  ];
+  oneof filed {
+    string Field3 = 3 [
+      (gogoproto.jsontag) = "MyField3",
+      (gogoproto.moretags) = "xml:\",comment\""
+    ];
+  }
 }
 
 message Inside {
-	optional string Field1 = 1 [(gogoproto.jsontag) = "MyField1", (gogoproto.moretags) = "xml:\",chardata\""];
+  optional string Field1 = 1 [
+    (gogoproto.jsontag) = "MyField1",
+    (gogoproto.moretags) = "xml:\",chardata\""
+  ];
 }

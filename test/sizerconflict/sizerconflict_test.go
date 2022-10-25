@@ -36,7 +36,7 @@ import (
 )
 
 func TestSizerConflict(t *testing.T) {
-	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../../../../:../../protobuf/:./", "sizerconflict.proto")
+	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../:../../protobuf/:./", "sizerconflict.proto")
 	data, err := cmd.CombinedOutput()
 	if err == nil && !strings.Contains(string(data), "Plugin failed with status code 1") {
 		t.Errorf("Expected error, got: %s", data)

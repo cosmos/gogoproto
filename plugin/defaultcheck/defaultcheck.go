@@ -46,8 +46,7 @@ It is enabled by the following extensions:
 
 For incorrect usage of nullable with tests see:
 
-  github.com/cosmos/gogoproto/test/nullableconflict
-
+	github.com/cosmos/gogoproto/test/nullableconflict
 */
 package defaultcheck
 

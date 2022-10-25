@@ -30,11 +30,9 @@ syntax = "proto2";
 
 package issue620;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
-message Bar {
-  optional string Field1 = 1;
-}
+message Bar { optional string Field1 = 1; }
 
 message BarFast {
   option (gogoproto.marshaler) = true;

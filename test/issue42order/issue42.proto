@@ -30,7 +30,7 @@ syntax = "proto2";
 
 package issue42;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -38,11 +38,11 @@ option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.populate_all) = true;
 
 message UnorderedFields {
-	optional int64 A = 10;
-	optional fixed64 B = 1;
+  optional int64 A = 10;
+  optional fixed64 B = 1;
 }
 
 message OrderedFields {
-	optional fixed64 B = 1;
-	optional int64 A = 10;
+  optional fixed64 B = 1;
+  optional int64 A = 10;
 }

@@ -36,7 +36,7 @@ import (
 )
 
 func testDefaultConflict(t *testing.T, name string) {
-	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../../../../:../../protobuf/:.", name+".proto")
+	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../:../../protobuf/:.", name+".proto")
 	data, err := cmd.CombinedOutput()
 	if err == nil && !strings.Contains(string(data), "Plugin failed with status code 1") {
 		t.Errorf("Expected error, got: %s", data)

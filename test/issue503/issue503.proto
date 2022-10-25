@@ -30,7 +30,7 @@ syntax = "proto3";
 
 package issue503;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.equal_all) = true;
 option (gogoproto.verbose_equal_all) = true;
@@ -40,8 +40,8 @@ option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.populate_all) = true;
 
 message Foo {
-	repeated int64 num1  = 1;
-	repeated int32 num2  = 2;
-	repeated string str1 = 3;
-	repeated bytes dat1  = 4;
+  repeated int64 num1 = 1;
+  repeated int32 num2 = 2;
+  repeated string str1 = 3;
+  repeated bytes dat1 = 4;
 }

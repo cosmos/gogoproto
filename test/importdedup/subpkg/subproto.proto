@@ -29,8 +29,6 @@
 syntax = "proto2";
 package subpkg;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
-message SubObject {
-
-}
+message SubObject {}

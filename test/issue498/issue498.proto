@@ -30,14 +30,14 @@ syntax = "proto2";
 
 package issue449;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.equal_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.testgen_all) = true;
 message Message {
-    required uint32 uint8 = 1 [(gogoproto.casttype) = "uint8"];
-    required uint32 uint16 = 2 [(gogoproto.casttype) = "uint16"];
-    required uint32 int8 = 3 [(gogoproto.casttype) = "int8"];
-    required uint32 int16 = 4 [(gogoproto.casttype) = "int16"];
+  required uint32 uint8 = 1 [ (gogoproto.casttype) = "uint8" ];
+  required uint32 uint16 = 2 [ (gogoproto.casttype) = "uint16" ];
+  required uint32 int8 = 3 [ (gogoproto.casttype) = "int8" ];
+  required uint32 int16 = 4 [ (gogoproto.casttype) = "int16" ];
 }

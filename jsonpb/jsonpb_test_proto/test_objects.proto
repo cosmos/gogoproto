@@ -39,7 +39,7 @@ import "google/protobuf/wrappers.proto";
 
 package jsonpb;
 
-import weak "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import weak "gogoproto/gogo.proto";
 
 // Test message for holding primitive types.
 message Simple {

@@ -30,9 +30,10 @@ syntax = "proto2";
 
 package embedconflict;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 message TakesLongTooDebug {
   optional bytes Field1 = 1;
-  optional bytes Field2 = 2 [(gogoproto.nullable)=false, (gogoproto.embed)=true];
+  optional bytes Field2 = 2
+      [ (gogoproto.nullable) = false, (gogoproto.embed) = true ];
 }

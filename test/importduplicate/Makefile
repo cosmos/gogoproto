@@ -27,12 +27,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
+	protoc-min-version --version="3.0.0" --gogo_out=Mtest/importduplicate/sortkeys/sortable.proto=github.com/cosmos/gogoproto/test/importduplicate/sortkeys,Mtest/importduplicate/proto/proto.proto=github.com/cosmos/gogoproto/test/importduplicate/proto:. \
+	--proto_path=../../:../../protobuf/:. importduplicate.proto
 	protoc-min-version --version="3.0.0" --gogo_out=:. \
-	--proto_path=../../../../../:../../protobuf/:. importduplicate.proto
+	--proto_path=../../:../../protobuf/:. sortkeys/sortable.proto
 	protoc-min-version --version="3.0.0" --gogo_out=:. \
-	--proto_path=../../../../../:../../protobuf/:. sortkeys/sortable.proto
-	protoc-min-version --version="3.0.0" --gogo_out=:. \
-	--proto_path=../../../../../:../../protobuf/:. proto/proto.proto
+	--proto_path=../../:../../protobuf/:. proto/proto.proto
 
 test:
 	go test

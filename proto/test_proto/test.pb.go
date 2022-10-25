@@ -3053,6 +3053,7 @@ func (m *MessageWithMap) GetStrToStr() map[string]string {
 
 type Oneof struct {
 	// Types that are valid to be assigned to Union:
+	//
 	//	*Oneof_F_Bool
 	//	*Oneof_F_Int32
 	//	*Oneof_F_Int64
@@ -3072,6 +3073,7 @@ type Oneof struct {
 	//	*Oneof_F_Largest_Tag
 	Union isOneof_Union `protobuf_oneof:"union"`
 	// Types that are valid to be assigned to Tormato:
+	//
 	//	*Oneof_Value
 	Tormato              isOneof_Tormato `protobuf_oneof:"tormato"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
@@ -3390,6 +3392,7 @@ type Communique struct {
 	// This is a oneof, called "union".
 	//
 	// Types that are valid to be assigned to Union:
+	//
 	//	*Communique_Number
 	//	*Communique_Name
 	//	*Communique_Data
@@ -3528,6 +3531,7 @@ type TestUTF8 struct {
 	Scalar *string  `protobuf:"bytes,1,opt,name=scalar" json:"scalar,omitempty"`
 	Vector []string `protobuf:"bytes,2,rep,name=vector" json:"vector,omitempty"`
 	// Types that are valid to be assigned to Oneof:
+	//
 	//	*TestUTF8_Field
 	Oneof                isTestUTF8_Oneof `protobuf_oneof:"oneof"`
 	MapKey               map[string]int64 `protobuf:"bytes,4,rep,name=map_key,json=mapKey" json:"map_key,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`

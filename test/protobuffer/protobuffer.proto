@@ -30,7 +30,7 @@ syntax = "proto2";
 
 package protobuffer;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 message PBuffMarshal {
   option (gogoproto.marshaler) = false;

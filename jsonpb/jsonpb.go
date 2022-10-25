@@ -108,6 +108,7 @@ func defaultResolveAny(typeUrl string) (proto.Message, error) {
 // parsed.
 //
 // The JSON marshaling must follow the proto to JSON specification:
+//
 //	https://developers.google.com/protocol-buffers/docs/proto3#json
 type JSONPBMarshaler interface {
 	MarshalJSONPB(*Marshaler) ([]byte, error)
@@ -119,6 +120,7 @@ type JSONPBMarshaler interface {
 // produced.
 //
 // The JSON unmarshaling must follow the JSON to proto specification:
+//
 //	https://developers.google.com/protocol-buffers/docs/proto3#json
 type JSONPBUnmarshaler interface {
 	UnmarshalJSONPB(*Unmarshaler, []byte) error

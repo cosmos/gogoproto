@@ -30,10 +30,10 @@ syntax = "proto2";
 
 package vanity;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 message B {
-	optional string String = 1 [(gogoproto.nullable) = true];
-	optional int64 Int64 = 2;
-	optional int32 Int32 = 3 [default = 1234];
+  optional string String = 1 [ (gogoproto.nullable) = true ];
+  optional int64 Int64 = 2;
+  optional int32 Int32 = 3 [ default = 1234 ];
 }

@@ -29,15 +29,14 @@
 syntax = "proto3";
 package sizerconflict;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.protosizer_all) = true;
 
 message Value {
-    oneof type {
-        int64 type_one = 1;
-        uint64 type_two = 2;
-    }
+  oneof type {
+    int64 type_one = 1;
+    uint64 type_two = 2;
+  }
 }
-

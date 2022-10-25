@@ -53,6 +53,7 @@ install:
 	go install ./protoc-gen-gogofaster
 	go install ./protoc-gen-gogoslick
 	go install ./protoc-gen-gostring
+	go install ./protoc-gen-gogotypes
 	go install ./protoc-min-version
 	go install ./protoc-gen-combo
 	go install ./protoc-gen-gocosmos

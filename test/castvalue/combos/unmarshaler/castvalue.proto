@@ -30,7 +30,7 @@ syntax = "proto2";
 
 package castvalue;
 
-import "github.com/cosmos/gogoproto/gogoproto/gogo.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -57,10 +57,10 @@ option (gogoproto.unsafe_marshaler_all) = false;
 option (gogoproto.unsafe_unmarshaler_all) = false;
 
 message Castaway {
-  map<int32,Wilson> CastMapValueMessage = 1 [(gogoproto.castvalue) = "MyWilson", (gogoproto.nullable) = false];
-  map<int32,Wilson> CastMapValueMessageNullable = 2 [(gogoproto.castvalue) = "MyWilson"];
+  map<int32, Wilson> CastMapValueMessage = 1
+      [ (gogoproto.castvalue) = "MyWilson", (gogoproto.nullable) = false ];
+  map<int32, Wilson> CastMapValueMessageNullable = 2
+      [ (gogoproto.castvalue) = "MyWilson" ];
 }
 
-message Wilson {
-  optional int64 Int64 = 1;
-}
+message Wilson { optional int64 Int64 = 1; }
