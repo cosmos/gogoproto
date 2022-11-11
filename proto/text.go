@@ -267,6 +267,12 @@ func (tm *TextMarshaler) writeStruct(w *textWriter, sv reflect.Value) error {
 	sprops := GetProperties(st)
 	for i := 0; i < sv.NumField(); i++ {
 		fv := sv.Field(i)
+
+		// skip unexported fields
+		if !fv.CanSet() {
+			continue
+		}
+
 		props := sprops.Prop[i]
 		name := st.Field(i).Name
 
@@ -482,7 +488,7 @@ var textMarshalerType = reflect.TypeOf((*encoding.TextMarshaler)(nil)).Elem()
 func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Properties) error {
 	v = reflect.Indirect(v)
 
-	// if cannot set value, then it is unexported - skip
+	// skip unexported fields
 	if !v.CanSet() {
 		return nil
 	}
@@ -556,7 +562,7 @@ func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Propert
 		// Other values are handled below.
 	}
 
-	// Uints are no interfaces
+	// Uints are not interfaces
 	if v.Kind() == reflect.Uint ||
 		v.Kind() == reflect.Uint8 ||
 		v.Kind() == reflect.Uint16 ||
