@@ -488,11 +488,6 @@ var textMarshalerType = reflect.TypeOf((*encoding.TextMarshaler)(nil)).Elem()
 func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Properties) error {
 	v = reflect.Indirect(v)
 
-	// skip unexported fields
-	if !v.CanSet() {
-		return nil
-	}
-
 	if props != nil {
 		if len(props.CustomType) > 0 {
 			custom, ok := v.Interface().(Marshaler)
