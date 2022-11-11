@@ -482,6 +482,11 @@ var textMarshalerType = reflect.TypeOf((*encoding.TextMarshaler)(nil)).Elem()
 func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Properties) error {
 	v = reflect.Indirect(v)
 
+	// if cannot set value, then it is unexported - skip
+	if !v.CanSet() {
+		return nil
+	}
+
 	if props != nil {
 		if len(props.CustomType) > 0 {
 			custom, ok := v.Interface().(Marshaler)
@@ -549,6 +554,16 @@ func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Propert
 			return err
 		}
 		// Other values are handled below.
+	}
+
+	// Uints are no interfaces
+	if v.Kind() == reflect.Uint ||
+		v.Kind() == reflect.Uint8 ||
+		v.Kind() == reflect.Uint16 ||
+		v.Kind() == reflect.Uint32 ||
+		v.Kind() == reflect.Uint64 {
+		_, err := fmt.Fprintf(w, "%d", v.Uint())
+		return err
 	}
 
 	// We don't attempt to serialise every possible value type; only those
