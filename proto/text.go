@@ -268,13 +268,13 @@ func (tm *TextMarshaler) writeStruct(w *textWriter, sv reflect.Value) error {
 	for i := 0; i < sv.NumField(); i++ {
 		fv := sv.Field(i)
 
-		// skip unexported fields
-		if !fv.CanSet() {
-			continue
-		}
-
 		props := sprops.Prop[i]
 		name := st.Field(i).Name
+
+		// skip unexported fields (i.e first letter is lowercase)
+		if name[0] != strings.ToUpper(name)[0] {
+			continue
+		}
 
 		if name == "XXX_NoUnkeyedLiteral" {
 			continue
