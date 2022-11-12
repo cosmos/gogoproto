@@ -2,8 +2,11 @@
 
 ## [Unreleased]
 
+## [v1.4.3](https://github.com/cosmos/gogoproto/releases/tag/v1.4.2) - 2022-10-14
+
 ### Bug Fixes
 
+- [#24](https://github.com/cosmos/gogoproto/pull/24) Fix `CompactTextString` panics with nested Anys and private fields.
 - [#14](https://github.com/cosmos/gogoproto/pull/14) Fix `make regenerate`.
 
 ## [v1.4.2](https://github.com/cosmos/gogoproto/releases/tag/v1.4.2) - 2022-09-14
