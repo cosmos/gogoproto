@@ -487,6 +487,7 @@ var textMarshalerType = reflect.TypeOf((*encoding.TextMarshaler)(nil)).Elem()
 // writeAny writes an arbitrary field.
 func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Properties) error {
 	v = reflect.Indirect(v)
+	k := v.Kind()
 
 	if props != nil {
 		if len(props.CustomType) > 0 {
@@ -539,7 +540,7 @@ func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Propert
 	}
 
 	// Floats have special cases.
-	if v.Kind() == reflect.Float32 || v.Kind() == reflect.Float64 {
+	if k == reflect.Float32 || k == reflect.Float64 {
 		x := v.Float()
 		var b []byte
 		switch {
@@ -557,19 +558,22 @@ func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Propert
 		// Other values are handled below.
 	}
 
-	// Uints are not interfaces
-	if v.Kind() == reflect.Uint ||
-		v.Kind() == reflect.Uint8 ||
-		v.Kind() == reflect.Uint16 ||
-		v.Kind() == reflect.Uint32 ||
-		v.Kind() == reflect.Uint64 {
+	// Handle Uints
+	if k == reflect.Uint ||
+		k == reflect.Uint8 ||
+		k == reflect.Uint16 ||
+		k == reflect.Uint32 ||
+		k == reflect.Uint64 {
 		_, err := fmt.Fprintf(w, "%d", v.Uint())
 		return err
 	}
 
 	// We don't attempt to serialise every possible value type; only those
 	// that can occur in protocol buffers.
-	switch v.Kind() {
+	switch k {
+	case reflect.Bool:
+		_, err := fmt.Fprint(w, v.Bool())
+		return err
 	case reflect.Slice:
 		// Should only be a []byte; repeated fields are handled in writeStruct.
 		if err := writeString(w, string(v.Bytes())); err != nil {
