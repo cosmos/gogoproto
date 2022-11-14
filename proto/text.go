@@ -267,8 +267,14 @@ func (tm *TextMarshaler) writeStruct(w *textWriter, sv reflect.Value) error {
 	sprops := GetProperties(st)
 	for i := 0; i < sv.NumField(); i++ {
 		fv := sv.Field(i)
+
 		props := sprops.Prop[i]
 		name := st.Field(i).Name
+
+		// skip unexported fields (i.e first letter is lowercase)
+		if name[0] != strings.ToUpper(name)[0] {
+			continue
+		}
 
 		if name == "XXX_NoUnkeyedLiteral" {
 			continue
@@ -481,6 +487,7 @@ var textMarshalerType = reflect.TypeOf((*encoding.TextMarshaler)(nil)).Elem()
 // writeAny writes an arbitrary field.
 func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Properties) error {
 	v = reflect.Indirect(v)
+	k := v.Kind()
 
 	if props != nil {
 		if len(props.CustomType) > 0 {
@@ -533,7 +540,7 @@ func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Propert
 	}
 
 	// Floats have special cases.
-	if v.Kind() == reflect.Float32 || v.Kind() == reflect.Float64 {
+	if k == reflect.Float32 || k == reflect.Float64 {
 		x := v.Float()
 		var b []byte
 		switch {
@@ -553,7 +560,7 @@ func (tm *TextMarshaler) writeAny(w *textWriter, v reflect.Value, props *Propert
 
 	// We don't attempt to serialise every possible value type; only those
 	// that can occur in protocol buffers.
-	switch v.Kind() {
+	switch k {
 	case reflect.Slice:
 		// Should only be a []byte; repeated fields are handled in writeStruct.
 		if err := writeString(w, string(v.Bytes())); err != nil {

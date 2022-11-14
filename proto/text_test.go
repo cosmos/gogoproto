@@ -516,3 +516,28 @@ func TestRacyMarshal(t *testing.T) {
 		}()
 	}
 }
+
+func TestAny(t *testing.T) {
+	any := &pb.MyMessage{Count: proto.Int32(47), Name: proto.String("David")}
+	proto.SetExtension(any, pb.E_Ext_Text, proto.String("bar"))
+	b, err := proto.Marshal(any)
+	if err != nil {
+		panic(err)
+	}
+	m := &proto3pb.Message{
+		Name:        "David",
+		ResultCount: 47,
+		Anything:    &types.Any{TypeUrl: proto.MessageName(any), Value: b},
+	}
+
+	expected := `name: "David"
+	result_count: 47
+	anything: <
+	  type_url: "test_proto.MyMessage"
+	  value: "\302\006\003bar\010/\022\005David"
+	>`
+	got := proto.MarshalTextString(m)
+	if strings.EqualFold(expected, got) {
+		t.Errorf("got = %s, want %s", expected, got)
+	}
+}
