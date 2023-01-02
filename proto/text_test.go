@@ -530,14 +530,22 @@ func TestAny(t *testing.T) {
 		Anything:    &types.Any{TypeUrl: proto.MessageName(any), Value: b},
 	}
 
-	expected := `name: "David"
-	result_count: 47
-	anything: <
-	  type_url: "test_proto.MyMessage"
-	  value: "\302\006\003bar\010/\022\005David"
-	>`
-	got := proto.MarshalTextString(m)
-	if strings.EqualFold(expected, got) {
-		t.Errorf("got = %s, want %s", expected, got)
+	cases := []struct {
+		got, expected string
+	}{
+		{proto.CompactTextString(m), `name:"David" result_count:47 anything:<type_url:"test_proto.MyMessage" value:"\302\006\003bar\010/\022\005David" > `},
+		{proto.MarshalTextString(m), `name: "David"
+result_count: 47
+anything: <
+  type_url: "test_proto.MyMessage"
+  value: "\302\006\003bar\010/\022\005David"
+>
+`},
+	}
+
+	for _, tc := range cases {
+		if tc.expected != tc.got {
+			t.Errorf("got = %s, want = %s", tc.got, tc.expected)
+		}
 	}
 }
