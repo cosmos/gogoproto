@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package issue270.a;
+package test.issue270.a;
 
 import "gogoproto/gogo.proto";
 import "test/issue270/a/a2.proto";

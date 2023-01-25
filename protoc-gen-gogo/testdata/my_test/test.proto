@@ -32,7 +32,7 @@
 syntax = "proto2";
 
 // This package holds interesting messages.
-package my.test;  // dotted package name
+package my_test;  // dotted package name
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/my_test;test";
 

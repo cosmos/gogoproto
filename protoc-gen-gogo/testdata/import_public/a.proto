@@ -31,7 +31,7 @@
 
 syntax = "proto2";
 
-package goproto.test.import_public;
+package import_public;
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/import_public";
 
@@ -39,7 +39,7 @@ import public "import_public/sub/a.proto"; // Different Go package.
 import public "import_public/b.proto";     // Same Go package.
 
 message Public {
-  optional goproto.test.import_public.sub.M m = 1;
-  optional goproto.test.import_public.sub.E e = 2;
+  optional import_public.sub.M m = 1;
+  optional import_public.sub.E e = 2;
   optional Local local = 3;
 }

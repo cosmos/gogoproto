@@ -31,7 +31,7 @@
 
 syntax = "proto2";
 
-package multitest;
+package multi;
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/multi;multitest";
 

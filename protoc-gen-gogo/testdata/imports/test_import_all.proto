@@ -31,7 +31,7 @@
 
 syntax = "proto3";
 
-package test;
+package imports;
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/imports";
 
@@ -48,11 +48,11 @@ import "imports/test_b_1/m2.proto";
 import "imports/fmt/m.proto";
 
 message All {
-  test.a.M1 am1 = 1;
-  test.a.M2 am2 = 2;
-  test.a.M3 am3 = 3;
-  test.a.M4 am4 = 4;
-  test.b.part1.M1 bm1 = 5;
-  test.b.part2.M2 bm2 = 6;
-  fmt.M fmt = 7;
+  imports.test_a_1.M1 am1 = 1;
+  imports.test_a_1.M2 am2 = 2;
+  imports.test_a_2.M3 am3 = 3;
+  imports.test_a_2.M4 am4 = 4;
+  imports.test_b_1.M1 bm1 = 5;
+  imports.test_b_1.M2 bm2 = 6;
+  imports.fmt.M fmt = 7;
 }
