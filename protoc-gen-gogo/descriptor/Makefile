@@ -30,5 +30,5 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc --gogo_out=. -I=../../protobuf/google/protobuf ../../protobuf/google/protobuf/descriptor.proto
-	protoc --gostring_out=. -I=../../protobuf/google/protobuf ../../protobuf/google/protobuf/descriptor.proto
+	protoc --gogo_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google/protobuf/descriptor.pb.go .
+	protoc --gostring_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv descriptor_gostring.gen.go .
