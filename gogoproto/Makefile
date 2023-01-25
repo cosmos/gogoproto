@@ -26,8 +26,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Match registration name to actual import path.
+# ref: https://github.com/cosmos/cosmos-sdk/issues/14713
 regenerate:
-	protoc --gogo_out=Mgoogle/protobuf/descriptor.proto=github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor:../../../../ --proto_path=../../../../:../protobuf/:. *.proto
+	cd .. && protoc --gogo_out=Mgoogle/protobuf/descriptor.proto=github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor:../../../ --proto_path=../../../:./protobuf/:. gogoproto/*.proto
 
 restore:
 	cp gogo.pb.golden gogo.pb.go
