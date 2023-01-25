@@ -31,4 +31,4 @@
 
 regenerate:
 	protoc --gogo_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google/protobuf/descriptor.pb.go .
-	protoc --gostring_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv descriptor_gostring.gen.go .
+	protoc --gostring_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google/protobuf/descriptor_gostring.gen.go .
