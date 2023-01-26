@@ -36,7 +36,7 @@
 
 syntax = "proto2";
 
-package proto2.maps;
+package mapsproto2.combos.neither;
 
 import "gogoproto/gogo.proto";
 

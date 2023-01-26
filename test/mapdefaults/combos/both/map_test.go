@@ -37,15 +37,15 @@ import (
 func TestUnmarshalImplicitDefaultKeyValue1(t *testing.T) {
 	fm := &FakeMap{
 		Entries: []*FakeMapEntry{
-			{
+			&FakeMapEntry{
 				Key:   "foo",
 				Value: "",
 			},
-			{
+			&FakeMapEntry{
 				Key:   "",
 				Value: "bar",
 			},
-			{
+			&FakeMapEntry{
 				Key:   "as",
 				Value: "df",
 			},
@@ -97,7 +97,7 @@ func TestUnmarshalImplicitDefaultKeyValue1(t *testing.T) {
 func TestUnmarshalImplicitDefaultKeyValue2(t *testing.T) {
 	fm := &FakeMap{
 		Entries: []*FakeMapEntry{
-			{
+			&FakeMapEntry{
 				Key:   "",
 				Value: "",
 			},
@@ -134,3 +134,4 @@ func TestUnmarshalImplicitDefaultKeyValue2(t *testing.T) {
 		t.Fatalf("Unexpected value for \"\": %s", val)
 	}
 }
+

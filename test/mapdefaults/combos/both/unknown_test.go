@@ -37,7 +37,7 @@ import (
 func TestUnmarshalIgnoreUnknownField(t *testing.T) {
 	fm := &FakeMap{
 		Entries: []*FakeMapEntry{
-			{
+			&FakeMapEntry{
 				Key:   "key",
 				Value: "value",
 				Other: "other",

@@ -40,7 +40,7 @@ package theproto3;
 
 import "gogoproto/gogo.proto";
 
-import "combos/both/theboth.proto";
+import "test/combos/both/thetest.proto";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -86,8 +86,8 @@ message Message {
   Nested nested = 6;
 
   map<int64, Nested> terrain = 10;
-  both.NinOptNative proto2_field = 11;
-  map<int64, both.NinOptEnum> proto2_value = 13;
+  test.combos.both.NinOptNative proto2_field = 11;
+  map<int64, test.combos.both.NinOptEnum> proto2_value = 13;
 }
 
 message Nested { string bunny = 1; }
