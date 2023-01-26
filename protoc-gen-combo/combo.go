@@ -37,6 +37,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/cosmos/gogoproto/version"
@@ -57,6 +58,7 @@ func (this MixMatch) Gen(folder string, news []string) {
 		panic(err)
 	}
 	content := string(data)
+	fileNameOnly, folderOnly := filepath.Base(this.Filename), filepath.Dir(this.Filename)
 	for i, old := range this.Old {
 		if !strings.Contains(content, old) {
 			panic(fmt.Errorf("could not find string {%s} to replace with {%s}", old, news[i]))
@@ -66,7 +68,13 @@ func (this MixMatch) Gen(folder string, news []string) {
 			panic(fmt.Errorf("found another string {%s} after it was replaced with {%s}", old, news[i]))
 		}
 	}
-	fileNameOnly, folderOnly := filepath.Base(this.Filename), filepath.Dir(this.Filename)
+
+	// Replace package name
+	re := regexp.MustCompile(`\npackage (.*);`)
+	correctPkgName := strings.Trim(strings.ReplaceAll(folder, "/", "."), ".")
+	replaceStr := fmt.Sprintf("\npackage $1.%s;", correctPkgName)
+	content = re.ReplaceAllString(content, replaceStr)
+
 	if err = ioutil.WriteFile(filepath.Join(folderOnly, folder, fileNameOnly), []byte(content), 0666); err != nil {
 		panic(err)
 	}
@@ -146,7 +154,6 @@ func main() {
 	}
 	m := MixMatch{
 		Old: []string{
-			"package test;",
 			"option (gogoproto.unmarshaler_all) = false;",
 			"option (gogoproto.marshaler_all) = false;",
 		},
@@ -155,23 +162,19 @@ func main() {
 	}
 	if def != "false" {
 		m.Gen("./combos/neither/", []string{
-			"package test.combos.neither;",
 			"option (gogoproto.unmarshaler_all) = false;",
 			"option (gogoproto.marshaler_all) = false;",
 		})
 	}
 	m.Gen("./combos/marshaler/", []string{
-		"package test.combos.marshaler;",
 		"option (gogoproto.unmarshaler_all) = false;",
 		"option (gogoproto.marshaler_all) = true;",
 	})
 	m.Gen("./combos/unmarshaler/", []string{
-		"package test.combos.unmarshaler;",
 		"option (gogoproto.unmarshaler_all) = true;",
 		"option (gogoproto.marshaler_all) = false;",
 	})
 	m.Gen("./combos/both/", []string{
-		"package test.combos.both;",
 		"option (gogoproto.unmarshaler_all) = true;",
 		"option (gogoproto.marshaler_all) = true;",
 	})
