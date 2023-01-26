@@ -66,10 +66,11 @@ func (this MixMatch) Gen(folder string, news []string) {
 			panic(fmt.Errorf("found another string {%s} after it was replaced with {%s}", old, news[i]))
 		}
 	}
-	if err = ioutil.WriteFile(filepath.Join(folder, this.Filename), []byte(content), 0666); err != nil {
+	fileNameOnly, folderOnly := filepath.Base(this.Filename), filepath.Dir(this.Filename)
+	if err = ioutil.WriteFile(filepath.Join(folderOnly, folder, fileNameOnly), []byte(content), 0666); err != nil {
 		panic(err)
 	}
-	args := append(this.Args, filepath.Join(folder, this.Filename))
+	args := append(this.Args, filepath.Join(folderOnly, folder, fileNameOnly))
 	var regenerate = exec.Command("protoc", args...)
 	out, err := regenerate.CombinedOutput()
 
@@ -139,12 +140,13 @@ func main() {
 	}
 	filename := args[0]
 	var def string
-	flags, def = filter(flags, "-default")
+	flags, def = filter(flags, "--default")
 	if _, err := exec.LookPath("protoc"); err != nil {
 		panic("cannot find protoc in PATH")
 	}
 	m := MixMatch{
 		Old: []string{
+			"package test;",
 			"option (gogoproto.unmarshaler_all) = false;",
 			"option (gogoproto.marshaler_all) = false;",
 		},
@@ -153,19 +155,23 @@ func main() {
 	}
 	if def != "false" {
 		m.Gen("./combos/neither/", []string{
+			"package test.combos.neither;",
 			"option (gogoproto.unmarshaler_all) = false;",
 			"option (gogoproto.marshaler_all) = false;",
 		})
 	}
 	m.Gen("./combos/marshaler/", []string{
+		"package test.combos.marshaler;",
 		"option (gogoproto.unmarshaler_all) = false;",
 		"option (gogoproto.marshaler_all) = true;",
 	})
 	m.Gen("./combos/unmarshaler/", []string{
+		"package test.combos.unmarshaler;",
 		"option (gogoproto.unmarshaler_all) = true;",
 		"option (gogoproto.marshaler_all) = false;",
 	})
 	m.Gen("./combos/both/", []string{
+		"package test.combos.both;",
 		"option (gogoproto.unmarshaler_all) = true;",
 		"option (gogoproto.marshaler_all) = true;",
 	})

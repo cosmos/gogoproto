@@ -27,8 +27,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc --gogo_out=. --proto_path=../protobuf/:../:../../../../:. thetest.proto
-	protoc-gen-combo --default=false --gogo_out=. --proto_path=../protobuf/:../:../../../../:. thetest.proto
+	cd .. && protoc --gogo_out=. --proto_path=./protobuf/:../../../:. test/thetest.proto
+	cd .. && protoc-gen-combo --default=false --gogo_out=. --proto_path=./protobuf:../../../:. test/thetest.proto
 	cp uuid.go ./combos/both/
 	cp uuid.go ./combos/marshaler/
 	cp uuid.go ./combos/unmarshaler/

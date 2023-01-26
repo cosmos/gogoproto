@@ -27,9 +27,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 syntax = "proto2";
-package test;
+package test.combos.both;
 
 import "gogoproto/gogo.proto";
+
+option go_package = "test";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
