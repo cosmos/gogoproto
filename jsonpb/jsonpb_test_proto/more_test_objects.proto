@@ -31,7 +31,7 @@
 
 syntax = "proto3";
 
-package jsonpb;
+package jsonpb_test_proto;
 
 message Simple3 {
   double dub = 1;

@@ -37,7 +37,7 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-package jsonpb;
+package jsonpb_test_proto;
 
 import weak "gogoproto/gogo.proto";
 
