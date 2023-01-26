@@ -27,16 +27,16 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc --gogofast_out=./fast/ vanity.proto
-	protoc --proto_path=../../:../../:../../protobuf/:. --gogofast_out=./fast/ gogovanity.proto
-	protoc-min-version -version="3.0.0" --proto_path=../../:../../:../../protobuf/:. --gogofast_out=./fast/ proto3.proto
-	protoc --gogofaster_out=./faster/ vanity.proto
-	protoc --proto_path=../../:../../:../../protobuf/:. --gogofaster_out=./faster/ gogovanity.proto
-	protoc-min-version -version="3.0.0" --proto_path=../../:../../:../../protobuf/:. --gogofaster_out=./faster/ proto3.proto
-	protoc --gogoslick_out=./slick/ vanity.proto
-	protoc --proto_path=../../:../../:../../protobuf/:. --gogoslick_out=./slick/ gogovanity.proto
-	protoc-min-version -version="3.0.0" --proto_path=../../:../../:../../protobuf/:. --gogoslick_out=./slick/ proto3.proto
+	cd .. && cd .. && protoc --gogofast_out=./fast/ vanity/vanity/vanity/vanity.proto
+	cd .. && cd .. && protoc --proto_path=../:../:../protobuf/:. --gogofast_out=./fast/ gogovanity/gogovanity/gogovanity/gogovanity.proto
+	cd .. && protoc-min-version -version="3.0.0" --proto_path=../:../:../protobuf/:. --gogofast_out=./fast/ proto3/proto3.proto
+	cd .. && cd .. && protoc --gogofaster_out=./faster/ vanity/vanity/vanity/vanity.proto
+	cd .. && cd .. && protoc --proto_path=../:../:../protobuf/:. --gogofaster_out=./faster/ gogovanity/gogovanity/gogovanity/gogovanity.proto
+	cd .. && protoc-min-version -version="3.0.0" --proto_path=../:../:../protobuf/:. --gogofaster_out=./faster/ proto3/proto3.proto
+	cd .. && cd .. && protoc --gogoslick_out=./slick/ vanity/vanity/vanity/vanity.proto
+	cd .. && cd .. && protoc --proto_path=../:../:../protobuf/:. --gogoslick_out=./slick/ gogovanity/gogovanity/gogovanity/gogovanity.proto
+	cd .. && protoc-min-version -version="3.0.0" --proto_path=../:../:../protobuf/:. --gogoslick_out=./slick/ proto3/proto3.proto
 
 test:
-	protoc --gofast_out=./gofast/ vanity.proto
+	cd .. && cd .. && protoc --gofast_out=./gofast/ vanity/vanity/vanity/vanity.proto
 	go test ./...

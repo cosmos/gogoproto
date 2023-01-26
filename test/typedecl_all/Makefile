@@ -1,2 +1,2 @@
 regenerate:
-	protoc-min-version --version="3.0.0" --gogo_out=. --proto_path=../../:../../protobuf/:. typedeclall.proto
+	cd .. && protoc-min-version --version="3.0.0" --gogo_out=. --proto_path=../:../protobuf/:. typedeclall/typedeclall.proto

@@ -27,6 +27,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 test:
-	(protoc --proto_path=../../:../../protobuf/:. --gogo_out=. registration.proto)
+	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=. registration/registration.proto)
 	cp registration_test.go.in registration_test.go
 	go test ./...

@@ -32,7 +32,7 @@ regenerate:
 	Mgoogle/protobuf/timestamp.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/wrappers.proto=github.com/cosmos/gogoproto/types\
 	:. \
-	--proto_path=../../:../../protobuf/:. stdtypes.proto
+	--proto_path=../:../protobuf/:. stdtypes.proto
 
 test:
 	go test -race -run=TestConcurrentTextMarshal .

@@ -36,7 +36,7 @@
 
 syntax = "proto3";
 
-package theproto3;
+package theproto3.combos.neither;
 
 import "gogoproto/gogo.proto";
 

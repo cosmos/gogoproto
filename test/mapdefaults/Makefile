@@ -27,7 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc-gen-combo --version="3.0.0" --proto_path=../../protobuf/:../../:. --gogo_out=. map.proto
+	cd .. && protoc-gen-combo --version="3.0.0" --proto_path=../protobuf/:../:. --gogo_out=. map/map.proto
 	find combos -type d -not -name combos -exec cp map_test.go.in {}/map_test.go \;
 	cp unknown_test.go.in ./combos/unmarshaler/unknown_test.go
 	cp unknown_test.go.in ./combos/both/unknown_test.go

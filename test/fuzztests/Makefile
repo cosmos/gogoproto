@@ -27,4 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc  --proto_path=../../:../../protobuf/:. --gogofast_out=. fuzz.proto
+	cd .. && protoc  --proto_path=../:../protobuf/:. --gogofast_out=. fuzz/fuzz.proto
