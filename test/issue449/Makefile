@@ -27,6 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
+	cd .. && \
 	protoc-min-version --version="3.0.0" \
 	--proto_path=../:../protobuf/:. \
-	--gogo_out=. issue449.proto
+	--gogo_out=. issue449/issue449.proto

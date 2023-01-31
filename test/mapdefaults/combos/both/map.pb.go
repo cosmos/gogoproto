@@ -683,7 +683,7 @@ func (this *MapTest) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&mapdefaults_combos_both.MapTest{")
 	keysForStrStr := make([]string, 0, len(this.StrStr))
-	for k, _ := range this.StrStr {
+	for k := range this.StrStr {
 		keysForStrStr = append(keysForStrStr, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStrStr)
@@ -1071,7 +1071,7 @@ func (this *MapTest) String() string {
 		return "nil"
 	}
 	keysForStrStr := make([]string, 0, len(this.StrStr))
-	for k, _ := range this.StrStr {
+	for k := range this.StrStr {
 		keysForStrStr = append(keysForStrStr, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStrStr)

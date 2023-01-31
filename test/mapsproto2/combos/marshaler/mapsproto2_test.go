@@ -81,7 +81,7 @@ func TestNilMapsBytes(t *testing.T) {
 }
 
 func TestEmptyMapsBytes(t *testing.T) {
-	m := &AllMaps{StringToBytesMap: map[string][]byte{"b": []byte{}}}
+	m := &AllMaps{StringToBytesMap: map[string][]byte{"b": {}}}
 	data, err := proto.Marshal(m)
 	if err != nil {
 		t.Fatal(err)

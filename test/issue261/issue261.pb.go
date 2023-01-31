@@ -137,7 +137,7 @@ func (this *MapStdTypes) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&issue261.MapStdTypes{")
 	keysForNullableDuration := make([]int32, 0, len(this.NullableDuration))
-	for k, _ := range this.NullableDuration {
+	for k := range this.NullableDuration {
 		keysForNullableDuration = append(keysForNullableDuration, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableDuration)
@@ -249,7 +249,7 @@ func (this *MapStdTypes) String() string {
 		return "nil"
 	}
 	keysForNullableDuration := make([]int32, 0, len(this.NullableDuration))
-	for k, _ := range this.NullableDuration {
+	for k := range this.NullableDuration {
 		keysForNullableDuration = append(keysForNullableDuration, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableDuration)

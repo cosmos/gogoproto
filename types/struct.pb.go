@@ -973,7 +973,7 @@ func (this *Struct) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&types.Struct{")
 	keysForFields := make([]string, 0, len(this.Fields))
-	for k, _ := range this.Fields {
+	for k := range this.Fields {
 		keysForFields = append(keysForFields, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForFields)
@@ -1604,7 +1604,7 @@ func (this *Struct) String() string {
 		return "nil"
 	}
 	keysForFields := make([]string, 0, len(this.Fields))
-	for k, _ := range this.Fields {
+	for k := range this.Fields {
 		keysForFields = append(keysForFields, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForFields)

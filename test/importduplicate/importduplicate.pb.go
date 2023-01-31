@@ -158,7 +158,7 @@ func (this *MapAndSortKeys) GoString() string {
 		s = append(s, "Key: "+fmt.Sprintf("%#v", this.Key)+",\n")
 	}
 	keysForKeyValue := make([]int32, 0, len(this.KeyValue))
-	for k, _ := range this.KeyValue {
+	for k := range this.KeyValue {
 		keysForKeyValue = append(keysForKeyValue, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForKeyValue)

@@ -3026,7 +3026,7 @@ func (this *MapStdTypes) GoString() string {
 	s := make([]string, 0, 26)
 	s = append(s, "&stdtypes.MapStdTypes{")
 	keysForNullableTimestamp := make([]int32, 0, len(this.NullableTimestamp))
-	for k, _ := range this.NullableTimestamp {
+	for k := range this.NullableTimestamp {
 		keysForNullableTimestamp = append(keysForNullableTimestamp, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableTimestamp)
@@ -3039,7 +3039,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableTimestamp: "+mapStringForNullableTimestamp+",\n")
 	}
 	keysForTimestamp := make([]int32, 0, len(this.Timestamp))
-	for k, _ := range this.Timestamp {
+	for k := range this.Timestamp {
 		keysForTimestamp = append(keysForTimestamp, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForTimestamp)
@@ -3052,7 +3052,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "Timestamp: "+mapStringForTimestamp+",\n")
 	}
 	keysForNullableDuration := make([]int32, 0, len(this.NullableDuration))
-	for k, _ := range this.NullableDuration {
+	for k := range this.NullableDuration {
 		keysForNullableDuration = append(keysForNullableDuration, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableDuration)
@@ -3065,7 +3065,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableDuration: "+mapStringForNullableDuration+",\n")
 	}
 	keysForDuration := make([]int32, 0, len(this.Duration))
-	for k, _ := range this.Duration {
+	for k := range this.Duration {
 		keysForDuration = append(keysForDuration, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForDuration)
@@ -3078,7 +3078,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "Duration: "+mapStringForDuration+",\n")
 	}
 	keysForNullableDouble := make([]int32, 0, len(this.NullableDouble))
-	for k, _ := range this.NullableDouble {
+	for k := range this.NullableDouble {
 		keysForNullableDouble = append(keysForNullableDouble, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableDouble)
@@ -3091,7 +3091,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableDouble: "+mapStringForNullableDouble+",\n")
 	}
 	keysForNonnullDouble := make([]int32, 0, len(this.NonnullDouble))
-	for k, _ := range this.NonnullDouble {
+	for k := range this.NonnullDouble {
 		keysForNonnullDouble = append(keysForNonnullDouble, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullDouble)
@@ -3104,7 +3104,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullDouble: "+mapStringForNonnullDouble+",\n")
 	}
 	keysForNullableFloat := make([]int32, 0, len(this.NullableFloat))
-	for k, _ := range this.NullableFloat {
+	for k := range this.NullableFloat {
 		keysForNullableFloat = append(keysForNullableFloat, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableFloat)
@@ -3117,7 +3117,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableFloat: "+mapStringForNullableFloat+",\n")
 	}
 	keysForNonnullFloat := make([]int32, 0, len(this.NonnullFloat))
-	for k, _ := range this.NonnullFloat {
+	for k := range this.NonnullFloat {
 		keysForNonnullFloat = append(keysForNonnullFloat, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullFloat)
@@ -3130,7 +3130,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullFloat: "+mapStringForNonnullFloat+",\n")
 	}
 	keysForNullableInt64 := make([]int32, 0, len(this.NullableInt64))
-	for k, _ := range this.NullableInt64 {
+	for k := range this.NullableInt64 {
 		keysForNullableInt64 = append(keysForNullableInt64, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableInt64)
@@ -3143,7 +3143,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableInt64: "+mapStringForNullableInt64+",\n")
 	}
 	keysForNonnullInt64 := make([]int32, 0, len(this.NonnullInt64))
-	for k, _ := range this.NonnullInt64 {
+	for k := range this.NonnullInt64 {
 		keysForNonnullInt64 = append(keysForNonnullInt64, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullInt64)
@@ -3156,7 +3156,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullInt64: "+mapStringForNonnullInt64+",\n")
 	}
 	keysForNullableUInt64 := make([]int32, 0, len(this.NullableUInt64))
-	for k, _ := range this.NullableUInt64 {
+	for k := range this.NullableUInt64 {
 		keysForNullableUInt64 = append(keysForNullableUInt64, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableUInt64)
@@ -3169,7 +3169,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableUInt64: "+mapStringForNullableUInt64+",\n")
 	}
 	keysForNonnullUInt64 := make([]int32, 0, len(this.NonnullUInt64))
-	for k, _ := range this.NonnullUInt64 {
+	for k := range this.NonnullUInt64 {
 		keysForNonnullUInt64 = append(keysForNonnullUInt64, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullUInt64)
@@ -3182,7 +3182,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullUInt64: "+mapStringForNonnullUInt64+",\n")
 	}
 	keysForNullableInt32 := make([]int32, 0, len(this.NullableInt32))
-	for k, _ := range this.NullableInt32 {
+	for k := range this.NullableInt32 {
 		keysForNullableInt32 = append(keysForNullableInt32, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableInt32)
@@ -3195,7 +3195,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableInt32: "+mapStringForNullableInt32+",\n")
 	}
 	keysForNonnullInt32 := make([]int32, 0, len(this.NonnullInt32))
-	for k, _ := range this.NonnullInt32 {
+	for k := range this.NonnullInt32 {
 		keysForNonnullInt32 = append(keysForNonnullInt32, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullInt32)
@@ -3208,7 +3208,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullInt32: "+mapStringForNonnullInt32+",\n")
 	}
 	keysForNullableUInt32 := make([]int32, 0, len(this.NullableUInt32))
-	for k, _ := range this.NullableUInt32 {
+	for k := range this.NullableUInt32 {
 		keysForNullableUInt32 = append(keysForNullableUInt32, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableUInt32)
@@ -3221,7 +3221,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableUInt32: "+mapStringForNullableUInt32+",\n")
 	}
 	keysForNonnullUInt32 := make([]int32, 0, len(this.NonnullUInt32))
-	for k, _ := range this.NonnullUInt32 {
+	for k := range this.NonnullUInt32 {
 		keysForNonnullUInt32 = append(keysForNonnullUInt32, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullUInt32)
@@ -3234,7 +3234,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullUInt32: "+mapStringForNonnullUInt32+",\n")
 	}
 	keysForNullableBool := make([]int32, 0, len(this.NullableBool))
-	for k, _ := range this.NullableBool {
+	for k := range this.NullableBool {
 		keysForNullableBool = append(keysForNullableBool, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableBool)
@@ -3247,7 +3247,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableBool: "+mapStringForNullableBool+",\n")
 	}
 	keysForNonnullBool := make([]int32, 0, len(this.NonnullBool))
-	for k, _ := range this.NonnullBool {
+	for k := range this.NonnullBool {
 		keysForNonnullBool = append(keysForNonnullBool, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullBool)
@@ -3260,7 +3260,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullBool: "+mapStringForNonnullBool+",\n")
 	}
 	keysForNullableString := make([]int32, 0, len(this.NullableString))
-	for k, _ := range this.NullableString {
+	for k := range this.NullableString {
 		keysForNullableString = append(keysForNullableString, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableString)
@@ -3273,7 +3273,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableString: "+mapStringForNullableString+",\n")
 	}
 	keysForNonnullString := make([]int32, 0, len(this.NonnullString))
-	for k, _ := range this.NonnullString {
+	for k := range this.NonnullString {
 		keysForNonnullString = append(keysForNonnullString, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullString)
@@ -3286,7 +3286,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NonnullString: "+mapStringForNonnullString+",\n")
 	}
 	keysForNullableBytes := make([]int32, 0, len(this.NullableBytes))
-	for k, _ := range this.NullableBytes {
+	for k := range this.NullableBytes {
 		keysForNullableBytes = append(keysForNullableBytes, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNullableBytes)
@@ -3299,7 +3299,7 @@ func (this *MapStdTypes) GoString() string {
 		s = append(s, "NullableBytes: "+mapStringForNullableBytes+",\n")
 	}
 	keysForNonnullBytes := make([]int32, 0, len(this.NonnullBytes))
-	for k, _ := range this.NonnullBytes {
+	for k := range this.NonnullBytes {
 		keysForNonnullBytes = append(keysForNonnullBytes, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNonnullBytes)

@@ -2994,7 +2994,7 @@ func (this *Message) GoString() string {
 		s = append(s, "Nested: "+fmt.Sprintf("%#v", this.Nested)+",\n")
 	}
 	keysForTerrain := make([]int64, 0, len(this.Terrain))
-	for k, _ := range this.Terrain {
+	for k := range this.Terrain {
 		keysForTerrain = append(keysForTerrain, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForTerrain)
@@ -3010,7 +3010,7 @@ func (this *Message) GoString() string {
 		s = append(s, "Proto2Field: "+fmt.Sprintf("%#v", this.Proto2Field)+",\n")
 	}
 	keysForProto2Value := make([]int64, 0, len(this.Proto2Value))
-	for k, _ := range this.Proto2Value {
+	for k := range this.Proto2Value {
 		keysForProto2Value = append(keysForProto2Value, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForProto2Value)
@@ -3048,7 +3048,7 @@ func (this *AllMaps) GoString() string {
 	s := make([]string, 0, 21)
 	s = append(s, "&theproto3_combos_neither.AllMaps{")
 	keysForStringToDoubleMap := make([]string, 0, len(this.StringToDoubleMap))
-	for k, _ := range this.StringToDoubleMap {
+	for k := range this.StringToDoubleMap {
 		keysForStringToDoubleMap = append(keysForStringToDoubleMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToDoubleMap)
@@ -3061,7 +3061,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "StringToDoubleMap: "+mapStringForStringToDoubleMap+",\n")
 	}
 	keysForStringToFloatMap := make([]string, 0, len(this.StringToFloatMap))
-	for k, _ := range this.StringToFloatMap {
+	for k := range this.StringToFloatMap {
 		keysForStringToFloatMap = append(keysForStringToFloatMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToFloatMap)
@@ -3074,7 +3074,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "StringToFloatMap: "+mapStringForStringToFloatMap+",\n")
 	}
 	keysForInt32Map := make([]int32, 0, len(this.Int32Map))
-	for k, _ := range this.Int32Map {
+	for k := range this.Int32Map {
 		keysForInt32Map = append(keysForInt32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForInt32Map)
@@ -3087,7 +3087,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Int32Map: "+mapStringForInt32Map+",\n")
 	}
 	keysForInt64Map := make([]int64, 0, len(this.Int64Map))
-	for k, _ := range this.Int64Map {
+	for k := range this.Int64Map {
 		keysForInt64Map = append(keysForInt64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForInt64Map)
@@ -3100,7 +3100,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Int64Map: "+mapStringForInt64Map+",\n")
 	}
 	keysForUint32Map := make([]uint32, 0, len(this.Uint32Map))
-	for k, _ := range this.Uint32Map {
+	for k := range this.Uint32Map {
 		keysForUint32Map = append(keysForUint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForUint32Map)
@@ -3113,7 +3113,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Uint32Map: "+mapStringForUint32Map+",\n")
 	}
 	keysForUint64Map := make([]uint64, 0, len(this.Uint64Map))
-	for k, _ := range this.Uint64Map {
+	for k := range this.Uint64Map {
 		keysForUint64Map = append(keysForUint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForUint64Map)
@@ -3126,7 +3126,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Uint64Map: "+mapStringForUint64Map+",\n")
 	}
 	keysForSint32Map := make([]int32, 0, len(this.Sint32Map))
-	for k, _ := range this.Sint32Map {
+	for k := range this.Sint32Map {
 		keysForSint32Map = append(keysForSint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSint32Map)
@@ -3139,7 +3139,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Sint32Map: "+mapStringForSint32Map+",\n")
 	}
 	keysForSint64Map := make([]int64, 0, len(this.Sint64Map))
-	for k, _ := range this.Sint64Map {
+	for k := range this.Sint64Map {
 		keysForSint64Map = append(keysForSint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSint64Map)
@@ -3152,7 +3152,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Sint64Map: "+mapStringForSint64Map+",\n")
 	}
 	keysForFixed32Map := make([]uint32, 0, len(this.Fixed32Map))
-	for k, _ := range this.Fixed32Map {
+	for k := range this.Fixed32Map {
 		keysForFixed32Map = append(keysForFixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForFixed32Map)
@@ -3165,7 +3165,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Fixed32Map: "+mapStringForFixed32Map+",\n")
 	}
 	keysForSfixed32Map := make([]int32, 0, len(this.Sfixed32Map))
-	for k, _ := range this.Sfixed32Map {
+	for k := range this.Sfixed32Map {
 		keysForSfixed32Map = append(keysForSfixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSfixed32Map)
@@ -3178,7 +3178,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Sfixed32Map: "+mapStringForSfixed32Map+",\n")
 	}
 	keysForFixed64Map := make([]uint64, 0, len(this.Fixed64Map))
-	for k, _ := range this.Fixed64Map {
+	for k := range this.Fixed64Map {
 		keysForFixed64Map = append(keysForFixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForFixed64Map)
@@ -3191,7 +3191,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Fixed64Map: "+mapStringForFixed64Map+",\n")
 	}
 	keysForSfixed64Map := make([]int64, 0, len(this.Sfixed64Map))
-	for k, _ := range this.Sfixed64Map {
+	for k := range this.Sfixed64Map {
 		keysForSfixed64Map = append(keysForSfixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSfixed64Map)
@@ -3204,7 +3204,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "Sfixed64Map: "+mapStringForSfixed64Map+",\n")
 	}
 	keysForBoolMap := make([]bool, 0, len(this.BoolMap))
-	for k, _ := range this.BoolMap {
+	for k := range this.BoolMap {
 		keysForBoolMap = append(keysForBoolMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Bools(keysForBoolMap)
@@ -3217,7 +3217,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "BoolMap: "+mapStringForBoolMap+",\n")
 	}
 	keysForStringMap := make([]string, 0, len(this.StringMap))
-	for k, _ := range this.StringMap {
+	for k := range this.StringMap {
 		keysForStringMap = append(keysForStringMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringMap)
@@ -3230,7 +3230,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "StringMap: "+mapStringForStringMap+",\n")
 	}
 	keysForStringToBytesMap := make([]string, 0, len(this.StringToBytesMap))
-	for k, _ := range this.StringToBytesMap {
+	for k := range this.StringToBytesMap {
 		keysForStringToBytesMap = append(keysForStringToBytesMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToBytesMap)
@@ -3243,7 +3243,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "StringToBytesMap: "+mapStringForStringToBytesMap+",\n")
 	}
 	keysForStringToEnumMap := make([]string, 0, len(this.StringToEnumMap))
-	for k, _ := range this.StringToEnumMap {
+	for k := range this.StringToEnumMap {
 		keysForStringToEnumMap = append(keysForStringToEnumMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToEnumMap)
@@ -3256,7 +3256,7 @@ func (this *AllMaps) GoString() string {
 		s = append(s, "StringToEnumMap: "+mapStringForStringToEnumMap+",\n")
 	}
 	keysForStringToMsgMap := make([]string, 0, len(this.StringToMsgMap))
-	for k, _ := range this.StringToMsgMap {
+	for k := range this.StringToMsgMap {
 		keysForStringToMsgMap = append(keysForStringToMsgMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToMsgMap)
@@ -3281,7 +3281,7 @@ func (this *AllMapsOrdered) GoString() string {
 	s := make([]string, 0, 21)
 	s = append(s, "&theproto3_combos_neither.AllMapsOrdered{")
 	keysForStringToDoubleMap := make([]string, 0, len(this.StringToDoubleMap))
-	for k, _ := range this.StringToDoubleMap {
+	for k := range this.StringToDoubleMap {
 		keysForStringToDoubleMap = append(keysForStringToDoubleMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToDoubleMap)
@@ -3294,7 +3294,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "StringToDoubleMap: "+mapStringForStringToDoubleMap+",\n")
 	}
 	keysForStringToFloatMap := make([]string, 0, len(this.StringToFloatMap))
-	for k, _ := range this.StringToFloatMap {
+	for k := range this.StringToFloatMap {
 		keysForStringToFloatMap = append(keysForStringToFloatMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToFloatMap)
@@ -3307,7 +3307,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "StringToFloatMap: "+mapStringForStringToFloatMap+",\n")
 	}
 	keysForInt32Map := make([]int32, 0, len(this.Int32Map))
-	for k, _ := range this.Int32Map {
+	for k := range this.Int32Map {
 		keysForInt32Map = append(keysForInt32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForInt32Map)
@@ -3320,7 +3320,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Int32Map: "+mapStringForInt32Map+",\n")
 	}
 	keysForInt64Map := make([]int64, 0, len(this.Int64Map))
-	for k, _ := range this.Int64Map {
+	for k := range this.Int64Map {
 		keysForInt64Map = append(keysForInt64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForInt64Map)
@@ -3333,7 +3333,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Int64Map: "+mapStringForInt64Map+",\n")
 	}
 	keysForUint32Map := make([]uint32, 0, len(this.Uint32Map))
-	for k, _ := range this.Uint32Map {
+	for k := range this.Uint32Map {
 		keysForUint32Map = append(keysForUint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForUint32Map)
@@ -3346,7 +3346,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Uint32Map: "+mapStringForUint32Map+",\n")
 	}
 	keysForUint64Map := make([]uint64, 0, len(this.Uint64Map))
-	for k, _ := range this.Uint64Map {
+	for k := range this.Uint64Map {
 		keysForUint64Map = append(keysForUint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForUint64Map)
@@ -3359,7 +3359,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Uint64Map: "+mapStringForUint64Map+",\n")
 	}
 	keysForSint32Map := make([]int32, 0, len(this.Sint32Map))
-	for k, _ := range this.Sint32Map {
+	for k := range this.Sint32Map {
 		keysForSint32Map = append(keysForSint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSint32Map)
@@ -3372,7 +3372,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Sint32Map: "+mapStringForSint32Map+",\n")
 	}
 	keysForSint64Map := make([]int64, 0, len(this.Sint64Map))
-	for k, _ := range this.Sint64Map {
+	for k := range this.Sint64Map {
 		keysForSint64Map = append(keysForSint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSint64Map)
@@ -3385,7 +3385,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Sint64Map: "+mapStringForSint64Map+",\n")
 	}
 	keysForFixed32Map := make([]uint32, 0, len(this.Fixed32Map))
-	for k, _ := range this.Fixed32Map {
+	for k := range this.Fixed32Map {
 		keysForFixed32Map = append(keysForFixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForFixed32Map)
@@ -3398,7 +3398,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Fixed32Map: "+mapStringForFixed32Map+",\n")
 	}
 	keysForSfixed32Map := make([]int32, 0, len(this.Sfixed32Map))
-	for k, _ := range this.Sfixed32Map {
+	for k := range this.Sfixed32Map {
 		keysForSfixed32Map = append(keysForSfixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSfixed32Map)
@@ -3411,7 +3411,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Sfixed32Map: "+mapStringForSfixed32Map+",\n")
 	}
 	keysForFixed64Map := make([]uint64, 0, len(this.Fixed64Map))
-	for k, _ := range this.Fixed64Map {
+	for k := range this.Fixed64Map {
 		keysForFixed64Map = append(keysForFixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForFixed64Map)
@@ -3424,7 +3424,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Fixed64Map: "+mapStringForFixed64Map+",\n")
 	}
 	keysForSfixed64Map := make([]int64, 0, len(this.Sfixed64Map))
-	for k, _ := range this.Sfixed64Map {
+	for k := range this.Sfixed64Map {
 		keysForSfixed64Map = append(keysForSfixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSfixed64Map)
@@ -3437,7 +3437,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "Sfixed64Map: "+mapStringForSfixed64Map+",\n")
 	}
 	keysForBoolMap := make([]bool, 0, len(this.BoolMap))
-	for k, _ := range this.BoolMap {
+	for k := range this.BoolMap {
 		keysForBoolMap = append(keysForBoolMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Bools(keysForBoolMap)
@@ -3450,7 +3450,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "BoolMap: "+mapStringForBoolMap+",\n")
 	}
 	keysForStringMap := make([]string, 0, len(this.StringMap))
-	for k, _ := range this.StringMap {
+	for k := range this.StringMap {
 		keysForStringMap = append(keysForStringMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringMap)
@@ -3463,7 +3463,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "StringMap: "+mapStringForStringMap+",\n")
 	}
 	keysForStringToBytesMap := make([]string, 0, len(this.StringToBytesMap))
-	for k, _ := range this.StringToBytesMap {
+	for k := range this.StringToBytesMap {
 		keysForStringToBytesMap = append(keysForStringToBytesMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToBytesMap)
@@ -3476,7 +3476,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "StringToBytesMap: "+mapStringForStringToBytesMap+",\n")
 	}
 	keysForStringToEnumMap := make([]string, 0, len(this.StringToEnumMap))
-	for k, _ := range this.StringToEnumMap {
+	for k := range this.StringToEnumMap {
 		keysForStringToEnumMap = append(keysForStringToEnumMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToEnumMap)
@@ -3489,7 +3489,7 @@ func (this *AllMapsOrdered) GoString() string {
 		s = append(s, "StringToEnumMap: "+mapStringForStringToEnumMap+",\n")
 	}
 	keysForStringToMsgMap := make([]string, 0, len(this.StringToMsgMap))
-	for k, _ := range this.StringToMsgMap {
+	for k := range this.StringToMsgMap {
 		keysForStringToMsgMap = append(keysForStringToMsgMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToMsgMap)
@@ -3514,7 +3514,7 @@ func (this *MessageWithMap) GoString() string {
 	s := make([]string, 0, 7)
 	s = append(s, "&theproto3_combos_neither.MessageWithMap{")
 	keysForNameMapping := make([]int32, 0, len(this.NameMapping))
-	for k, _ := range this.NameMapping {
+	for k := range this.NameMapping {
 		keysForNameMapping = append(keysForNameMapping, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNameMapping)
@@ -3527,7 +3527,7 @@ func (this *MessageWithMap) GoString() string {
 		s = append(s, "NameMapping: "+mapStringForNameMapping+",\n")
 	}
 	keysForMsgMapping := make([]int64, 0, len(this.MsgMapping))
-	for k, _ := range this.MsgMapping {
+	for k := range this.MsgMapping {
 		keysForMsgMapping = append(keysForMsgMapping, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForMsgMapping)
@@ -3540,7 +3540,7 @@ func (this *MessageWithMap) GoString() string {
 		s = append(s, "MsgMapping: "+mapStringForMsgMapping+",\n")
 	}
 	keysForByteMapping := make([]bool, 0, len(this.ByteMapping))
-	for k, _ := range this.ByteMapping {
+	for k := range this.ByteMapping {
 		keysForByteMapping = append(keysForByteMapping, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Bools(keysForByteMapping)
@@ -3604,7 +3604,7 @@ func (this *ContainsNestedMap_NestedMap) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&theproto3_combos_neither.ContainsNestedMap_NestedMap{")
 	keysForNestedMapField := make([]string, 0, len(this.NestedMapField))
-	for k, _ := range this.NestedMapField {
+	for k := range this.NestedMapField {
 		keysForNestedMapField = append(keysForNestedMapField, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForNestedMapField)
@@ -4753,7 +4753,7 @@ func (this *Message) String() string {
 		return "nil"
 	}
 	keysForTerrain := make([]int64, 0, len(this.Terrain))
-	for k, _ := range this.Terrain {
+	for k := range this.Terrain {
 		keysForTerrain = append(keysForTerrain, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForTerrain)
@@ -4763,7 +4763,7 @@ func (this *Message) String() string {
 	}
 	mapStringForTerrain += "}"
 	keysForProto2Value := make([]int64, 0, len(this.Proto2Value))
-	for k, _ := range this.Proto2Value {
+	for k := range this.Proto2Value {
 		keysForProto2Value = append(keysForProto2Value, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForProto2Value)
@@ -4806,7 +4806,7 @@ func (this *AllMaps) String() string {
 		return "nil"
 	}
 	keysForStringToDoubleMap := make([]string, 0, len(this.StringToDoubleMap))
-	for k, _ := range this.StringToDoubleMap {
+	for k := range this.StringToDoubleMap {
 		keysForStringToDoubleMap = append(keysForStringToDoubleMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToDoubleMap)
@@ -4816,7 +4816,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForStringToDoubleMap += "}"
 	keysForStringToFloatMap := make([]string, 0, len(this.StringToFloatMap))
-	for k, _ := range this.StringToFloatMap {
+	for k := range this.StringToFloatMap {
 		keysForStringToFloatMap = append(keysForStringToFloatMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToFloatMap)
@@ -4826,7 +4826,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForStringToFloatMap += "}"
 	keysForInt32Map := make([]int32, 0, len(this.Int32Map))
-	for k, _ := range this.Int32Map {
+	for k := range this.Int32Map {
 		keysForInt32Map = append(keysForInt32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForInt32Map)
@@ -4836,7 +4836,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForInt32Map += "}"
 	keysForInt64Map := make([]int64, 0, len(this.Int64Map))
-	for k, _ := range this.Int64Map {
+	for k := range this.Int64Map {
 		keysForInt64Map = append(keysForInt64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForInt64Map)
@@ -4846,7 +4846,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForInt64Map += "}"
 	keysForUint32Map := make([]uint32, 0, len(this.Uint32Map))
-	for k, _ := range this.Uint32Map {
+	for k := range this.Uint32Map {
 		keysForUint32Map = append(keysForUint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForUint32Map)
@@ -4856,7 +4856,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForUint32Map += "}"
 	keysForUint64Map := make([]uint64, 0, len(this.Uint64Map))
-	for k, _ := range this.Uint64Map {
+	for k := range this.Uint64Map {
 		keysForUint64Map = append(keysForUint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForUint64Map)
@@ -4866,7 +4866,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForUint64Map += "}"
 	keysForSint32Map := make([]int32, 0, len(this.Sint32Map))
-	for k, _ := range this.Sint32Map {
+	for k := range this.Sint32Map {
 		keysForSint32Map = append(keysForSint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSint32Map)
@@ -4876,7 +4876,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForSint32Map += "}"
 	keysForSint64Map := make([]int64, 0, len(this.Sint64Map))
-	for k, _ := range this.Sint64Map {
+	for k := range this.Sint64Map {
 		keysForSint64Map = append(keysForSint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSint64Map)
@@ -4886,7 +4886,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForSint64Map += "}"
 	keysForFixed32Map := make([]uint32, 0, len(this.Fixed32Map))
-	for k, _ := range this.Fixed32Map {
+	for k := range this.Fixed32Map {
 		keysForFixed32Map = append(keysForFixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForFixed32Map)
@@ -4896,7 +4896,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForFixed32Map += "}"
 	keysForSfixed32Map := make([]int32, 0, len(this.Sfixed32Map))
-	for k, _ := range this.Sfixed32Map {
+	for k := range this.Sfixed32Map {
 		keysForSfixed32Map = append(keysForSfixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSfixed32Map)
@@ -4906,7 +4906,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForSfixed32Map += "}"
 	keysForFixed64Map := make([]uint64, 0, len(this.Fixed64Map))
-	for k, _ := range this.Fixed64Map {
+	for k := range this.Fixed64Map {
 		keysForFixed64Map = append(keysForFixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForFixed64Map)
@@ -4916,7 +4916,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForFixed64Map += "}"
 	keysForSfixed64Map := make([]int64, 0, len(this.Sfixed64Map))
-	for k, _ := range this.Sfixed64Map {
+	for k := range this.Sfixed64Map {
 		keysForSfixed64Map = append(keysForSfixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSfixed64Map)
@@ -4926,7 +4926,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForSfixed64Map += "}"
 	keysForBoolMap := make([]bool, 0, len(this.BoolMap))
-	for k, _ := range this.BoolMap {
+	for k := range this.BoolMap {
 		keysForBoolMap = append(keysForBoolMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Bools(keysForBoolMap)
@@ -4936,7 +4936,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForBoolMap += "}"
 	keysForStringMap := make([]string, 0, len(this.StringMap))
-	for k, _ := range this.StringMap {
+	for k := range this.StringMap {
 		keysForStringMap = append(keysForStringMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringMap)
@@ -4946,7 +4946,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForStringMap += "}"
 	keysForStringToBytesMap := make([]string, 0, len(this.StringToBytesMap))
-	for k, _ := range this.StringToBytesMap {
+	for k := range this.StringToBytesMap {
 		keysForStringToBytesMap = append(keysForStringToBytesMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToBytesMap)
@@ -4956,7 +4956,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForStringToBytesMap += "}"
 	keysForStringToEnumMap := make([]string, 0, len(this.StringToEnumMap))
-	for k, _ := range this.StringToEnumMap {
+	for k := range this.StringToEnumMap {
 		keysForStringToEnumMap = append(keysForStringToEnumMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToEnumMap)
@@ -4966,7 +4966,7 @@ func (this *AllMaps) String() string {
 	}
 	mapStringForStringToEnumMap += "}"
 	keysForStringToMsgMap := make([]string, 0, len(this.StringToMsgMap))
-	for k, _ := range this.StringToMsgMap {
+	for k := range this.StringToMsgMap {
 		keysForStringToMsgMap = append(keysForStringToMsgMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToMsgMap)
@@ -5003,7 +5003,7 @@ func (this *AllMapsOrdered) String() string {
 		return "nil"
 	}
 	keysForStringToDoubleMap := make([]string, 0, len(this.StringToDoubleMap))
-	for k, _ := range this.StringToDoubleMap {
+	for k := range this.StringToDoubleMap {
 		keysForStringToDoubleMap = append(keysForStringToDoubleMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToDoubleMap)
@@ -5013,7 +5013,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForStringToDoubleMap += "}"
 	keysForStringToFloatMap := make([]string, 0, len(this.StringToFloatMap))
-	for k, _ := range this.StringToFloatMap {
+	for k := range this.StringToFloatMap {
 		keysForStringToFloatMap = append(keysForStringToFloatMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToFloatMap)
@@ -5023,7 +5023,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForStringToFloatMap += "}"
 	keysForInt32Map := make([]int32, 0, len(this.Int32Map))
-	for k, _ := range this.Int32Map {
+	for k := range this.Int32Map {
 		keysForInt32Map = append(keysForInt32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForInt32Map)
@@ -5033,7 +5033,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForInt32Map += "}"
 	keysForInt64Map := make([]int64, 0, len(this.Int64Map))
-	for k, _ := range this.Int64Map {
+	for k := range this.Int64Map {
 		keysForInt64Map = append(keysForInt64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForInt64Map)
@@ -5043,7 +5043,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForInt64Map += "}"
 	keysForUint32Map := make([]uint32, 0, len(this.Uint32Map))
-	for k, _ := range this.Uint32Map {
+	for k := range this.Uint32Map {
 		keysForUint32Map = append(keysForUint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForUint32Map)
@@ -5053,7 +5053,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForUint32Map += "}"
 	keysForUint64Map := make([]uint64, 0, len(this.Uint64Map))
-	for k, _ := range this.Uint64Map {
+	for k := range this.Uint64Map {
 		keysForUint64Map = append(keysForUint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForUint64Map)
@@ -5063,7 +5063,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForUint64Map += "}"
 	keysForSint32Map := make([]int32, 0, len(this.Sint32Map))
-	for k, _ := range this.Sint32Map {
+	for k := range this.Sint32Map {
 		keysForSint32Map = append(keysForSint32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSint32Map)
@@ -5073,7 +5073,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForSint32Map += "}"
 	keysForSint64Map := make([]int64, 0, len(this.Sint64Map))
-	for k, _ := range this.Sint64Map {
+	for k := range this.Sint64Map {
 		keysForSint64Map = append(keysForSint64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSint64Map)
@@ -5083,7 +5083,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForSint64Map += "}"
 	keysForFixed32Map := make([]uint32, 0, len(this.Fixed32Map))
-	for k, _ := range this.Fixed32Map {
+	for k := range this.Fixed32Map {
 		keysForFixed32Map = append(keysForFixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint32s(keysForFixed32Map)
@@ -5093,7 +5093,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForFixed32Map += "}"
 	keysForSfixed32Map := make([]int32, 0, len(this.Sfixed32Map))
-	for k, _ := range this.Sfixed32Map {
+	for k := range this.Sfixed32Map {
 		keysForSfixed32Map = append(keysForSfixed32Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForSfixed32Map)
@@ -5103,7 +5103,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForSfixed32Map += "}"
 	keysForFixed64Map := make([]uint64, 0, len(this.Fixed64Map))
-	for k, _ := range this.Fixed64Map {
+	for k := range this.Fixed64Map {
 		keysForFixed64Map = append(keysForFixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Uint64s(keysForFixed64Map)
@@ -5113,7 +5113,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForFixed64Map += "}"
 	keysForSfixed64Map := make([]int64, 0, len(this.Sfixed64Map))
-	for k, _ := range this.Sfixed64Map {
+	for k := range this.Sfixed64Map {
 		keysForSfixed64Map = append(keysForSfixed64Map, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForSfixed64Map)
@@ -5123,7 +5123,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForSfixed64Map += "}"
 	keysForBoolMap := make([]bool, 0, len(this.BoolMap))
-	for k, _ := range this.BoolMap {
+	for k := range this.BoolMap {
 		keysForBoolMap = append(keysForBoolMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Bools(keysForBoolMap)
@@ -5133,7 +5133,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForBoolMap += "}"
 	keysForStringMap := make([]string, 0, len(this.StringMap))
-	for k, _ := range this.StringMap {
+	for k := range this.StringMap {
 		keysForStringMap = append(keysForStringMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringMap)
@@ -5143,7 +5143,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForStringMap += "}"
 	keysForStringToBytesMap := make([]string, 0, len(this.StringToBytesMap))
-	for k, _ := range this.StringToBytesMap {
+	for k := range this.StringToBytesMap {
 		keysForStringToBytesMap = append(keysForStringToBytesMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToBytesMap)
@@ -5153,7 +5153,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForStringToBytesMap += "}"
 	keysForStringToEnumMap := make([]string, 0, len(this.StringToEnumMap))
-	for k, _ := range this.StringToEnumMap {
+	for k := range this.StringToEnumMap {
 		keysForStringToEnumMap = append(keysForStringToEnumMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToEnumMap)
@@ -5163,7 +5163,7 @@ func (this *AllMapsOrdered) String() string {
 	}
 	mapStringForStringToEnumMap += "}"
 	keysForStringToMsgMap := make([]string, 0, len(this.StringToMsgMap))
-	for k, _ := range this.StringToMsgMap {
+	for k := range this.StringToMsgMap {
 		keysForStringToMsgMap = append(keysForStringToMsgMap, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForStringToMsgMap)
@@ -5200,7 +5200,7 @@ func (this *MessageWithMap) String() string {
 		return "nil"
 	}
 	keysForNameMapping := make([]int32, 0, len(this.NameMapping))
-	for k, _ := range this.NameMapping {
+	for k := range this.NameMapping {
 		keysForNameMapping = append(keysForNameMapping, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int32s(keysForNameMapping)
@@ -5210,7 +5210,7 @@ func (this *MessageWithMap) String() string {
 	}
 	mapStringForNameMapping += "}"
 	keysForMsgMapping := make([]int64, 0, len(this.MsgMapping))
-	for k, _ := range this.MsgMapping {
+	for k := range this.MsgMapping {
 		keysForMsgMapping = append(keysForMsgMapping, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Int64s(keysForMsgMapping)
@@ -5220,7 +5220,7 @@ func (this *MessageWithMap) String() string {
 	}
 	mapStringForMsgMapping += "}"
 	keysForByteMapping := make([]bool, 0, len(this.ByteMapping))
-	for k, _ := range this.ByteMapping {
+	for k := range this.ByteMapping {
 		keysForByteMapping = append(keysForByteMapping, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Bools(keysForByteMapping)
@@ -5276,7 +5276,7 @@ func (this *ContainsNestedMap_NestedMap) String() string {
 		return "nil"
 	}
 	keysForNestedMapField := make([]string, 0, len(this.NestedMapField))
-	for k, _ := range this.NestedMapField {
+	for k := range this.NestedMapField {
 		keysForNestedMapField = append(keysForNestedMapField, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForNestedMapField)
