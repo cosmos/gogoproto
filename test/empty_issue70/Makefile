@@ -27,4 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=. empty/empty.proto)
+	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=. empty_issue70/empty.proto)
