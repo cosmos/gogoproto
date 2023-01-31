@@ -3,7 +3,7 @@ package importcustom_issue389.imported;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/cosmos/gogoproto/test/importcustom_issue389/imported";
+option go_package = "imported";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;

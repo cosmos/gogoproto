@@ -8,7 +8,7 @@ import (
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	proto "github.com/cosmos/gogoproto/proto"
 	github_com_cosmos_gogoproto_test_importdedup_subpkg "github.com/cosmos/gogoproto/test/importdedup/subpkg"
-	subpkg "importdedup/subpkg"
+	subpkg "github.com/cosmos/gogoproto/test/importdedup/subpkg"
 	math "math"
 )
 

@@ -8,7 +8,7 @@ import (
 	fmt "fmt"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	proto "github.com/cosmos/gogoproto/proto"
-	issue312 "issue312"
+	issue312 "github.com/cosmos/gogoproto/test/issue312"
 	math "math"
 	reflect "reflect"
 	strings "strings"

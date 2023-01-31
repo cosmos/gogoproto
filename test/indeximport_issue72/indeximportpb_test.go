@@ -9,7 +9,7 @@ import (
 	github_com_cosmos_gogoproto_jsonpb "github.com/cosmos/gogoproto/jsonpb"
 	github_com_cosmos_gogoproto_proto "github.com/cosmos/gogoproto/proto"
 	proto "github.com/cosmos/gogoproto/proto"
-	_ "indeximport_issue72/index"
+	_ "github.com/cosmos/gogoproto/test/indeximport_issue72/index"
 	math "math"
 	math_rand "math/rand"
 	testing "testing"

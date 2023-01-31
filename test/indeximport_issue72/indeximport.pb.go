@@ -8,7 +8,7 @@ import (
 	fmt "fmt"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	proto "github.com/cosmos/gogoproto/proto"
-	index "indeximport_issue72/index"
+	index "github.com/cosmos/gogoproto/test/indeximport_issue72/index"
 	io "io"
 	math "math"
 	math_bits "math/bits"

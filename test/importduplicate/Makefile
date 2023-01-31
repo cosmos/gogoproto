@@ -27,7 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	cd .. && protoc-min-version --version="3.0.0" --gogo_out=Mtest/importduplicate/sortkeys/sortable.proto=github.com/cosmos/gogoproto/test/importduplicate/sortkeys,Mtest/importduplicate/proto/proto/--gogo_out=Mtest/importduplicate/sortkeys/sortable.proto=github.com/cosmos/gogoproto/test/importduplicate/sortkeys,Mtest/importduplicate/proto/proto.proto=github.com/cosmos/gogoproto/test/importduplicate/proto:. \
+	cd .. && protoc-min-version --version="3.0.0" --gogo_out=Mimportduplicate/sortkeys/sortable.proto=github.com/cosmos/gogoproto/test/importduplicate/sortkeys,Mimportduplicate/proto/proto/--gogo_out=Mimportduplicate/sortkeys/sortable.proto=github.com/cosmos/gogoproto/test/importduplicate/sortkeys,Mimportduplicate/proto/proto.proto=github.com/cosmos/gogoproto/test/importduplicate/proto:. \
 	--proto_path=../protobuf/:../:. importduplicate/importduplicate.proto
 	cd .. && protoc-min-version --version="3.0.0" --gogo_out=:. \
 	--proto_path=../protobuf/:../:. importduplicate/sortkeys/sortable.proto
