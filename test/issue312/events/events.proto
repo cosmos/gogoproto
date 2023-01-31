@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package issue312.events;
 
-import "test/issue312/issue312.proto";
+import "issue312/issue312.proto";
 import "gogoproto/gogo.proto";
 
 option go_package = "events";
