@@ -40,6 +40,8 @@ package mapsproto2.combos.both;
 
 import "gogoproto/gogo.proto";
 
+option go_package = "proto2_maps";
+
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
 option (gogoproto.goproto_getters_all) = false;

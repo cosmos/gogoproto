@@ -31,6 +31,8 @@ package mapdefaults.combos.both;
 
 import "gogoproto/gogo.proto";
 
+option go_package = "mapdefaults";
+
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
 option (gogoproto.goproto_getters_all) = false;

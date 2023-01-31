@@ -42,6 +42,8 @@ import "gogoproto/gogo.proto";
 
 import "test/combos/both/thetest.proto";
 
+option go_package = "theproto3";
+
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
 option (gogoproto.goproto_getters_all) = false;

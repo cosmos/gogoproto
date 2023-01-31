@@ -32,6 +32,8 @@ package asymetric_issue125;
 
 import "gogoproto/gogo.proto";
 
+option go_package = "asym";
+
 option (gogoproto.equal_all) = true;
 option (gogoproto.verbose_equal_all) = true;
 option (gogoproto.marshaler_all) = true;

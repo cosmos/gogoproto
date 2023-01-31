@@ -31,4 +31,6 @@ package importdedup.subpkg;
 
 import "gogoproto/gogo.proto";
 
+option go_package = "subpkg";
+
 message SubObject {}

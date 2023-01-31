@@ -32,6 +32,8 @@ package empty_issue70;
 
 import "gogoproto/gogo.proto";
 
+option go_package = "empty";
+
 option (gogoproto.unmarshaler_all) = true;
 
 message TestRequest {}

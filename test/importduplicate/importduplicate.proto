@@ -33,6 +33,8 @@ import "gogoproto/gogo.proto";
 import "importduplicate/sortkeys/sortable.proto";
 import "importduplicate/proto/proto.proto";
 
+option go_package = "importduplicate";
+
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;

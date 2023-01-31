@@ -4,6 +4,8 @@ package importcustom_issue389.importing;
 import "gogoproto/gogo.proto";
 import "importcustom_issue389/imported/a.proto";
 
+option go_package = "importing";
+
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
@@ -14,6 +16,6 @@ option (gogoproto.equal_all) = true;
 message C {
   importcustom_issue389.imported.A f2 = 1 [
     (gogoproto.customtype) =
-        "github.com/cosmos/gogoproto/test/importcustom-issue389/imported.B"
+        "github.com/cosmos/gogoproto/test/importcustom_issue389/imported.B"
   ];
 }
