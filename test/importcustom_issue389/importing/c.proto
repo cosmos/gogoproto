@@ -1,8 +1,8 @@
 syntax = "proto3";
-package importing;
+package importcustom_issue389.importing;
 
 import "gogoproto/gogo.proto";
-import "test/importcustom-issue389/imported/a.proto";
+import "importcustom_issue389/imported/a.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -12,7 +12,7 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;
 
 message C {
-  imported.A f2 = 1 [
+  importcustom_issue389.imported.A f2 = 1 [
     (gogoproto.customtype) =
         "github.com/cosmos/gogoproto/test/importcustom-issue389/imported.B"
   ];

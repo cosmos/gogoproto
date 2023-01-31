@@ -1,5 +1,5 @@
 syntax = "proto3";
-package imported;
+package importcustom_issue389.imported;
 
 import "gogoproto/gogo.proto";
 
