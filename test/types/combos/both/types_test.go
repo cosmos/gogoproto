@@ -29,12 +29,12 @@
 package types
 
 import (
-	math_rand "math/rand"
 	"testing"
 	"time"
+	math_rand "math/rand"
 
-	"github.com/cosmos/gogoproto/jsonpb"
 	"github.com/cosmos/gogoproto/proto"
+	"github.com/cosmos/gogoproto/jsonpb"
 )
 
 func TestFullCircleProtoToStd(t *testing.T) {
@@ -138,6 +138,7 @@ func TestJsonFullCircleRepProtoToStd(t *testing.T) {
 		t.Fatalf("want %#v got %#v", protoMsg, protoMsgOut)
 	}
 }
+
 
 func TestFullCircleMapProtoToStd(t *testing.T) {
 	seed := time.Now().UnixNano()

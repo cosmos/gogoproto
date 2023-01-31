@@ -28,7 +28,7 @@
 
 syntax = "proto3";
 
-package types;
+package types.combos.both;
 
 import "gogoproto/gogo.proto";
 
