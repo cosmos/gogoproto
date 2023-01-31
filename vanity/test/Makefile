@@ -27,16 +27,19 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	cd .. && cd .. && protoc --gogofast_out=./fast/ vanity/vanity/vanity/vanity.proto
-	cd .. && cd .. && protoc --proto_path=../:../:../protobuf/:. --gogofast_out=./fast/ gogovanity/gogovanity/gogovanity/gogovanity.proto
-	cd .. && protoc-min-version -version="3.0.0" --proto_path=../:../:../protobuf/:. --gogofast_out=./fast/ proto3/proto3.proto
-	cd .. && cd .. && protoc --gogofaster_out=./faster/ vanity/vanity/vanity/vanity.proto
-	cd .. && cd .. && protoc --proto_path=../:../:../protobuf/:. --gogofaster_out=./faster/ gogovanity/gogovanity/gogovanity/gogovanity.proto
-	cd .. && protoc-min-version -version="3.0.0" --proto_path=../:../:../protobuf/:. --gogofaster_out=./faster/ proto3/proto3.proto
-	cd .. && cd .. && protoc --gogoslick_out=./slick/ vanity/vanity/vanity/vanity.proto
-	cd .. && cd .. && protoc --proto_path=../:../:../protobuf/:. --gogoslick_out=./slick/ gogovanity/gogovanity/gogovanity/gogovanity.proto
-	cd .. && protoc-min-version -version="3.0.0" --proto_path=../:../:../protobuf/:. --gogoslick_out=./slick/ proto3/proto3.proto
+	cd ../.. && protoc --gogofast_out=./vanity/test/fast/ vanity/test/vanity.proto
+	cd ../.. && protoc --proto_path=./protobuf:. --gogofast_out=./vanity/test/fast/ vanity/test/gogovanity.proto
+	cd ../.. && protoc-min-version -version="3.0.0" --proto_path=./protobuf:. --gogofast_out=./vanity/test/fast/ vanity/test/proto3.proto
+	mv ./fast/vanity/test/*.pb.go ./fast/
+	cd ../.. && protoc --gogofaster_out=./vanity/test/faster/ vanity/test/vanity.proto
+	cd ../.. && protoc --proto_path=./protobuf:. --gogofaster_out=./vanity/test/faster/ vanity/test/gogovanity.proto
+	cd ../.. && protoc-min-version -version="3.0.0" --proto_path=./protobuf:. --gogofaster_out=./vanity/test/faster/ vanity/test/proto3.proto
+	mv ./faster/vanity/test/*.pb.go ./faster/
+	cd ../.. && protoc --gogoslick_out=./vanity/test/slick/ vanity/test/vanity.proto
+	cd ../.. && protoc --proto_path=./protobuf:. --gogoslick_out=./vanity/test/slick/ vanity/test/gogovanity.proto
+	cd ../.. && protoc-min-version -version="3.0.0" --proto_path=./protobuf:. --gogoslick_out=./vanity/test/slick/ vanity/test/proto3.proto
+	mv ./slick/vanity/test/*.pb.go ./slick/
 
 test:
-	cd .. && cd .. && protoc --gofast_out=./gofast/ vanity/vanity/vanity/vanity.proto
+	cd ../.. && protoc --gofast_out=./vanity/test/gofast/ vanity/test/vanity.proto
 	go test ./...
