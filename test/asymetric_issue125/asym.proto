@@ -28,7 +28,7 @@
 
 syntax = "proto2";
 
-package asym;
+package asymetric_issue125;
 
 import "gogoproto/gogo.proto";
 
