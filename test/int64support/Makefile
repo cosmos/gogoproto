@@ -27,4 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	cd .. && (protoc -I=. -I=../ -I=../protobuf/ --gogo_out=. object/object.proto)
+	cd .. && (protoc -I=. -I=../ -I=../protobuf/ --gogo_out=. int64support/object.proto)

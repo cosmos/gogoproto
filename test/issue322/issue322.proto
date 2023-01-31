@@ -1,5 +1,5 @@
 syntax = "proto2";
-package test;
+package issue322;
 
 import "gogoproto/gogo.proto";
 
