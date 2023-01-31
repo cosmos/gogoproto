@@ -27,5 +27,5 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	cd .. && (cd index && protoc --proto_path=../../:../../protobuf/:. --gogo_out=. index/index.proto)
-	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=Mindex/index.proto=github.com/cosmos/gogoproto/test/indeximport-issue72/index:. indeximport/indeximport.proto)
+	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=. indeximport_issue72/index/index.proto)
+	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=Mindex/index.proto=github.com/cosmos/gogoproto/test/indeximport-issue72/index:. indeximport_issue72/indeximport.proto)

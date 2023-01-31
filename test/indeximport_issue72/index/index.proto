@@ -28,7 +28,7 @@
 
 syntax = "proto2";
 
-package index;
+package indeximport_issue72.index;
 
 import "gogoproto/gogo.proto";
 

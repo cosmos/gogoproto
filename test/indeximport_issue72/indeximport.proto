@@ -28,9 +28,9 @@
 
 syntax = "proto2";
 
-package indeximport;
+package indeximport_issue72;
 
-import "index/index.proto";
+import "indeximport_issue72/index/index.proto";
 import "gogoproto/gogo.proto";
 
 option (gogoproto.marshaler_all) = true;
@@ -40,4 +40,4 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.equal_all) = true;
 option (gogoproto.testgen_all) = true;
 
-message IndexQueries { repeated index.IndexQuery Queries = 1; }
+message IndexQueries { repeated indeximport_issue72.index.IndexQuery Queries = 1; }
