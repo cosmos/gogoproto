@@ -45,7 +45,7 @@ func TestPopulateWarning(t *testing.T) {
 	} else if strings.Contains(dataStr, "WARNING") {
 		t.Errorf("Unexpected WARNING: %s", dataStr)
 	}
-	if err = os.Remove("test/embedconflict/a/a1.pb.go"); err != nil && !os.IsNotExist(err) {
+	if err = os.Remove("test/issue270/a/a1.pb.go"); err != nil && !os.IsNotExist(err) {
 		t.Error(err)
 	}
 }
