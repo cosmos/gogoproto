@@ -338,23 +338,23 @@ var (
 	complexNumber  = &pb.Complex{Imaginary: proto.Float64(0.5772156649)}
 	realNumberJSON = `{` +
 		`"value":3.14159265359,` +
-		`"[jsonpb.Complex.real_extension]":{"imaginary":0.5772156649},` +
-		`"[jsonpb.name]":"Pi"` +
+		`"[jsonpb_test_proto.Complex.real_extension]":{"imaginary":0.5772156649},` +
+		`"[jsonpb_test_proto.name]":"Pi"` +
 		`}`
 
 	anySimple = &pb.KnownTypes{
 		An: &types.Any{
-			TypeUrl: "something.example.com/jsonpb.Simple",
+			TypeUrl: "something.example.com/jsonpb_test_proto.Simple",
 			Value: []byte{
 				// &pb.Simple{OBool:true}
 				1 << 3, 1,
 			},
 		},
 	}
-	anySimpleJSON       = `{"an":{"@type":"something.example.com/jsonpb.Simple","oBool":true}}`
+	anySimpleJSON       = `{"an":{"@type":"something.example.com/jsonpb_test_proto.Simple","oBool":true}}`
 	anySimplePrettyJSON = `{
   "an": {
-    "@type": "something.example.com/jsonpb.Simple",
+    "@type": "something.example.com/jsonpb_test_proto.Simple",
     "oBool": true
   }
 }`
@@ -1077,7 +1077,7 @@ func TestUnmarshalAnyJSONPBUnmarshaler(t *testing.T) {
 }
 
 const (
-	dynamicMessageName = "google.protobuf.jsonpb.testing.dynamicMessage"
+	dynamicMessageName = "google.protobuf.jsonpb_test_proto.testing.dynamicMessage"
 )
 
 func init() {
@@ -1200,12 +1200,12 @@ func TestUnmarshalUnsetRequiredFields(t *testing.T) {
 		{
 			desc: "any containing message with required field set to null",
 			pb:   &pb.KnownTypes{},
-			json: `{"an": {"@type": "example.com/jsonpb.MsgWithRequired", "str": null}}`,
+			json: `{"an": {"@type": "example.com/jsonpb_test_proto.MsgWithRequired", "str": null}}`,
 		},
 		{
 			desc: "any containing message with missing required field",
 			pb:   &pb.KnownTypes{},
-			json: `{"an": {"@type": "example.com/jsonpb.MsgWithRequired"}}`,
+			json: `{"an": {"@type": "example.com/jsonpb_test_proto.MsgWithRequired"}}`,
 		},
 		{
 			desc: "missing required in map value",
@@ -1240,12 +1240,12 @@ func TestUnmarshalUnsetRequiredFields(t *testing.T) {
 		{
 			desc: "required field in extension missing",
 			pb:   &pb.Real{},
-			json: `{"[jsonpb.extm]":{}}`,
+			json: `{"[jsonpb_test_proto.extm]":{}}`,
 		},
 		{
 			desc: "required field in extension set to null",
 			pb:   &pb.Real{},
-			json: `{"[jsonpb.extm]":{"str": null}}`,
+			json: `{"[jsonpb_test_proto.extm]":{"str": null}}`,
 		},
 	}
 
