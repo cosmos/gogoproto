@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Bug Fixes
+
+- [#34](https://github.com/cosmos/gogoproto/pull/34) Allow empty package name, as per gogo original behavior. Fix regression introduced in v1.4.4
+
 ## [v1.4.3](https://github.com/cosmos/gogoproto/releases/tag/v1.4.2) - 2022-10-14
 
 ### Bug Fixes
