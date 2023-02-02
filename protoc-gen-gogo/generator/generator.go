@@ -787,13 +787,8 @@ func (g *Generator) WrapTypes() {
 		// Make sure the registration path matches the import path.
 		// We check this by making sure that the file's name name
 		// starts with the package name.
-		//
-		// Example:
-		// Proto file "google/protobuf/descriptor.proto" should be imported
-		// from OS path ./google/protobuf/descriptor.proto.
-		expectedPrefix := strings.ReplaceAll(*f.Package, ".", "/") + "/"
-		if !strings.HasPrefix(*f.Name, expectedPrefix) {
-			panic(fmt.Errorf("file name %s does not start with expected %s; please make sure your folder structure matches the proto files fully-qualified names", *f.Name, expectedPrefix))
+		if err := proto.CheckImportPath(f.GetName(), f.GetPackage()); err != nil {
+			panic(err)
 		}
 
 		fd := &FileDescriptor{
