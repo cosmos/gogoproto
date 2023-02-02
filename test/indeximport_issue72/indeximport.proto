@@ -28,27 +28,16 @@
 
 syntax = "proto2";
 
-package asym;
+package indeximport_issue72;
 
+import "indeximport_issue72/index/index.proto";
 import "gogoproto/gogo.proto";
 
-option (gogoproto.equal_all) = true;
-option (gogoproto.verbose_equal_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.populate_all) = true;
-// TODO: renable this once https://github.com/cosmos/gogoproto/issues/388 is
-// fixed: option (gogoproto.testgen_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.testgen_all) = true;
 
-message M {
-  repeated bytes arr = 1
-      [ (gogoproto.customtype) = "MyType", (gogoproto.nullable) = false ];
-}
-
-message MyType {
-  option (gogoproto.marshaler) = false;
-  option (gogoproto.sizer) = false;
-  option (gogoproto.populate) = false;
-  option (gogoproto.testgen) = false;
-}
+message IndexQueries { repeated indeximport_issue72.index.IndexQuery Queries = 1; }

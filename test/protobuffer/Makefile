@@ -27,4 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc --gogo_out=. --proto_path=../../:../../protobuf/:. *.proto
+	cd .. && protoc --gogo_out=. --proto_path=../:../protobuf/:. protobuffer/*.proto

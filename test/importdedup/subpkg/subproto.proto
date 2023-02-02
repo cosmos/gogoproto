@@ -27,8 +27,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 syntax = "proto2";
-package subpkg;
+package importdedup.subpkg;
 
 import "gogoproto/gogo.proto";
+
+option go_package = "subpkg";
 
 message SubObject {}

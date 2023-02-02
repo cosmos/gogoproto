@@ -107,11 +107,11 @@ regenerate: install
 	make -C vanity/test regenerate
 	make -C test/sizeunderscore regenerate
 	make -C test/issue34 regenerate
-	make -C test/empty-issue70 regenerate
-	make -C test/indeximport-issue72 regenerate
+	make -C test/empty_issue70 regenerate
+	make -C test/indeximport_issue72 regenerate
 	make -C test/fuzztests regenerate
 	make -C test/oneofembed regenerate
-	make -C test/asymetric-issue125 regenerate
+	make -C test/asymetric_issue125 regenerate
 	make -C test/filedotname regenerate
 	make -C test/nopackage regenerate
 	make -C test/types regenerate
@@ -129,7 +129,7 @@ regenerate: install
 	make -C test/int64support regenerate
 	make -C test/issue322 regenerate
 	make -C test/issue330 regenerate
-	make -C test/importcustom-issue389 regenerate
+	make -C test/importcustom_issue389 regenerate
 	make -C test/merge regenerate
 	make -C test/cachedsize regenerate
 	make -C test/deterministic regenerate

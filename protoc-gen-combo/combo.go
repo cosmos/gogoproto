@@ -37,6 +37,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/cosmos/gogoproto/version"
@@ -57,6 +58,7 @@ func (this MixMatch) Gen(folder string, news []string) {
 		panic(err)
 	}
 	content := string(data)
+	fileNameOnly, folderOnly := filepath.Base(this.Filename), filepath.Dir(this.Filename)
 	for i, old := range this.Old {
 		if !strings.Contains(content, old) {
 			panic(fmt.Errorf("could not find string {%s} to replace with {%s}", old, news[i]))
@@ -66,10 +68,17 @@ func (this MixMatch) Gen(folder string, news []string) {
 			panic(fmt.Errorf("found another string {%s} after it was replaced with {%s}", old, news[i]))
 		}
 	}
-	if err = ioutil.WriteFile(filepath.Join(folder, this.Filename), []byte(content), 0666); err != nil {
+
+	// Replace package name
+	re := regexp.MustCompile(`\npackage (.*);`)
+	correctPkgName := strings.Trim(strings.ReplaceAll(folder, "/", "."), ".")
+	replaceStr := fmt.Sprintf("\npackage $1.%s;", correctPkgName)
+	content = re.ReplaceAllString(content, replaceStr)
+
+	if err = ioutil.WriteFile(filepath.Join(folderOnly, folder, fileNameOnly), []byte(content), 0666); err != nil {
 		panic(err)
 	}
-	args := append(this.Args, filepath.Join(folder, this.Filename))
+	args := append(this.Args, filepath.Join(folderOnly, folder, fileNameOnly))
 	var regenerate = exec.Command("protoc", args...)
 	out, err := regenerate.CombinedOutput()
 
@@ -139,7 +148,7 @@ func main() {
 	}
 	filename := args[0]
 	var def string
-	flags, def = filter(flags, "-default")
+	flags, def = filter(flags, "--default")
 	if _, err := exec.LookPath("protoc"); err != nil {
 		panic("cannot find protoc in PATH")
 	}

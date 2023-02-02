@@ -114,14 +114,14 @@ var fdescRE = regexp.MustCompile(`(?ms)^var fileDescriptor.*}`)
 const (
 	aProto = `
 syntax = "proto3";
-package test.alpha;
+package alpha;
 option go_package = "package/alpha";
 import "beta/b.proto";
-message M { test.beta.M field = 1; }`
+message M { beta.M field = 1; }`
 
 	bProto = `
 syntax = "proto3";
-package test.beta;
+package beta;
 // no go_package option
 message M {}`
 )
@@ -140,7 +140,7 @@ func TestParameters(t *testing.T) {
 			"beta/b.pb.go":          true,
 		},
 		wantPackageA: "alpha",
-		wantPackageB: "test_beta",
+		wantPackageB: "beta",
 		wantImportsA: map[string]bool{
 			"github.com/cosmos/gogoproto/proto": true,
 			"beta":                              true,
@@ -152,7 +152,7 @@ func TestParameters(t *testing.T) {
 			"beta/b.pb.go":          true,
 		},
 		wantPackageA: "alpha",
-		wantPackageB: "test_beta",
+		wantPackageB: "beta",
 		wantImportsA: map[string]bool{
 			// This really doesn't seem like useful behavior.
 			"prefixgithub.com/cosmos/gogoproto/proto": true,
@@ -174,7 +174,7 @@ func TestParameters(t *testing.T) {
 			"beta/b.pb.go":          true,
 		},
 		wantPackageA: "alpha",
-		wantPackageB: "test_beta",
+		wantPackageB: "beta",
 		wantImportsA: map[string]bool{
 			"github.com/cosmos/gogoproto/proto": true,
 			// Rewritten by the M parameter.
@@ -187,7 +187,7 @@ func TestParameters(t *testing.T) {
 			"beta/b.pb.go":          true,
 		},
 		wantPackageA: "alpha",
-		wantPackageB: "test_beta",
+		wantPackageB: "beta",
 		wantImportsA: map[string]bool{
 			// import_prefix applies after M.
 			"prefixpackage/gamma": true,
@@ -199,7 +199,7 @@ func TestParameters(t *testing.T) {
 			"beta/b.pb.go":  true,
 		},
 		wantPackageA: "alpha",
-		wantPackageB: "test_beta",
+		wantPackageB: "beta",
 	}, {
 		parameters: "paths=source_relative,import_prefix=prefix",
 		wantFiles: map[string]bool{
@@ -208,7 +208,7 @@ func TestParameters(t *testing.T) {
 			"beta/b.pb.go":  true,
 		},
 		wantPackageA: "alpha",
-		wantPackageB: "test_beta",
+		wantPackageB: "beta",
 	}} {
 		name := test.parameters
 		if name == "" {

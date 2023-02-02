@@ -74,12 +74,12 @@ func TestMessageRegistered(t *testing.T) {
 }
 
 func TestFileRegistered(t *testing.T) {
-	got := golangproto.FileDescriptor("registration.proto")
+	got := golangproto.FileDescriptor("registration/registration.proto")
 	if got == nil {
-		t.Error(`File "registration.proto" was not registered with golang/protobuf`)
+		t.Error(`File "registration/registration.proto" was not registered with golang/protobuf`)
 	}
-	got = gogoproto.FileDescriptor("registration.proto")
+	got = gogoproto.FileDescriptor("registration/registration.proto")
 	if got == nil {
-		t.Error(`File "registration.proto" was not registered with cosmos/gogoproto`)
+		t.Error(`File "registration/registration.proto" was not registered with cosmos/gogoproto`)
 	}
 }

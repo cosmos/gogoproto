@@ -1,4 +1,4 @@
-package typedeclall
+package typedecl_all
 
 import (
 	"encoding/json"

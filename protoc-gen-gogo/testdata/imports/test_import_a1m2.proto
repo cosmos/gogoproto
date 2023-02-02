@@ -31,12 +31,12 @@
 
 syntax = "proto3";
 
-package test;
+package imports;
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/imports";
 
 import "imports/test_a_1/m2.proto";
 
 message A1M2 {
-  test.a.M2 f = 1;
+  imports.test_a_1.M2 f = 1;
 }

@@ -28,7 +28,7 @@
 
 syntax = "proto2";
 
-package issue42;
+package issue42order;
 
 import "gogoproto/gogo.proto";
 

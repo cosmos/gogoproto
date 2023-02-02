@@ -28,7 +28,7 @@
 
 syntax = "proto2";
 
-package casttype;
+package casttype.combos.neither;
 
 import "gogoproto/gogo.proto";
 

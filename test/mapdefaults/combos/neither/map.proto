@@ -27,9 +27,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 syntax = "proto3";
-package mapdefaults;
+package mapdefaults.combos.neither;
 
 import "gogoproto/gogo.proto";
+
+option go_package = "mapdefaults";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;

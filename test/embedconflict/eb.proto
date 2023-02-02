@@ -28,7 +28,7 @@
 
 syntax = "proto2";
 
-package embedconflict;
+package test.embedconflict;
 
 import "gogoproto/gogo.proto";
 

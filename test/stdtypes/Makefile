@@ -27,12 +27,13 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
+	cd .. && \
 	protoc-min-version --version="3.0.0" --gogo_out=\
 	Mgoogle/protobuf/duration.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/timestamp.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/wrappers.proto=github.com/cosmos/gogoproto/types\
 	:. \
-	--proto_path=../../:../../protobuf/:. stdtypes.proto
+	--proto_path=../:../protobuf/:. stdtypes/stdtypes.proto
 
 test:
 	go test -race -run=TestConcurrentTextMarshal .

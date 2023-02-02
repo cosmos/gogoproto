@@ -36,11 +36,13 @@
 
 syntax = "proto3";
 
-package theproto3;
+package theproto3.combos.unmarshaler;
 
 import "gogoproto/gogo.proto";
 
 import "test/combos/both/thetest.proto";
+
+option go_package = "theproto3";
 
 option (gogoproto.goproto_stringer_all) = false;
 option (gogoproto.goproto_enum_prefix_all) = false;
@@ -86,8 +88,8 @@ message Message {
   Nested nested = 6;
 
   map<int64, Nested> terrain = 10;
-  test.NinOptNative proto2_field = 11;
-  map<int64, test.NinOptEnum> proto2_value = 13;
+  test.combos.both.NinOptNative proto2_field = 11;
+  map<int64, test.combos.both.NinOptEnum> proto2_value = 13;
 }
 
 message Nested { string bunny = 1; }

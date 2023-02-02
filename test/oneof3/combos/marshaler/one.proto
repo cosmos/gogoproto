@@ -28,7 +28,7 @@
 
 syntax = "proto3";
 
-package one;
+package oneof3.combos.marshaler;
 
 import "gogoproto/gogo.proto";
 

@@ -1,8 +1,10 @@
 syntax = "proto3";
 
-package enumdeclall;
+package enumdecl_all;
 
 import "gogoproto/gogo.proto";
+
+option go_package = "enumdeclall";
 
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;

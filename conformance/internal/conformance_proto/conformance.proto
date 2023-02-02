@@ -29,7 +29,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 syntax = "proto3";
-package conformance;
+package conformance_proto;
 option java_package = "com.google.protobuf.conformance";
 
 import "google/protobuf/any.proto";

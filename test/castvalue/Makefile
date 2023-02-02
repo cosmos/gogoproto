@@ -28,8 +28,9 @@
 
 regenerate:
 	rm -rf combos
-	protoc-min-version --version="3.0.0" --gogo_out=. --proto_path=../../protobuf/:../../:. castvalue.proto
-	protoc-gen-combo --default=false --version="3.0.0" --gogo_out=. --proto_path=../../protobuf/:../../:. castvalue.proto
+	mkdir combos combos/both combos/marshaler combos/unmarshaler
+	cd .. && protoc-min-version --version="3.0.0" --gogo_out=. --proto_path=../protobuf/:../:. castvalue/castvalue.proto
+	cd .. && protoc-gen-combo --default=false --version="3.0.0" --gogo_out=. --proto_path=../protobuf/:../:. castvalue/castvalue.proto
 	cp mytypes.go ./combos/both/ || true
 	cp mytypes.go ./combos/marshaler/ || true
 	cp mytypes.go ./combos/unmarshaler/ || true

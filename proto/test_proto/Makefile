@@ -32,4 +32,4 @@
 all:	regenerate
 
 regenerate:
-	protoc-min-version --version="3.0.0" --gogo_out=paths=source_relative:. test.proto
+	cd .. && protoc-min-version --version="3.0.0" --gogo_out=paths=source_relative:.. ./test_proto/test.proto && mv ../test_proto/test.pb.go ./test_proto/

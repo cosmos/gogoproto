@@ -28,7 +28,7 @@
 
 syntax = "proto3";
 
-package vanity;
+package vanity.test;
 
 message Aproto3 {
   string B = 1;

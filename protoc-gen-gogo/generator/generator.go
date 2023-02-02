@@ -784,11 +784,13 @@ func (g *Generator) WrapTypes() {
 		genFileNames[n] = true
 	}
 	for _, f := range g.Request.ProtoFile {
-		// Make sure the registration path matches the import path.
-		// We check this by making sure that the file's name name
-		// starts with the package name.
-		if err := proto.CheckImportPath(f.GetName(), f.GetPackage()); err != nil {
-			panic(err)
+		if f.Package != nil {
+			// Make sure the registration path matches the import path.
+			// We check this by making sure that the file's name name
+			// starts with the package name.
+			if err := proto.CheckImportPath(f.GetName(), f.GetPackage()); err != nil {
+				panic(err)
+			}
 		}
 
 		fd := &FileDescriptor{

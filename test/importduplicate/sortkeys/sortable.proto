@@ -27,7 +27,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 syntax = "proto3";
-package sortkeys;
+package importduplicate.sortkeys;
 
 import "gogoproto/gogo.proto";
 
