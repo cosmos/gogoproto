@@ -49,6 +49,7 @@ test:
 	./test.sh $(PROTOBUF_ROOT)
 
 regenerate:
+	cd internal && \
 	protoc-min-version --version="3.0.0" --proto_path=../protobuf:. --gogo_out=\
 	Mgoogle/protobuf/any.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/duration.proto=github.com/cosmos/gogoproto/types,\
@@ -56,5 +57,5 @@ regenerate:
 	Mgoogle/protobuf/timestamp.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/wrappers.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/field_mask.proto=github.com/cosmos/gogoproto/types\
-	:. ./internal/conformance_proto/conformance.proto\
-	 -I ../gogoproto -I ../protobuf
+	:. ./conformance_proto/conformance.proto\
+	 -I ../../gogoproto -I ../../protobuf

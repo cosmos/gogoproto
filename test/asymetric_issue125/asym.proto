@@ -28,16 +28,29 @@
 
 syntax = "proto2";
 
-package indeximport;
+package asymetric_issue125;
 
-import "index/index.proto";
 import "gogoproto/gogo.proto";
 
+option go_package = "asym";
+
+option (gogoproto.equal_all) = true;
+option (gogoproto.verbose_equal_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.populate_all) = true;
-option (gogoproto.equal_all) = true;
-option (gogoproto.testgen_all) = true;
+// TODO: renable this once https://github.com/cosmos/gogoproto/issues/388 is
+// fixed: option (gogoproto.testgen_all) = true;
 
-message IndexQueries { repeated index.IndexQuery Queries = 1; }
+message M {
+  repeated bytes arr = 1
+      [ (gogoproto.customtype) = "MyType", (gogoproto.nullable) = false ];
+}
+
+message MyType {
+  option (gogoproto.marshaler) = false;
+  option (gogoproto.sizer) = false;
+  option (gogoproto.populate) = false;
+  option (gogoproto.testgen) = false;
+}

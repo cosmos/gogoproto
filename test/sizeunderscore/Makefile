@@ -27,4 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	(protoc --proto_path=../../:../../protobuf/:. --gogo_out=. sizeunderscore.proto)
+	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=. sizeunderscore/sizeunderscore.proto)

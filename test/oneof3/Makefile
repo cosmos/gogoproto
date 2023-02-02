@@ -27,4 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc-gen-combo --version="3.0.0" --gogo_out=. --proto_path=../../protobuf/:../../:. one.proto
+	cd .. && protoc-gen-combo --version="3.0.0" --gogo_out=. --proto_path=../protobuf/:../:. oneof3/one.proto

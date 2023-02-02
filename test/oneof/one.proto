@@ -28,7 +28,7 @@
 
 syntax = "proto2";
 
-package one;
+package oneof;
 
 import "gogoproto/gogo.proto";
 

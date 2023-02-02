@@ -27,7 +27,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 syntax = "proto3";
-package proto;
+package oneofembed;
 import "gogoproto/gogo.proto";
 
 option (gogoproto.populate_all) = true;

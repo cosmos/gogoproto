@@ -30,8 +30,10 @@ syntax = "proto3";
 package importduplicate;
 
 import "gogoproto/gogo.proto";
-import "test/importduplicate/sortkeys/sortable.proto";
-import "test/importduplicate/proto/proto.proto";
+import "importduplicate/sortkeys/sortable.proto";
+import "importduplicate/proto/proto.proto";
+
+option go_package = "importduplicate";
 
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;
@@ -39,7 +41,7 @@ option (gogoproto.equal_all) = true;
 option (gogoproto.gostring_all) = true;
 
 message MapAndSortKeys {
-  sortkeys.Object key = 1;
+  importduplicate.sortkeys.Object key = 1;
   map<int32, string> keyValue = 2;
-  proto.Subject value = 3;
+  importduplicate.proto.Subject value = 3;
 }

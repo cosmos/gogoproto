@@ -28,7 +28,7 @@
 
 syntax = "proto3";
 
-package types;
+package types.combos.neither;
 
 import "gogoproto/gogo.proto";
 
@@ -37,6 +37,8 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
+
+option go_package = "types";
 
 option (gogoproto.testgen_all) = true;
 option (gogoproto.populate_all) = true;

@@ -27,4 +27,4 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	protoc --proto_path=../../:../../protobuf/:. --gogo_out=. issue620.proto
+	cd .. && protoc --proto_path=../:../protobuf/:. --gogo_out=. issue620/issue620.proto

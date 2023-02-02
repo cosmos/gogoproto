@@ -31,7 +31,7 @@
 
 syntax = "proto3";
 
-package grpc.testing;
+package grpc;
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/grpc;testing";
 

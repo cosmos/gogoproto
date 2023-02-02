@@ -36,7 +36,7 @@ import (
 )
 
 func TestPopulateWarning(t *testing.T) {
-	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../:../../protobuf/:.", "a/a1.proto")
+	cmd := exec.Command("protoc", "--gogo_out=.", "-I=../../:../../protobuf/:.", "test/issue270/a/a1.proto")
 	data, err := cmd.CombinedOutput()
 	dataStr := string(data)
 	t.Logf("received error = %v and output = %v", err, dataStr)
@@ -45,7 +45,7 @@ func TestPopulateWarning(t *testing.T) {
 	} else if strings.Contains(dataStr, "WARNING") {
 		t.Errorf("Unexpected WARNING: %s", dataStr)
 	}
-	if err = os.Remove("a/a1.pb.go"); err != nil && !os.IsNotExist(err) {
+	if err = os.Remove("test/issue270/a/a1.pb.go"); err != nil && !os.IsNotExist(err) {
 		t.Error(err)
 	}
 }

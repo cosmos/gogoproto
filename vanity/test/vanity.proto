@@ -28,7 +28,7 @@
 
 syntax = "proto2";
 
-package vanity;
+package vanity.test;
 
 message A {
 	optional string Strings = 1;

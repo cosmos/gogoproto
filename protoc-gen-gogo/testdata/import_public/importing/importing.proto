@@ -31,7 +31,7 @@
 
 syntax = "proto2";
 
-package goproto.test.import_public.importing;
+package import_public.importing;
 
 option go_package = "github.com/golang/protobuf/protoc-gen-go/testdata/import_public/importing";
 
@@ -39,5 +39,5 @@ import "import_public/a.proto";
 
 message M {
   // Message type defined in a file publicly imported by a file we import.
-  optional goproto.test.import_public.sub.M m = 1;
+  optional import_public.sub.M m = 1;
 }

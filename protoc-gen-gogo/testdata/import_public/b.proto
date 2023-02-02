@@ -31,13 +31,13 @@
 
 syntax = "proto2";
 
-package goproto.test.import_public;
+package import_public;
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/import_public";
 
 import "import_public/sub/a.proto";
 
 message Local {
-  optional goproto.test.import_public.sub.M m = 1;
-  optional goproto.test.import_public.sub.E e = 2;
+  optional import_public.sub.M m = 1;
+  optional import_public.sub.E e = 2;
 }

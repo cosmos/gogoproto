@@ -31,7 +31,7 @@
 
 syntax = "proto2";
 
-package goproto.test.import_public.sub;
+package import_public.sub;
 
 option go_package = "github.com/cosmos/gogoproto/protoc-gen-gogo/testdata/import_public/sub";
 

@@ -26,14 +26,15 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package issue42
+package issue42order
 
 import (
 	"bytes"
-	"github.com/cosmos/gogoproto/proto"
 	math_rand "math/rand"
 	"testing"
 	time "time"
+
+	"github.com/cosmos/gogoproto/proto"
 )
 
 func TestIssue42Order(t *testing.T) {

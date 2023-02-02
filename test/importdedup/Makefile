@@ -27,5 +27,5 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	(protoc --proto_path=../../:../../protobuf/:. --gogo_out=Mtest/importdedup/subpkg/subproto.proto=github.com/cosmos/gogoproto/test/importdedup/subpkg:. proto.proto)
-	(protoc --proto_path=../../:../../protobuf/:. --gogo_out=. subpkg/subproto.proto)
+	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=Mimportdedup/subpkg/subproto.proto=github.com/cosmos/gogoproto/test/importdedup/subpkg:. importdedup/proto.proto)
+	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=. importdedup/subpkg/subproto.proto)
