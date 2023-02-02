@@ -7,11 +7,13 @@ import (
 	"io"
 	"strings"
 
+	"github.com/google/go-cmp/cmp"
 	"golang.org/x/exp/slices"
 	protov2 "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
+	"google.golang.org/protobuf/testing/protocmp"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
@@ -65,7 +67,8 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 		// If we already loaded gogo's file descriptor, compare that the 2
 		// are strictly equal.
 		if ok && !protov2.Equal(fd, gogoFd) {
-			panic(fmt.Errorf("got different file descriptors for %s", *fd.Package))
+			diff := cmp.Diff(fd, gogoFd, protocmp.Transform())
+			panic(fmt.Errorf("got different file descriptors for %s; %s", *fd.Package, diff))
 		} else {
 			fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
 		}
