@@ -49,7 +49,7 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 
 		err = CheckImportPath(*fd.Name, *fd.Package)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 
 		fds.File = append(fds.File, fd)
@@ -85,10 +85,10 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 	return fds, nil
 }
 
-// MergedRegistry returns a protodesc.Resolver that acts as a single registry
+// MergedRegistry returns a *protoregistry.Files that acts as a single registry
 // which contains all the file descriptors registered with both gogoproto and
 // protoregistry.
-func MergedRegistry() (protodesc.Resolver, error) {
+func MergedRegistry() (*protoregistry.Files, error) {
 	fds, err := MergedFileDescriptors()
 	if err != nil {
 		return nil, err
