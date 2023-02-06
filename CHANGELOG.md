@@ -10,7 +10,13 @@
 
 - [#34](https://github.com/cosmos/gogoproto/pull/34) Allow empty package name, as per gogo original behavior. Fix regression introduced in v1.4.4
 
-## [v1.4.3](https://github.com/cosmos/gogoproto/releases/tag/v1.4.2) - 2022-10-14
+## [v1.4.4](https://github.com/cosmos/gogoproto/releases/tag/v1.4.4) - 2023-01-30
+
+### Improvements
+
+- [#32](https://github.com/cosmos/gogoproto/pull/32) The prtoc-gen-gogo generator requires that all proto files import paths match their fully-qualified package name.
+
+## [v1.4.3](https://github.com/cosmos/gogoproto/releases/tag/v1.4.3) - 2022-10-14
 
 ### Bug Fixes
 
