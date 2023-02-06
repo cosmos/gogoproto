@@ -68,7 +68,7 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 		// are strictly equal.
 		if ok && !protov2.Equal(fd, gogoFd) {
 			diff := cmp.Diff(fd, gogoFd, protocmp.Transform())
-			panic(fmt.Errorf("got different file descriptors for %s; %s", *fd.Package, diff))
+			panic(fmt.Errorf("got different file descriptors for %s; %s", *fd.Name, diff))
 		} else {
 			fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
 		}
