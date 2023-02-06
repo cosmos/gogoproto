@@ -63,12 +63,14 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 			panic(err)
 		}
 
-		gogoFd, ok := gogoFdsMap[fileDescriptor.Path()]
+		gogoFd, found := gogoFdsMap[fileDescriptor.Path()]
 		// If we already loaded gogo's file descriptor, compare that the 2
 		// are strictly equal.
-		if ok && !protov2.Equal(fd, gogoFd) {
-			diff := cmp.Diff(fd, gogoFd, protocmp.Transform())
-			panic(fmt.Errorf("got different file descriptors for %s; %s", *fd.Name, diff))
+		if found {
+			if !protov2.Equal(gogoFd, fd) {
+				diff := cmp.Diff(fd, gogoFd, protocmp.Transform())
+				panic(fmt.Errorf("got different file descriptors for %s; %s", *fd.Name, diff))
+			}
 		} else {
 			fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
 		}
