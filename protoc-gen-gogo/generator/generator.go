@@ -759,6 +759,12 @@ func (g *Generator) SetPackageNames() {
 		// (typepb, structpb, anypb...), so running protoc here will error.
 		// As a hack, we skip them here. It should be safe, as they packages
 		// are generated internally in this repo.
+		//
+		// FYI, the original hack by gogoproto's author was to use gogoreplace
+		// to modify the `go_package` option in the source proto file direct.
+		// https://github.com/cosmos/gogoproto/blob/f0ad06da053d047dd105817b0d251ade660c927e/protobuf/Makefile#L36
+		// However, this won't work anymore, because we now require that the
+		// file descriptors are exactly the same.
 		if *f.Package == "google.protobuf" {
 			continue
 		}
