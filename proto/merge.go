@@ -63,8 +63,10 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 	)
 	protoregistry.GlobalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
 		fd := protodesc.ToFileDescriptorProto(fileDescriptor)
-		if err := CheckImportPath(*fd.Name, *fd.Package); err != nil {
-			checkImportErr = append(checkImportErr, err.Error())
+		if fd.Name != nil && fd.Package != nil {
+			if err := CheckImportPath(*fd.Name, *fd.Package); err != nil {
+				checkImportErr = append(checkImportErr, err.Error())
+			}
 		}
 
 		gogoFd, found := gogoFdsMap[fileDescriptor.Path()]
