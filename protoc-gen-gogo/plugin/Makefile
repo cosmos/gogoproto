@@ -33,4 +33,5 @@
 # at src/google/protobuf/compiler/plugin.proto
 # Also we need to fix an import.
 regenerate:
-	protoc --gogo_out=Mgoogle/protobuf/descriptor.proto=github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor:. -I=../../protobuf/ ../../protobuf/google/protobuf/compiler/plugin.proto && mv google/protobuf/compiler/plugin.pb.go .
+	protoc --gogo_out=Mgoogle/protobuf/descriptor.proto=github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor:. -I=../../protobuf/ ../../protobuf/google/protobuf/compiler/plugin.proto && mv google.golang.org/protobuf/types/pluginpb/plugin.pb.go .
+	sed -i.bak 's/package pluginpb/package plugin_go/' plugin.pb.go && rm plugin.pb.go.bak

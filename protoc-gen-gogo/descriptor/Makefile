@@ -35,6 +35,6 @@
 # some sed magic to change the package name to descriptor.
 regenerate:
 	protoc --gogo_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google.golang.org/protobuf/types/descriptorpb/descriptor.pb.go .
-	echo descriptor.pb.go | xargs sed -e 's/package descriptorpb/package descriptor/' > descriptor.pb.go.tmp && mv descriptor.pb.go.tmp descriptor.pb.go
+	sed -i.bak 's/package descriptorpb/package descriptor/' descriptor.pb.go && rm descriptor.pb.go.bak
 	protoc --gostring_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google.golang.org/protobuf/types/descriptorpb/descriptor_gostring.gen.go .
-	echo descriptor_gostring.gen.go | xargs sed -e 's/package descriptorpb/package descriptor/' > descriptor_gostring.gen.go.tmp && mv descriptor_gostring.gen.go.tmp descriptor_gostring.gen.go
+	sed -i.bak 's/package descriptorpb/package descriptor/' descriptor_gostring.gen.go && rm descriptor_gostring.gen.go.bak
