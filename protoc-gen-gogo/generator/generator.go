@@ -755,6 +755,14 @@ func (g *Generator) SetPackageNames() {
 
 	// Check that all files have a consistent package name and import path.
 	for _, f := range g.genFiles[1:] {
+		// "google.protobuf" pacakges all have different go package names
+		// (typepb, structpb, anypb...), so running protoc here will error.
+		// As a hack, we skip them here. It should be safe, as they packages
+		// are generated internally in this repo.
+		if *f.Package == "google.protobuf" {
+			continue
+		}
+
 		if a, b := g.genFiles[0].importPath, f.importPath; a != b {
 			g.Fail(fmt.Sprintf("inconsistent package import paths: %v, %v", a, b))
 		}
