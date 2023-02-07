@@ -57,10 +57,14 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 	}
 
 	// load any protoregistry file descriptors not in gogo
+	var (
+		checkImportErr []string
+		diffErr        error
+	)
 	protoregistry.GlobalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
 		fd := protodesc.ToFileDescriptorProto(fileDescriptor)
 		if err := CheckImportPath(*fd.Name, *fd.Package); err != nil {
-			panic(err)
+			checkImportErr = append(checkImportErr, err.Error())
 		}
 
 		gogoFd, found := gogoFdsMap[fileDescriptor.Path()]
@@ -69,7 +73,8 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 		if found {
 			if !protov2.Equal(gogoFd, fd) {
 				diff := cmp.Diff(fd, gogoFd, protocmp.Transform())
-				panic(fmt.Errorf("got different file descriptors for %s; %s", *fd.Name, diff))
+				diffErr = fmt.Errorf("got different file descriptors for %s; %s", *fd.Name, diff)
+				return false
 			}
 		} else {
 			fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
@@ -77,6 +82,12 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 
 		return true
 	})
+	if len(checkImportErr) > 0 {
+		return nil, fmt.Errorf("got %d file descriptor import path errors:\n%s", len(checkImportErr), strings.Join(checkImportErr, "\n"))
+	}
+	if diffErr != nil {
+		return nil, diffErr
+	}
 
 	slices.SortFunc(fds.File, func(x, y *descriptorpb.FileDescriptorProto) bool {
 		return *x.Name < *y.Name
