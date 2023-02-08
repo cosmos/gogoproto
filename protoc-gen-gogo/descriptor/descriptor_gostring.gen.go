@@ -24,7 +24,7 @@ func (this *FileDescriptorSet) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&descriptor.FileDescriptorSet{")
+	s = append(s, "&descriptorpb.FileDescriptorSet{")
 	if this.File != nil {
 		s = append(s, "File: "+fmt.Sprintf("%#v", this.File)+",\n")
 	}
@@ -39,7 +39,7 @@ func (this *FileDescriptorProto) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 16)
-	s = append(s, "&descriptor.FileDescriptorProto{")
+	s = append(s, "&descriptorpb.FileDescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -87,7 +87,7 @@ func (this *DescriptorProto) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 14)
-	s = append(s, "&descriptor.DescriptorProto{")
+	s = append(s, "&descriptorpb.DescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -129,7 +129,7 @@ func (this *DescriptorProto_ExtensionRange) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 7)
-	s = append(s, "&descriptor.DescriptorProto_ExtensionRange{")
+	s = append(s, "&descriptorpb.DescriptorProto_ExtensionRange{")
 	if this.Start != nil {
 		s = append(s, "Start: "+valueToGoStringDescriptor(this.Start, "int32")+",\n")
 	}
@@ -150,7 +150,7 @@ func (this *DescriptorProto_ReservedRange) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&descriptor.DescriptorProto_ReservedRange{")
+	s = append(s, "&descriptorpb.DescriptorProto_ReservedRange{")
 	if this.Start != nil {
 		s = append(s, "Start: "+valueToGoStringDescriptor(this.Start, "int32")+",\n")
 	}
@@ -168,7 +168,7 @@ func (this *ExtensionRangeOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&descriptor.ExtensionRangeOptions{")
+	s = append(s, "&descriptorpb.ExtensionRangeOptions{")
 	if this.UninterpretedOption != nil {
 		s = append(s, "UninterpretedOption: "+fmt.Sprintf("%#v", this.UninterpretedOption)+",\n")
 	}
@@ -183,8 +183,8 @@ func (this *FieldDescriptorProto) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 14)
-	s = append(s, "&descriptor.FieldDescriptorProto{")
+	s := make([]string, 0, 15)
+	s = append(s, "&descriptorpb.FieldDescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -215,6 +215,9 @@ func (this *FieldDescriptorProto) GoString() string {
 	if this.Options != nil {
 		s = append(s, "Options: "+fmt.Sprintf("%#v", this.Options)+",\n")
 	}
+	if this.Proto3Optional != nil {
+		s = append(s, "Proto3Optional: "+valueToGoStringDescriptor(this.Proto3Optional, "bool")+",\n")
+	}
 	if this.XXX_unrecognized != nil {
 		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
 	}
@@ -226,7 +229,7 @@ func (this *OneofDescriptorProto) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&descriptor.OneofDescriptorProto{")
+	s = append(s, "&descriptorpb.OneofDescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -244,7 +247,7 @@ func (this *EnumDescriptorProto) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&descriptor.EnumDescriptorProto{")
+	s = append(s, "&descriptorpb.EnumDescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -271,7 +274,7 @@ func (this *EnumDescriptorProto_EnumReservedRange) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&descriptor.EnumDescriptorProto_EnumReservedRange{")
+	s = append(s, "&descriptorpb.EnumDescriptorProto_EnumReservedRange{")
 	if this.Start != nil {
 		s = append(s, "Start: "+valueToGoStringDescriptor(this.Start, "int32")+",\n")
 	}
@@ -289,7 +292,7 @@ func (this *EnumValueDescriptorProto) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 7)
-	s = append(s, "&descriptor.EnumValueDescriptorProto{")
+	s = append(s, "&descriptorpb.EnumValueDescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -310,7 +313,7 @@ func (this *ServiceDescriptorProto) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 7)
-	s = append(s, "&descriptor.ServiceDescriptorProto{")
+	s = append(s, "&descriptorpb.ServiceDescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -331,7 +334,7 @@ func (this *MethodDescriptorProto) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 10)
-	s = append(s, "&descriptor.MethodDescriptorProto{")
+	s = append(s, "&descriptorpb.MethodDescriptorProto{")
 	if this.Name != nil {
 		s = append(s, "Name: "+valueToGoStringDescriptor(this.Name, "string")+",\n")
 	}
@@ -361,7 +364,7 @@ func (this *FileOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 25)
-	s = append(s, "&descriptor.FileOptions{")
+	s = append(s, "&descriptorpb.FileOptions{")
 	if this.JavaPackage != nil {
 		s = append(s, "JavaPackage: "+valueToGoStringDescriptor(this.JavaPackage, "string")+",\n")
 	}
@@ -437,7 +440,7 @@ func (this *MessageOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&descriptor.MessageOptions{")
+	s = append(s, "&descriptorpb.MessageOptions{")
 	if this.MessageSetWireFormat != nil {
 		s = append(s, "MessageSetWireFormat: "+valueToGoStringDescriptor(this.MessageSetWireFormat, "bool")+",\n")
 	}
@@ -465,7 +468,7 @@ func (this *FieldOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 11)
-	s = append(s, "&descriptor.FieldOptions{")
+	s = append(s, "&descriptorpb.FieldOptions{")
 	if this.Ctype != nil {
 		s = append(s, "Ctype: "+valueToGoStringDescriptor(this.Ctype, "FieldOptions_CType")+",\n")
 	}
@@ -499,7 +502,7 @@ func (this *OneofOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&descriptor.OneofOptions{")
+	s = append(s, "&descriptorpb.OneofOptions{")
 	if this.UninterpretedOption != nil {
 		s = append(s, "UninterpretedOption: "+fmt.Sprintf("%#v", this.UninterpretedOption)+",\n")
 	}
@@ -515,7 +518,7 @@ func (this *EnumOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 7)
-	s = append(s, "&descriptor.EnumOptions{")
+	s = append(s, "&descriptorpb.EnumOptions{")
 	if this.AllowAlias != nil {
 		s = append(s, "AllowAlias: "+valueToGoStringDescriptor(this.AllowAlias, "bool")+",\n")
 	}
@@ -537,7 +540,7 @@ func (this *EnumValueOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&descriptor.EnumValueOptions{")
+	s = append(s, "&descriptorpb.EnumValueOptions{")
 	if this.Deprecated != nil {
 		s = append(s, "Deprecated: "+valueToGoStringDescriptor(this.Deprecated, "bool")+",\n")
 	}
@@ -556,7 +559,7 @@ func (this *ServiceOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&descriptor.ServiceOptions{")
+	s = append(s, "&descriptorpb.ServiceOptions{")
 	if this.Deprecated != nil {
 		s = append(s, "Deprecated: "+valueToGoStringDescriptor(this.Deprecated, "bool")+",\n")
 	}
@@ -575,7 +578,7 @@ func (this *MethodOptions) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 7)
-	s = append(s, "&descriptor.MethodOptions{")
+	s = append(s, "&descriptorpb.MethodOptions{")
 	if this.Deprecated != nil {
 		s = append(s, "Deprecated: "+valueToGoStringDescriptor(this.Deprecated, "bool")+",\n")
 	}
@@ -597,7 +600,7 @@ func (this *UninterpretedOption) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 11)
-	s = append(s, "&descriptor.UninterpretedOption{")
+	s = append(s, "&descriptorpb.UninterpretedOption{")
 	if this.Name != nil {
 		s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
 	}
@@ -630,7 +633,7 @@ func (this *UninterpretedOption_NamePart) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 6)
-	s = append(s, "&descriptor.UninterpretedOption_NamePart{")
+	s = append(s, "&descriptorpb.UninterpretedOption_NamePart{")
 	if this.NamePart != nil {
 		s = append(s, "NamePart: "+valueToGoStringDescriptor(this.NamePart, "string")+",\n")
 	}
@@ -648,7 +651,7 @@ func (this *SourceCodeInfo) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&descriptor.SourceCodeInfo{")
+	s = append(s, "&descriptorpb.SourceCodeInfo{")
 	if this.Location != nil {
 		s = append(s, "Location: "+fmt.Sprintf("%#v", this.Location)+",\n")
 	}
@@ -663,7 +666,7 @@ func (this *SourceCodeInfo_Location) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 9)
-	s = append(s, "&descriptor.SourceCodeInfo_Location{")
+	s = append(s, "&descriptorpb.SourceCodeInfo_Location{")
 	if this.Path != nil {
 		s = append(s, "Path: "+fmt.Sprintf("%#v", this.Path)+",\n")
 	}
@@ -690,7 +693,7 @@ func (this *GeneratedCodeInfo) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&descriptor.GeneratedCodeInfo{")
+	s = append(s, "&descriptorpb.GeneratedCodeInfo{")
 	if this.Annotation != nil {
 		s = append(s, "Annotation: "+fmt.Sprintf("%#v", this.Annotation)+",\n")
 	}
@@ -705,7 +708,7 @@ func (this *GeneratedCodeInfo_Annotation) GoString() string {
 		return "nil"
 	}
 	s := make([]string, 0, 8)
-	s = append(s, "&descriptor.GeneratedCodeInfo_Annotation{")
+	s = append(s, "&descriptorpb.GeneratedCodeInfo_Annotation{")
 	if this.Path != nil {
 		s = append(s, "Path: "+fmt.Sprintf("%#v", this.Path)+",\n")
 	}

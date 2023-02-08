@@ -755,6 +755,20 @@ func (g *Generator) SetPackageNames() {
 
 	// Check that all files have a consistent package name and import path.
 	for _, f := range g.genFiles[1:] {
+		// "google.protobuf" pacakges all have different go package names
+		// (typepb, structpb, anypb...), so running protoc here will error.
+		// As a hack, we skip them here. It should be safe, as they packages
+		// are generated internally in this repo.
+		//
+		// FYI, the original hack by gogoproto's author was to use gogoreplace
+		// to modify the `go_package` option in the source proto file direct.
+		// https://github.com/cosmos/gogoproto/blob/f0ad06da053d047dd105817b0d251ade660c927e/protobuf/Makefile#L36
+		// However, this won't work anymore, because we now require that the
+		// file descriptors are exactly the same.
+		if *f.Package == "google.protobuf" {
+			continue
+		}
+
 		if a, b := g.genFiles[0].importPath, f.importPath; a != b {
 			g.Fail(fmt.Sprintf("inconsistent package import paths: %v, %v", a, b))
 		}
@@ -788,13 +802,8 @@ func (g *Generator) WrapTypes() {
 			// Make sure the registration path matches the import path.
 			// We check this by making sure that the file's name name
 			// starts with the package name.
-			//
-			// Example:
-			// Proto file "google/protobuf/descriptor.proto" should be imported
-			// from OS path ./google/protobuf/descriptor.proto.
-			expectedPrefix := strings.ReplaceAll(*f.Package, ".", "/") + "/"
-			if !strings.HasPrefix(*f.Name, expectedPrefix) {
-				panic(fmt.Errorf("file name %s does not start with expected %s; please make sure your folder structure matches the proto files fully-qualified names", *f.Name, expectedPrefix))
+			if err := proto.CheckImportPath(f.GetName(), f.GetPackage()); err != nil {
+				panic(err)
 			}
 		}
 

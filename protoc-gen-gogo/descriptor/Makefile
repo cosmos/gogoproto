@@ -29,6 +29,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# descriptor.proto outputs a file whose package name is descriptorpb. However,
+# we want the package name to be descriptor in gogoproto so that we don't break
+# too many APIs. This Makefile generates the descriptor.pb.go and then does
+# some sed magic to change the package name to descriptor.
 regenerate:
-	protoc --gogo_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google/protobuf/descriptor.pb.go .
-	protoc --gostring_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google/protobuf/descriptor_gostring.gen.go .
+	protoc --gogo_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google.golang.org/protobuf/types/descriptorpb/descriptor.pb.go .
+	sed -i.bak 's/package descriptorpb/package descriptor/' descriptor.pb.go && rm descriptor.pb.go.bak
+	protoc --gostring_out=. -I=../../protobuf/ ../../protobuf/google/protobuf/descriptor.proto && mv google.golang.org/protobuf/types/descriptorpb/descriptor_gostring.gen.go .
+	sed -i.bak 's/package descriptorpb/package descriptor/' descriptor_gostring.gen.go && rm descriptor_gostring.gen.go.bak

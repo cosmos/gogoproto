@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Improvements
+
+- [#37](https://github.com/cosmos/gogoproto/pull/37) Add `MergedFileDescriptors` and `MergedRegistry` to retrieve a registry with merged file descriptors from both gogo and protoregistry.
+
 ### Bug Fixes
 
 - [#34](https://github.com/cosmos/gogoproto/pull/34) Allow empty package name, as per gogo original behavior. Fix regression introduced in v1.4.4
