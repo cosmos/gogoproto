@@ -3285,6 +3285,32 @@ func (g *Generator) generateFileDescriptor(file *FileDescriptor) {
 	pb := proto.Clone(file.FileDescriptorProto).(*descriptor.FileDescriptorProto)
 	pb.SourceCodeInfo = nil
 
+	// The `protoc-gen-gogotypes` generator sets some custom gogo options,
+	// like `go_stringer_all`. We need to remove these options for
+	// `google.protobuf.*` types so that they match what's in the protobuf
+	// known types file descriptors
+	//
+	// To understand where this list comes from, see protoc-gen-gogotypes/main.go.
+	if file.GetPackage() == "google.protobuf" {
+		exts := []*proto.ExtensionDesc{
+			gogoproto.E_MarshalerAll,
+			gogoproto.E_SizerAll,
+			gogoproto.E_UnmarshalerAll,
+			gogoproto.E_EnumStringerAll,
+			gogoproto.E_GoprotoEnumStringerAll,
+			gogoproto.E_EqualAll,
+			gogoproto.E_GostringAll,
+			gogoproto.E_GoprotoStringerAll,
+			gogoproto.E_MessagenameAll,
+			gogoproto.E_CompareAll,  // for struct.proto only
+			gogoproto.E_StringerAll, // for duration.proto and timestamp.proto
+			gogoproto.E_PopulateAll, // for duration.proto and timestamp.proto
+		}
+		for _, e := range exts {
+			proto.ClearExtension(pb.Options, e)
+		}
+	}
+
 	b, err := proto.Marshal(pb)
 	if err != nil {
 		g.Fail(err.Error())
