@@ -4,14 +4,12 @@
 package types
 
 import (
-	bytes "bytes"
 	fmt "fmt"
 	proto "github.com/cosmos/gogoproto/proto"
-	io "io"
+	apipb "google.golang.org/protobuf/types/known/apipb"
+	sourcecontextpb "google.golang.org/protobuf/types/known/sourcecontextpb"
+	typepb "google.golang.org/protobuf/types/known/typepb"
 	math "math"
-	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -39,9 +37,9 @@ type Api struct {
 	// followed by the interface's simple name.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The methods of this interface, in unspecified order.
-	Methods []*Method `protobuf:"bytes,2,rep,name=methods,proto3" json:"methods,omitempty"`
+	Methods []*apipb.Method `protobuf:"bytes,2,rep,name=methods,proto3" json:"methods,omitempty"`
 	// Any metadata attached to the interface.
-	Options []*Option `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty"`
+	Options []*typepb.Option `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty"`
 	// A version string for this interface. If specified, must have the form
 	// `major-version.minor-version`, as in `1.10`. If the minor version is
 	// omitted, it defaults to zero. If the entire version field is empty, the
@@ -61,46 +59,36 @@ type Api struct {
 	// `google.feature.v1`. For major versions 0 and 1, the suffix can
 	// be omitted. Zero major versions must only be used for
 	// experimental, non-GA interfaces.
-	//
-	//
 	Version string `protobuf:"bytes,4,opt,name=version,proto3" json:"version,omitempty"`
 	// Source context for the protocol buffer service represented by this
 	// message.
-	SourceContext *SourceContext `protobuf:"bytes,5,opt,name=source_context,json=sourceContext,proto3" json:"source_context,omitempty"`
+	SourceContext *sourcecontextpb.SourceContext `protobuf:"bytes,5,opt,name=source_context,json=sourceContext,proto3" json:"source_context,omitempty"`
 	// Included interfaces. See [Mixin][].
-	Mixins []*Mixin `protobuf:"bytes,6,rep,name=mixins,proto3" json:"mixins,omitempty"`
+	Mixins []*apipb.Mixin `protobuf:"bytes,6,rep,name=mixins,proto3" json:"mixins,omitempty"`
 	// The source syntax of the service.
-	Syntax               Syntax   `protobuf:"varint,7,opt,name=syntax,proto3,enum=google.protobuf.Syntax" json:"syntax,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Syntax               typepb.Syntax `protobuf:"varint,7,opt,name=syntax,proto3,enum=google.protobuf.Syntax" json:"syntax,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
-func (m *Api) Reset()      { *m = Api{} }
-func (*Api) ProtoMessage() {}
+func (m *Api) Reset()         { *m = Api{} }
+func (m *Api) String() string { return proto.CompactTextString(m) }
+func (*Api) ProtoMessage()    {}
 func (*Api) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a2ec32096296c143, []int{0}
 }
 func (m *Api) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_Api.Unmarshal(m, b)
 }
 func (m *Api) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_Api.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_Api.Marshal(b, m, deterministic)
 }
 func (m *Api) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Api.Merge(m, src)
 }
 func (m *Api) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_Api.Size(m)
 }
 func (m *Api) XXX_DiscardUnknown() {
 	xxx_messageInfo_Api.DiscardUnknown(m)
@@ -115,14 +103,14 @@ func (m *Api) GetName() string {
 	return ""
 }
 
-func (m *Api) GetMethods() []*Method {
+func (m *Api) GetMethods() []*apipb.Method {
 	if m != nil {
 		return m.Methods
 	}
 	return nil
 }
 
-func (m *Api) GetOptions() []*Option {
+func (m *Api) GetOptions() []*typepb.Option {
 	if m != nil {
 		return m.Options
 	}
@@ -136,29 +124,25 @@ func (m *Api) GetVersion() string {
 	return ""
 }
 
-func (m *Api) GetSourceContext() *SourceContext {
+func (m *Api) GetSourceContext() *sourcecontextpb.SourceContext {
 	if m != nil {
 		return m.SourceContext
 	}
 	return nil
 }
 
-func (m *Api) GetMixins() []*Mixin {
+func (m *Api) GetMixins() []*apipb.Mixin {
 	if m != nil {
 		return m.Mixins
 	}
 	return nil
 }
 
-func (m *Api) GetSyntax() Syntax {
+func (m *Api) GetSyntax() typepb.Syntax {
 	if m != nil {
 		return m.Syntax
 	}
-	return Syntax_SYNTAX_PROTO2
-}
-
-func (*Api) XXX_MessageName() string {
-	return "google.protobuf.Api"
+	return typepb.Syntax_SYNTAX_PROTO2
 }
 
 // Method represents a method of an API interface.
@@ -174,39 +158,31 @@ type Method struct {
 	// If true, the response is streamed.
 	ResponseStreaming bool `protobuf:"varint,5,opt,name=response_streaming,json=responseStreaming,proto3" json:"response_streaming,omitempty"`
 	// Any metadata attached to the method.
-	Options []*Option `protobuf:"bytes,6,rep,name=options,proto3" json:"options,omitempty"`
+	Options []*typepb.Option `protobuf:"bytes,6,rep,name=options,proto3" json:"options,omitempty"`
 	// The source syntax of this method.
-	Syntax               Syntax   `protobuf:"varint,7,opt,name=syntax,proto3,enum=google.protobuf.Syntax" json:"syntax,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Syntax               typepb.Syntax `protobuf:"varint,7,opt,name=syntax,proto3,enum=google.protobuf.Syntax" json:"syntax,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
-func (m *Method) Reset()      { *m = Method{} }
-func (*Method) ProtoMessage() {}
+func (m *Method) Reset()         { *m = Method{} }
+func (m *Method) String() string { return proto.CompactTextString(m) }
+func (*Method) ProtoMessage()    {}
 func (*Method) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a2ec32096296c143, []int{1}
 }
 func (m *Method) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_Method.Unmarshal(m, b)
 }
 func (m *Method) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_Method.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_Method.Marshal(b, m, deterministic)
 }
 func (m *Method) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Method.Merge(m, src)
 }
 func (m *Method) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_Method.Size(m)
 }
 func (m *Method) XXX_DiscardUnknown() {
 	xxx_messageInfo_Method.DiscardUnknown(m)
@@ -249,22 +225,18 @@ func (m *Method) GetResponseStreaming() bool {
 	return false
 }
 
-func (m *Method) GetOptions() []*Option {
+func (m *Method) GetOptions() []*typepb.Option {
 	if m != nil {
 		return m.Options
 	}
 	return nil
 }
 
-func (m *Method) GetSyntax() Syntax {
+func (m *Method) GetSyntax() typepb.Syntax {
 	if m != nil {
 		return m.Syntax
 	}
-	return Syntax_SYNTAX_PROTO2
-}
-
-func (*Method) XXX_MessageName() string {
-	return "google.protobuf.Method"
+	return typepb.Syntax_SYNTAX_PROTO2
 }
 
 // Declares an API Interface to be included in this interface. The including
@@ -314,7 +286,7 @@ func (*Method) XXX_MessageName() string {
 // The mixin construct implies that all methods in `AccessControl` are
 // also declared with same name and request/response types in
 // `Storage`. A documentation generator or annotation processor will
-// see the effective `Storage.GetAcl` method after inherting
+// see the effective `Storage.GetAcl` method after inheriting
 // documentation and annotations as follows:
 //
 //	service Storage {
@@ -356,31 +328,23 @@ type Mixin struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Mixin) Reset()      { *m = Mixin{} }
-func (*Mixin) ProtoMessage() {}
+func (m *Mixin) Reset()         { *m = Mixin{} }
+func (m *Mixin) String() string { return proto.CompactTextString(m) }
+func (*Mixin) ProtoMessage()    {}
 func (*Mixin) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a2ec32096296c143, []int{2}
 }
 func (m *Mixin) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_Mixin.Unmarshal(m, b)
 }
 func (m *Mixin) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_Mixin.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_Mixin.Marshal(b, m, deterministic)
 }
 func (m *Mixin) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Mixin.Merge(m, src)
 }
 func (m *Mixin) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_Mixin.Size(m)
 }
 func (m *Mixin) XXX_DiscardUnknown() {
 	xxx_messageInfo_Mixin.DiscardUnknown(m)
@@ -402,9 +366,6 @@ func (m *Mixin) GetRoot() string {
 	return ""
 }
 
-func (*Mixin) XXX_MessageName() string {
-	return "google.protobuf.Mixin"
-}
 func init() {
 	proto.RegisterType((*Api)(nil), "google.protobuf.Api")
 	proto.RegisterType((*Method)(nil), "google.protobuf.Method")
@@ -414,1721 +375,33 @@ func init() {
 func init() { proto.RegisterFile("google/protobuf/api.proto", fileDescriptor_a2ec32096296c143) }
 
 var fileDescriptor_a2ec32096296c143 = []byte{
-	// 467 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x91, 0x31, 0x6f, 0x13, 0x31,
-	0x14, 0xc7, 0xeb, 0xbb, 0xe4, 0x52, 0x5c, 0x91, 0x82, 0x91, 0xc0, 0x64, 0xb0, 0x4e, 0x15, 0xc3,
-	0x09, 0xc4, 0x45, 0x94, 0x4f, 0xd0, 0x20, 0xd4, 0x01, 0x21, 0xa2, 0x0b, 0x08, 0x89, 0x25, 0x4a,
-	0x83, 0x09, 0x96, 0xee, 0x6c, 0x63, 0x3b, 0x90, 0x4c, 0xf0, 0x59, 0x98, 0x10, 0x23, 0xdf, 0x80,
-	0xad, 0x23, 0x23, 0x23, 0xb9, 0x2e, 0x8c, 0x1d, 0x19, 0x91, 0x7d, 0xe7, 0xa6, 0x5c, 0x83, 0x04,
-	0x9b, 0xdf, 0xfb, 0xff, 0xfc, 0xf7, 0x7b, 0x7f, 0xc3, 0x9b, 0x33, 0x21, 0x66, 0x39, 0xed, 0x4b,
-	0x25, 0x8c, 0x38, 0x9a, 0xbf, 0xea, 0x4f, 0x24, 0x4b, 0x5d, 0x81, 0x76, 0x2b, 0x29, 0xf5, 0x52,
-	0xef, 0x56, 0x93, 0xd5, 0x62, 0xae, 0xa6, 0x74, 0x3c, 0x15, 0xdc, 0xd0, 0x85, 0xa9, 0xc0, 0x5e,
-	0xaf, 0x49, 0x99, 0xa5, 0xac, 0x4d, 0xf6, 0xbe, 0x06, 0x30, 0x3c, 0x90, 0x0c, 0x21, 0xd8, 0xe2,
-	0x93, 0x82, 0x62, 0x10, 0x83, 0xe4, 0x52, 0xe6, 0xce, 0xe8, 0x1e, 0xec, 0x14, 0xd4, 0xbc, 0x16,
-	0x2f, 0x35, 0x0e, 0xe2, 0x30, 0xd9, 0xd9, 0xbf, 0x91, 0x36, 0x06, 0x48, 0x1f, 0x3b, 0x3d, 0xf3,
-	0x9c, 0xbd, 0x22, 0xa4, 0x61, 0x82, 0x6b, 0x1c, 0xfe, 0xe5, 0xca, 0x13, 0xa7, 0x67, 0x9e, 0x43,
-	0x18, 0x76, 0xde, 0x52, 0xa5, 0x99, 0xe0, 0xb8, 0xe5, 0x1e, 0xf7, 0x25, 0x7a, 0x08, 0xbb, 0x7f,
-	0xee, 0x83, 0xdb, 0x31, 0x48, 0x76, 0xf6, 0xc9, 0x05, 0xcf, 0x91, 0xc3, 0x1e, 0x54, 0x54, 0x76,
-	0x59, 0x9f, 0x2f, 0x51, 0x0a, 0xa3, 0x82, 0x2d, 0x18, 0xd7, 0x38, 0x72, 0x23, 0x5d, 0xbf, 0xb8,
-	0x85, 0x95, 0xb3, 0x9a, 0x42, 0x7d, 0x18, 0xe9, 0x25, 0x37, 0x93, 0x05, 0xee, 0xc4, 0x20, 0xe9,
-	0x6e, 0x58, 0x61, 0xe4, 0xe4, 0xac, 0xc6, 0xf6, 0xbe, 0x04, 0x30, 0xaa, 0x82, 0xd8, 0x18, 0x63,
-	0x02, 0xaf, 0x28, 0xfa, 0x66, 0x4e, 0xb5, 0x19, 0xdb, 0xe0, 0xc7, 0x73, 0x95, 0xe3, 0xc0, 0xe9,
-	0xdd, 0xba, 0xff, 0x74, 0x29, 0xe9, 0x33, 0x95, 0xa3, 0x3b, 0xf0, 0xaa, 0x27, 0xb5, 0x51, 0x74,
-	0x52, 0x30, 0x3e, 0xc3, 0x61, 0x0c, 0x92, 0xed, 0xcc, 0x5b, 0x8c, 0x7c, 0x1f, 0xdd, 0xb6, 0xb0,
-	0x96, 0x82, 0x6b, 0xba, 0xf6, 0xad, 0x12, 0xdc, 0xf5, 0x82, 0x37, 0xbe, 0x0b, 0xd1, 0x19, 0xbb,
-	0x76, 0x6e, 0x3b, 0xe7, 0x33, 0x97, 0xb5, 0xf5, 0xb9, 0x5f, 0x8c, 0xfe, 0xf1, 0x17, 0xff, 0x3b,
-	0xb4, 0x3e, 0x6c, 0xbb, 0xd8, 0x37, 0x46, 0x86, 0x60, 0x4b, 0x09, 0x61, 0xea, 0x98, 0xdc, 0x79,
-	0xf0, 0xfe, 0xfb, 0x8a, 0x6c, 0x9d, 0xae, 0x08, 0xf8, 0xb5, 0x22, 0xe0, 0x43, 0x49, 0xc0, 0xa7,
-	0x92, 0x80, 0xe3, 0x92, 0x80, 0x6f, 0x25, 0x01, 0x3f, 0x4a, 0x02, 0x7e, 0x96, 0x64, 0xeb, 0xd4,
-	0xf6, 0x4f, 0x08, 0x38, 0x3e, 0x21, 0x00, 0x5e, 0x9b, 0x8a, 0xa2, 0x39, 0xc6, 0x60, 0xfb, 0x40,
-	0xb2, 0xa1, 0x2d, 0x86, 0xe0, 0x45, 0xdb, 0xe6, 0xa6, 0x3f, 0x06, 0xe1, 0xe1, 0x70, 0xf0, 0x39,
-	0x20, 0x87, 0x15, 0x3a, 0xf4, 0x13, 0x3f, 0xa7, 0x79, 0xfe, 0x88, 0x8b, 0x77, 0xdc, 0xc6, 0xa8,
-	0x8f, 0x22, 0xe7, 0x71, 0xff, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2b, 0x64, 0x40, 0x40, 0xa1,
-	0x03, 0x00, 0x00,
+	// 433 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xcd, 0x8e, 0xd3, 0x30,
+	0x14, 0x85, 0x95, 0xa4, 0x4d, 0x07, 0x8f, 0xe8, 0x80, 0x91, 0xc0, 0x74, 0x31, 0x8a, 0x46, 0x2c,
+	0x22, 0x7e, 0x12, 0x31, 0x3c, 0xc1, 0x14, 0xa1, 0x59, 0x20, 0x44, 0x94, 0x82, 0x90, 0xd8, 0x54,
+	0x69, 0x31, 0xc1, 0x22, 0xf1, 0x35, 0xb6, 0x33, 0xb4, 0xaf, 0xc3, 0x92, 0x25, 0x6f, 0xc0, 0x9b,
+	0x21, 0x3b, 0x71, 0x7f, 0xd2, 0x22, 0xc1, 0xce, 0xd7, 0xe7, 0xbb, 0xa7, 0xf7, 0x1e, 0x37, 0xe8,
+	0x61, 0x09, 0x50, 0x56, 0x34, 0x15, 0x12, 0x34, 0x2c, 0x9a, 0xcf, 0x69, 0x21, 0x58, 0x62, 0x0b,
+	0x7c, 0xd6, 0x4a, 0x89, 0x93, 0x26, 0x8f, 0xfa, 0xac, 0x82, 0x46, 0x2e, 0xe9, 0x7c, 0x09, 0x5c,
+	0xd3, 0x95, 0x6e, 0xc1, 0xc9, 0xa4, 0x4f, 0xe9, 0xb5, 0xe8, 0x4c, 0x2e, 0x7e, 0xfb, 0x28, 0xb8,
+	0x12, 0x0c, 0x63, 0x34, 0xe0, 0x45, 0x4d, 0x89, 0x17, 0x79, 0xf1, 0xad, 0xdc, 0x9e, 0xf1, 0x73,
+	0x34, 0xaa, 0xa9, 0xfe, 0x02, 0x9f, 0x14, 0xf1, 0xa3, 0x20, 0x3e, 0xbd, 0x7c, 0x90, 0xf4, 0x06,
+	0x48, 0xde, 0x58, 0x3d, 0x77, 0x9c, 0x69, 0x01, 0xa1, 0x19, 0x70, 0x45, 0x82, 0xbf, 0xb4, 0xbc,
+	0xb5, 0x7a, 0xee, 0x38, 0x4c, 0xd0, 0xe8, 0x86, 0x4a, 0xc5, 0x80, 0x93, 0x81, 0xfd, 0x71, 0x57,
+	0xe2, 0x57, 0x68, 0xbc, 0xbf, 0x0f, 0x19, 0x46, 0x5e, 0x7c, 0x7a, 0x79, 0x7e, 0xe0, 0x39, 0xb3,
+	0xd8, 0xcb, 0x96, 0xca, 0x6f, 0xab, 0xdd, 0x12, 0x27, 0x28, 0xac, 0xd9, 0x8a, 0x71, 0x45, 0x42,
+	0x3b, 0xd2, 0xfd, 0xc3, 0x2d, 0x8c, 0x9c, 0x77, 0x14, 0x4e, 0x51, 0xa8, 0xd6, 0x5c, 0x17, 0x2b,
+	0x32, 0x8a, 0xbc, 0x78, 0x7c, 0x64, 0x85, 0x99, 0x95, 0xf3, 0x0e, 0xbb, 0xf8, 0xe5, 0xa3, 0xb0,
+	0x0d, 0xe2, 0x68, 0x8c, 0x31, 0xba, 0x23, 0xe9, 0xb7, 0x86, 0x2a, 0x3d, 0x37, 0xc1, 0xcf, 0x1b,
+	0x59, 0x11, 0xdf, 0xea, 0xe3, 0xee, 0xfe, 0xdd, 0x5a, 0xd0, 0xf7, 0xb2, 0xc2, 0x4f, 0xd0, 0x5d,
+	0x47, 0x2a, 0x2d, 0x69, 0x51, 0x33, 0x5e, 0x92, 0x20, 0xf2, 0xe2, 0x93, 0xdc, 0x59, 0xcc, 0xdc,
+	0x3d, 0x7e, 0x6c, 0x60, 0x25, 0x80, 0x2b, 0xba, 0xf5, 0x6d, 0x13, 0x3c, 0x73, 0x82, 0x33, 0x7e,
+	0x86, 0xf0, 0x86, 0xdd, 0x3a, 0x0f, 0xad, 0xf3, 0xc6, 0x65, 0x6b, 0xbd, 0xf3, 0x8a, 0xe1, 0x3f,
+	0xbe, 0xe2, 0x7f, 0x87, 0x96, 0xa2, 0xa1, 0x8d, 0xfd, 0x68, 0x64, 0x18, 0x0d, 0x24, 0x80, 0xee,
+	0x62, 0xb2, 0xe7, 0xe9, 0x0d, 0xba, 0xb7, 0x84, 0xba, 0x6f, 0x3b, 0x3d, 0xb9, 0x12, 0x2c, 0x33,
+	0x45, 0xe6, 0x7d, 0x7c, 0xda, 0x89, 0x25, 0x54, 0x05, 0x2f, 0x13, 0x90, 0xe5, 0xfe, 0x7f, 0x5e,
+	0xa5, 0x5f, 0x39, 0x7c, 0xe7, 0xe6, 0x8b, 0x12, 0x8b, 0x1f, 0x7e, 0x70, 0x9d, 0x4d, 0x7f, 0xfa,
+	0xe7, 0xd7, 0x6d, 0x53, 0xe6, 0x06, 0xfd, 0x40, 0xab, 0xea, 0xb5, 0xe1, 0x4c, 0x7a, 0x6a, 0x11,
+	0x5a, 0x8b, 0x17, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0xe5, 0x30, 0xe1, 0x89, 0x98, 0x03, 0x00,
+	0x00,
 }
-
-func (this *Api) Compare(that interface{}) int {
-	if that == nil {
-		if this == nil {
-			return 0
-		}
-		return 1
-	}
-
-	that1, ok := that.(*Api)
-	if !ok {
-		that2, ok := that.(Api)
-		if ok {
-			that1 = &that2
-		} else {
-			return 1
-		}
-	}
-	if that1 == nil {
-		if this == nil {
-			return 0
-		}
-		return 1
-	} else if this == nil {
-		return -1
-	}
-	if this.Name != that1.Name {
-		if this.Name < that1.Name {
-			return -1
-		}
-		return 1
-	}
-	if len(this.Methods) != len(that1.Methods) {
-		if len(this.Methods) < len(that1.Methods) {
-			return -1
-		}
-		return 1
-	}
-	for i := range this.Methods {
-		if c := this.Methods[i].Compare(that1.Methods[i]); c != 0 {
-			return c
-		}
-	}
-	if len(this.Options) != len(that1.Options) {
-		if len(this.Options) < len(that1.Options) {
-			return -1
-		}
-		return 1
-	}
-	for i := range this.Options {
-		if c := this.Options[i].Compare(that1.Options[i]); c != 0 {
-			return c
-		}
-	}
-	if this.Version != that1.Version {
-		if this.Version < that1.Version {
-			return -1
-		}
-		return 1
-	}
-	if c := this.SourceContext.Compare(that1.SourceContext); c != 0 {
-		return c
-	}
-	if len(this.Mixins) != len(that1.Mixins) {
-		if len(this.Mixins) < len(that1.Mixins) {
-			return -1
-		}
-		return 1
-	}
-	for i := range this.Mixins {
-		if c := this.Mixins[i].Compare(that1.Mixins[i]); c != 0 {
-			return c
-		}
-	}
-	if this.Syntax != that1.Syntax {
-		if this.Syntax < that1.Syntax {
-			return -1
-		}
-		return 1
-	}
-	if c := bytes.Compare(this.XXX_unrecognized, that1.XXX_unrecognized); c != 0 {
-		return c
-	}
-	return 0
-}
-func (this *Method) Compare(that interface{}) int {
-	if that == nil {
-		if this == nil {
-			return 0
-		}
-		return 1
-	}
-
-	that1, ok := that.(*Method)
-	if !ok {
-		that2, ok := that.(Method)
-		if ok {
-			that1 = &that2
-		} else {
-			return 1
-		}
-	}
-	if that1 == nil {
-		if this == nil {
-			return 0
-		}
-		return 1
-	} else if this == nil {
-		return -1
-	}
-	if this.Name != that1.Name {
-		if this.Name < that1.Name {
-			return -1
-		}
-		return 1
-	}
-	if this.RequestTypeUrl != that1.RequestTypeUrl {
-		if this.RequestTypeUrl < that1.RequestTypeUrl {
-			return -1
-		}
-		return 1
-	}
-	if this.RequestStreaming != that1.RequestStreaming {
-		if !this.RequestStreaming {
-			return -1
-		}
-		return 1
-	}
-	if this.ResponseTypeUrl != that1.ResponseTypeUrl {
-		if this.ResponseTypeUrl < that1.ResponseTypeUrl {
-			return -1
-		}
-		return 1
-	}
-	if this.ResponseStreaming != that1.ResponseStreaming {
-		if !this.ResponseStreaming {
-			return -1
-		}
-		return 1
-	}
-	if len(this.Options) != len(that1.Options) {
-		if len(this.Options) < len(that1.Options) {
-			return -1
-		}
-		return 1
-	}
-	for i := range this.Options {
-		if c := this.Options[i].Compare(that1.Options[i]); c != 0 {
-			return c
-		}
-	}
-	if this.Syntax != that1.Syntax {
-		if this.Syntax < that1.Syntax {
-			return -1
-		}
-		return 1
-	}
-	if c := bytes.Compare(this.XXX_unrecognized, that1.XXX_unrecognized); c != 0 {
-		return c
-	}
-	return 0
-}
-func (this *Mixin) Compare(that interface{}) int {
-	if that == nil {
-		if this == nil {
-			return 0
-		}
-		return 1
-	}
-
-	that1, ok := that.(*Mixin)
-	if !ok {
-		that2, ok := that.(Mixin)
-		if ok {
-			that1 = &that2
-		} else {
-			return 1
-		}
-	}
-	if that1 == nil {
-		if this == nil {
-			return 0
-		}
-		return 1
-	} else if this == nil {
-		return -1
-	}
-	if this.Name != that1.Name {
-		if this.Name < that1.Name {
-			return -1
-		}
-		return 1
-	}
-	if this.Root != that1.Root {
-		if this.Root < that1.Root {
-			return -1
-		}
-		return 1
-	}
-	if c := bytes.Compare(this.XXX_unrecognized, that1.XXX_unrecognized); c != 0 {
-		return c
-	}
-	return 0
-}
-func (this *Api) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Api)
-	if !ok {
-		that2, ok := that.(Api)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if len(this.Methods) != len(that1.Methods) {
-		return false
-	}
-	for i := range this.Methods {
-		if !this.Methods[i].Equal(that1.Methods[i]) {
-			return false
-		}
-	}
-	if len(this.Options) != len(that1.Options) {
-		return false
-	}
-	for i := range this.Options {
-		if !this.Options[i].Equal(that1.Options[i]) {
-			return false
-		}
-	}
-	if this.Version != that1.Version {
-		return false
-	}
-	if !this.SourceContext.Equal(that1.SourceContext) {
-		return false
-	}
-	if len(this.Mixins) != len(that1.Mixins) {
-		return false
-	}
-	for i := range this.Mixins {
-		if !this.Mixins[i].Equal(that1.Mixins[i]) {
-			return false
-		}
-	}
-	if this.Syntax != that1.Syntax {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return false
-	}
-	return true
-}
-func (this *Method) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Method)
-	if !ok {
-		that2, ok := that.(Method)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.RequestTypeUrl != that1.RequestTypeUrl {
-		return false
-	}
-	if this.RequestStreaming != that1.RequestStreaming {
-		return false
-	}
-	if this.ResponseTypeUrl != that1.ResponseTypeUrl {
-		return false
-	}
-	if this.ResponseStreaming != that1.ResponseStreaming {
-		return false
-	}
-	if len(this.Options) != len(that1.Options) {
-		return false
-	}
-	for i := range this.Options {
-		if !this.Options[i].Equal(that1.Options[i]) {
-			return false
-		}
-	}
-	if this.Syntax != that1.Syntax {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return false
-	}
-	return true
-}
-func (this *Mixin) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Mixin)
-	if !ok {
-		that2, ok := that.(Mixin)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.Root != that1.Root {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return false
-	}
-	return true
-}
-func (this *Api) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 11)
-	s = append(s, "&types.Api{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	if this.Methods != nil {
-		s = append(s, "Methods: "+fmt.Sprintf("%#v", this.Methods)+",\n")
-	}
-	if this.Options != nil {
-		s = append(s, "Options: "+fmt.Sprintf("%#v", this.Options)+",\n")
-	}
-	s = append(s, "Version: "+fmt.Sprintf("%#v", this.Version)+",\n")
-	if this.SourceContext != nil {
-		s = append(s, "SourceContext: "+fmt.Sprintf("%#v", this.SourceContext)+",\n")
-	}
-	if this.Mixins != nil {
-		s = append(s, "Mixins: "+fmt.Sprintf("%#v", this.Mixins)+",\n")
-	}
-	s = append(s, "Syntax: "+fmt.Sprintf("%#v", this.Syntax)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Method) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 11)
-	s = append(s, "&types.Method{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "RequestTypeUrl: "+fmt.Sprintf("%#v", this.RequestTypeUrl)+",\n")
-	s = append(s, "RequestStreaming: "+fmt.Sprintf("%#v", this.RequestStreaming)+",\n")
-	s = append(s, "ResponseTypeUrl: "+fmt.Sprintf("%#v", this.ResponseTypeUrl)+",\n")
-	s = append(s, "ResponseStreaming: "+fmt.Sprintf("%#v", this.ResponseStreaming)+",\n")
-	if this.Options != nil {
-		s = append(s, "Options: "+fmt.Sprintf("%#v", this.Options)+",\n")
-	}
-	s = append(s, "Syntax: "+fmt.Sprintf("%#v", this.Syntax)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Mixin) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&types.Mixin{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "Root: "+fmt.Sprintf("%#v", this.Root)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringApi(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
-func (m *Api) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *Api) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Api) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Syntax != 0 {
-		i = encodeVarintApi(dAtA, i, uint64(m.Syntax))
-		i--
-		dAtA[i] = 0x38
-	}
-	if len(m.Mixins) > 0 {
-		for iNdEx := len(m.Mixins) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Mixins[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintApi(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x32
-		}
-	}
-	if m.SourceContext != nil {
-		{
-			size, err := m.SourceContext.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintApi(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.Version) > 0 {
-		i -= len(m.Version)
-		copy(dAtA[i:], m.Version)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Version)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.Options) > 0 {
-		for iNdEx := len(m.Options) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Options[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintApi(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x1a
-		}
-	}
-	if len(m.Methods) > 0 {
-		for iNdEx := len(m.Methods) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Methods[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintApi(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x12
-		}
-	}
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Name)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *Method) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *Method) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Method) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Syntax != 0 {
-		i = encodeVarintApi(dAtA, i, uint64(m.Syntax))
-		i--
-		dAtA[i] = 0x38
-	}
-	if len(m.Options) > 0 {
-		for iNdEx := len(m.Options) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Options[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintApi(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x32
-		}
-	}
-	if m.ResponseStreaming {
-		i--
-		if m.ResponseStreaming {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x28
-	}
-	if len(m.ResponseTypeUrl) > 0 {
-		i -= len(m.ResponseTypeUrl)
-		copy(dAtA[i:], m.ResponseTypeUrl)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.ResponseTypeUrl)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.RequestStreaming {
-		i--
-		if m.RequestStreaming {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x18
-	}
-	if len(m.RequestTypeUrl) > 0 {
-		i -= len(m.RequestTypeUrl)
-		copy(dAtA[i:], m.RequestTypeUrl)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.RequestTypeUrl)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Name)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *Mixin) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *Mixin) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Mixin) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Root) > 0 {
-		i -= len(m.Root)
-		copy(dAtA[i:], m.Root)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Root)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Name)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func encodeVarintApi(dAtA []byte, offset int, v uint64) int {
-	offset -= sovApi(v)
-	base := offset
-	for v >= 1<<7 {
-		dAtA[offset] = uint8(v&0x7f | 0x80)
-		v >>= 7
-		offset++
-	}
-	dAtA[offset] = uint8(v)
-	return base
-}
-func NewPopulatedApi(r randyApi, easy bool) *Api {
-	this := &Api{}
-	this.Name = string(randStringApi(r))
-	if r.Intn(5) != 0 {
-		v1 := r.Intn(5)
-		this.Methods = make([]*Method, v1)
-		for i := 0; i < v1; i++ {
-			this.Methods[i] = NewPopulatedMethod(r, easy)
-		}
-	}
-	if r.Intn(5) != 0 {
-		v2 := r.Intn(5)
-		this.Options = make([]*Option, v2)
-		for i := 0; i < v2; i++ {
-			this.Options[i] = NewPopulatedOption(r, easy)
-		}
-	}
-	this.Version = string(randStringApi(r))
-	if r.Intn(5) != 0 {
-		this.SourceContext = NewPopulatedSourceContext(r, easy)
-	}
-	if r.Intn(5) != 0 {
-		v3 := r.Intn(5)
-		this.Mixins = make([]*Mixin, v3)
-		for i := 0; i < v3; i++ {
-			this.Mixins[i] = NewPopulatedMixin(r, easy)
-		}
-	}
-	this.Syntax = Syntax([]int32{0, 1}[r.Intn(2)])
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedApi(r, 8)
-	}
-	return this
-}
-
-func NewPopulatedMethod(r randyApi, easy bool) *Method {
-	this := &Method{}
-	this.Name = string(randStringApi(r))
-	this.RequestTypeUrl = string(randStringApi(r))
-	this.RequestStreaming = bool(bool(r.Intn(2) == 0))
-	this.ResponseTypeUrl = string(randStringApi(r))
-	this.ResponseStreaming = bool(bool(r.Intn(2) == 0))
-	if r.Intn(5) != 0 {
-		v4 := r.Intn(5)
-		this.Options = make([]*Option, v4)
-		for i := 0; i < v4; i++ {
-			this.Options[i] = NewPopulatedOption(r, easy)
-		}
-	}
-	this.Syntax = Syntax([]int32{0, 1}[r.Intn(2)])
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedApi(r, 8)
-	}
-	return this
-}
-
-func NewPopulatedMixin(r randyApi, easy bool) *Mixin {
-	this := &Mixin{}
-	this.Name = string(randStringApi(r))
-	this.Root = string(randStringApi(r))
-	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedApi(r, 3)
-	}
-	return this
-}
-
-type randyApi interface {
-	Float32() float32
-	Float64() float64
-	Int63() int64
-	Int31() int32
-	Uint32() uint32
-	Intn(n int) int
-}
-
-func randUTF8RuneApi(r randyApi) rune {
-	ru := r.Intn(62)
-	if ru < 10 {
-		return rune(ru + 48)
-	} else if ru < 36 {
-		return rune(ru + 55)
-	}
-	return rune(ru + 61)
-}
-func randStringApi(r randyApi) string {
-	v5 := r.Intn(100)
-	tmps := make([]rune, v5)
-	for i := 0; i < v5; i++ {
-		tmps[i] = randUTF8RuneApi(r)
-	}
-	return string(tmps)
-}
-func randUnrecognizedApi(r randyApi, maxFieldNumber int) (dAtA []byte) {
-	l := r.Intn(5)
-	for i := 0; i < l; i++ {
-		wire := r.Intn(4)
-		if wire == 3 {
-			wire = 5
-		}
-		fieldNumber := maxFieldNumber + r.Intn(100)
-		dAtA = randFieldApi(dAtA, r, fieldNumber, wire)
-	}
-	return dAtA
-}
-func randFieldApi(dAtA []byte, r randyApi, fieldNumber int, wire int) []byte {
-	key := uint32(fieldNumber)<<3 | uint32(wire)
-	switch wire {
-	case 0:
-		dAtA = encodeVarintPopulateApi(dAtA, uint64(key))
-		v6 := r.Int63()
-		if r.Intn(2) == 0 {
-			v6 *= -1
-		}
-		dAtA = encodeVarintPopulateApi(dAtA, uint64(v6))
-	case 1:
-		dAtA = encodeVarintPopulateApi(dAtA, uint64(key))
-		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	case 2:
-		dAtA = encodeVarintPopulateApi(dAtA, uint64(key))
-		ll := r.Intn(100)
-		dAtA = encodeVarintPopulateApi(dAtA, uint64(ll))
-		for j := 0; j < ll; j++ {
-			dAtA = append(dAtA, byte(r.Intn(256)))
-		}
-	default:
-		dAtA = encodeVarintPopulateApi(dAtA, uint64(key))
-		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	}
-	return dAtA
-}
-func encodeVarintPopulateApi(dAtA []byte, v uint64) []byte {
-	for v >= 1<<7 {
-		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
-		v >>= 7
-	}
-	dAtA = append(dAtA, uint8(v))
-	return dAtA
-}
-func (m *Api) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Name)
-	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
-	}
-	if len(m.Methods) > 0 {
-		for _, e := range m.Methods {
-			l = e.Size()
-			n += 1 + l + sovApi(uint64(l))
-		}
-	}
-	if len(m.Options) > 0 {
-		for _, e := range m.Options {
-			l = e.Size()
-			n += 1 + l + sovApi(uint64(l))
-		}
-	}
-	l = len(m.Version)
-	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
-	}
-	if m.SourceContext != nil {
-		l = m.SourceContext.Size()
-		n += 1 + l + sovApi(uint64(l))
-	}
-	if len(m.Mixins) > 0 {
-		for _, e := range m.Mixins {
-			l = e.Size()
-			n += 1 + l + sovApi(uint64(l))
-		}
-	}
-	if m.Syntax != 0 {
-		n += 1 + sovApi(uint64(m.Syntax))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *Method) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Name)
-	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
-	}
-	l = len(m.RequestTypeUrl)
-	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
-	}
-	if m.RequestStreaming {
-		n += 2
-	}
-	l = len(m.ResponseTypeUrl)
-	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
-	}
-	if m.ResponseStreaming {
-		n += 2
-	}
-	if len(m.Options) > 0 {
-		for _, e := range m.Options {
-			l = e.Size()
-			n += 1 + l + sovApi(uint64(l))
-		}
-	}
-	if m.Syntax != 0 {
-		n += 1 + sovApi(uint64(m.Syntax))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *Mixin) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Name)
-	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
-	}
-	l = len(m.Root)
-	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func sovApi(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
-}
-func sozApi(x uint64) (n int) {
-	return sovApi(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Api) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForMethods := "[]*Method{"
-	for _, f := range this.Methods {
-		repeatedStringForMethods += strings.Replace(f.String(), "Method", "Method", 1) + ","
-	}
-	repeatedStringForMethods += "}"
-	repeatedStringForOptions := "[]*Option{"
-	for _, f := range this.Options {
-		repeatedStringForOptions += strings.Replace(fmt.Sprintf("%v", f), "Option", "Option", 1) + ","
-	}
-	repeatedStringForOptions += "}"
-	repeatedStringForMixins := "[]*Mixin{"
-	for _, f := range this.Mixins {
-		repeatedStringForMixins += strings.Replace(f.String(), "Mixin", "Mixin", 1) + ","
-	}
-	repeatedStringForMixins += "}"
-	s := strings.Join([]string{`&Api{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`Methods:` + repeatedStringForMethods + `,`,
-		`Options:` + repeatedStringForOptions + `,`,
-		`Version:` + fmt.Sprintf("%v", this.Version) + `,`,
-		`SourceContext:` + strings.Replace(fmt.Sprintf("%v", this.SourceContext), "SourceContext", "SourceContext", 1) + `,`,
-		`Mixins:` + repeatedStringForMixins + `,`,
-		`Syntax:` + fmt.Sprintf("%v", this.Syntax) + `,`,
-		`XXX_unrecognized:` + fmt.Sprintf("%v", this.XXX_unrecognized) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Method) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForOptions := "[]*Option{"
-	for _, f := range this.Options {
-		repeatedStringForOptions += strings.Replace(fmt.Sprintf("%v", f), "Option", "Option", 1) + ","
-	}
-	repeatedStringForOptions += "}"
-	s := strings.Join([]string{`&Method{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`RequestTypeUrl:` + fmt.Sprintf("%v", this.RequestTypeUrl) + `,`,
-		`RequestStreaming:` + fmt.Sprintf("%v", this.RequestStreaming) + `,`,
-		`ResponseTypeUrl:` + fmt.Sprintf("%v", this.ResponseTypeUrl) + `,`,
-		`ResponseStreaming:` + fmt.Sprintf("%v", this.ResponseStreaming) + `,`,
-		`Options:` + repeatedStringForOptions + `,`,
-		`Syntax:` + fmt.Sprintf("%v", this.Syntax) + `,`,
-		`XXX_unrecognized:` + fmt.Sprintf("%v", this.XXX_unrecognized) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Mixin) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Mixin{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`Root:` + fmt.Sprintf("%v", this.Root) + `,`,
-		`XXX_unrecognized:` + fmt.Sprintf("%v", this.XXX_unrecognized) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringApi(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
-}
-func (m *Api) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowApi
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Api: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Api: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Name = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Methods", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Methods = append(m.Methods, &Method{})
-			if err := m.Methods[len(m.Methods)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Options = append(m.Options, &Option{})
-			if err := m.Options[len(m.Options)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Version = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SourceContext", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.SourceContext == nil {
-				m.SourceContext = &SourceContext{}
-			}
-			if err := m.SourceContext.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Mixins", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Mixins = append(m.Mixins, &Mixin{})
-			if err := m.Mixins[len(m.Mixins)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 7:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Syntax", wireType)
-			}
-			m.Syntax = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Syntax |= Syntax(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipApi(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthApi
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *Method) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowApi
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Method: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Method: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Name = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequestTypeUrl", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RequestTypeUrl = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequestStreaming", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.RequestStreaming = bool(v != 0)
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResponseTypeUrl", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ResponseTypeUrl = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResponseStreaming", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.ResponseStreaming = bool(v != 0)
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Options = append(m.Options, &Option{})
-			if err := m.Options[len(m.Options)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 7:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Syntax", wireType)
-			}
-			m.Syntax = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Syntax |= Syntax(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipApi(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthApi
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *Mixin) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowApi
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Mixin: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Mixin: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Name = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Root", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Root = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipApi(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthApi
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func skipApi(dAtA []byte) (n int, err error) {
-	l := len(dAtA)
-	iNdEx := 0
-	depth := 0
-	for iNdEx < l {
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return 0, ErrIntOverflowApi
-			}
-			if iNdEx >= l {
-				return 0, io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		wireType := int(wire & 0x7)
-		switch wireType {
-		case 0:
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return 0, ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return 0, io.ErrUnexpectedEOF
-				}
-				iNdEx++
-				if dAtA[iNdEx-1] < 0x80 {
-					break
-				}
-			}
-		case 1:
-			iNdEx += 8
-		case 2:
-			var length int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return 0, ErrIntOverflowApi
-				}
-				if iNdEx >= l {
-					return 0, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				length |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if length < 0 {
-				return 0, ErrInvalidLengthApi
-			}
-			iNdEx += length
-		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupApi
-			}
-			depth--
-		case 5:
-			iNdEx += 4
-		default:
-			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
-		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthApi
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
-	}
-	return 0, io.ErrUnexpectedEOF
-}
-
-var (
-	ErrInvalidLengthApi        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowApi          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupApi = fmt.Errorf("proto: unexpected end of group")
-)
