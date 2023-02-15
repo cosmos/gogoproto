@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"strings"
 
 	"golang.org/x/exp/slices"
@@ -96,10 +97,10 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 	}
 
 	if len(checkImportErr) > 0 {
-		fmt.Printf("Got %d file descriptor import path errors:\n\t%s\n", len(checkImportErr), strings.Join(checkImportErr, "\n\t"))
+		fmt.Fprintf(os.Stderr, "Got %d file descriptor import path errors:\n\t%s\n", len(checkImportErr), strings.Join(checkImportErr, "\n\t"))
 	}
 	if diffErr != nil {
-		fmt.Printf("Got %d file descriptor mismatches:\n\t%s\nMake sure gogoproto and protoregistry use the same .proto files\n", len(diffErr), strings.Join(diffErr, "\n\t"))
+		fmt.Fprintf(os.Stderr, "Got %d file descriptor mismatches:\n\t%s\nMake sure gogoproto and protoregistry use the same .proto files\n", len(diffErr), strings.Join(diffErr, "\n\t"))
 	}
 
 	slices.SortFunc(fds.File, func(x, y *descriptorpb.FileDescriptorProto) bool {
