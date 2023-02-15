@@ -467,7 +467,7 @@ func (this *FieldOptions) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 11)
+	s := make([]string, 0, 12)
 	s = append(s, "&descriptorpb.FieldOptions{")
 	if this.Ctype != nil {
 		s = append(s, "Ctype: "+valueToGoStringDescriptor(this.Ctype, "FieldOptions_CType")+",\n")
@@ -480,6 +480,9 @@ func (this *FieldOptions) GoString() string {
 	}
 	if this.Lazy != nil {
 		s = append(s, "Lazy: "+valueToGoStringDescriptor(this.Lazy, "bool")+",\n")
+	}
+	if this.UnverifiedLazy != nil {
+		s = append(s, "UnverifiedLazy: "+valueToGoStringDescriptor(this.UnverifiedLazy, "bool")+",\n")
 	}
 	if this.Deprecated != nil {
 		s = append(s, "Deprecated: "+valueToGoStringDescriptor(this.Deprecated, "bool")+",\n")

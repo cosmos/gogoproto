@@ -115,8 +115,8 @@ func (*Struct) XXX_MessageName() string {
 
 // `Value` represents a dynamically typed value which can be either
 // null, a number, a string, a boolean, a recursive struct value, or a
-// list of values. A producer of value is expected to set one of that
-// variants, absence of any variant indicates an error.
+// list of values. A producer of value is expected to set one of these
+// variants. Absence of any variant indicates an error.
 //
 // The JSON representation for `Value` is JSON value.
 type Value struct {
@@ -971,7 +971,7 @@ func (this *Struct) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&structpb.Struct{")
 	keysForFields := make([]string, 0, len(this.Fields))
-	for k, _ := range this.Fields {
+	for k := range this.Fields {
 		keysForFields = append(keysForFields, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForFields)
@@ -1602,7 +1602,7 @@ func (this *Struct) String() string {
 		return "nil"
 	}
 	keysForFields := make([]string, 0, len(this.Fields))
-	for k, _ := range this.Fields {
+	for k := range this.Fields {
 		keysForFields = append(keysForFields, k)
 	}
 	github_com_cosmos_gogoproto_sortkeys.Strings(keysForFields)

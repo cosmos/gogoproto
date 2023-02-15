@@ -32,8 +32,6 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 //	service Foo {
 //	  rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
 //	}
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
 type Empty struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

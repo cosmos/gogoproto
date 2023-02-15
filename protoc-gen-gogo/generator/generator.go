@@ -3299,9 +3299,12 @@ func (g *Generator) generateFileDescriptor(file *FileDescriptor) {
 			gogoproto.E_EnumStringerAll,
 			gogoproto.E_GoprotoEnumStringerAll,
 			gogoproto.E_EqualAll,
+			gogoproto.E_GoprotoStringer,
 			gogoproto.E_GostringAll,
 			gogoproto.E_GoprotoStringerAll,
 			gogoproto.E_MessagenameAll,
+			gogoproto.E_Stringer,
+			gogoproto.E_Typedecl,
 			gogoproto.E_CompareAll,  // for struct.proto only
 			gogoproto.E_StringerAll, // for duration.proto and timestamp.proto
 			gogoproto.E_PopulateAll, // for duration.proto and timestamp.proto

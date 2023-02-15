@@ -1,6 +1,7 @@
-# This is the version shipped with google.golang.org/protobuf v1.28.1
-VERSION=3.15.3
-URL=https://raw.githubusercontent.com/protocolbuffers/protobuf/v${VERSION}/src/google/protobuf
+# This is the version shipped with google.golang.org/protobuf v1.28.2-0.20230208135220-49eaa78c6c9c
+# that the SDK currently uses.
+VERSION=v21.5
+URL=https://raw.githubusercontent.com/protocolbuffers/protobuf/${VERSION}/src/google/protobuf
 
 regenerate:
 
