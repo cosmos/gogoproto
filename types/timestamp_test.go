@@ -123,7 +123,7 @@ func TestTimestampString(t *testing.T) {
 		// Not much testing needed because presumably time.Format is
 		// well-tested.
 		{&Timestamp{Seconds: 0, Nanos: 0}, "1970-01-01T00:00:00Z"},
-		{&Timestamp{Seconds: minValidSeconds - 1, Nanos: 0}, "(timestamp: &types.Timestamp{Seconds: -62135596801,\nNanos: 0,\n} before 0001-01-01)"},
+		{&Timestamp{Seconds: minValidSeconds - 1, Nanos: 0}, "(timestamp: &timestamppb.Timestamp{Seconds: -62135596801,\nNanos: 0,\n} before 0001-01-01)"},
 	} {
 		got := TimestampString(test.ts)
 		if got != test.want {
