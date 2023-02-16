@@ -4,7 +4,7 @@
 
 ### Improvements
 
-- [#43](https://github.com/cosmos/gogoproto/pull/43) Relax runtime linter checks introduced in #37: instead of throwing an error, simply log a warning to StdErr.
+- [#43](https://github.com/cosmos/gogoproto/pull/43) Relax runtime linter checks introduced in #37: instead of throwing an error, simply log a warning to StdErr. Also provide a helper function `DebugFileDescriptorsMismatch` to debug these errors.
 - [#37](https://github.com/cosmos/gogoproto/pull/37) Add `MergedFileDescriptors` and `MergedRegistry` to retrieve a registry with merged file descriptors from both gogo and protoregistry.
 
 ### Bug Fixes
