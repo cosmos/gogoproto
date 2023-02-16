@@ -82,9 +82,11 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 			return nil, err
 		}
 
-		err = CheckImportPath(*fd.Name, *fd.Package)
-		if err != nil {
-			checkImportErr = append(checkImportErr, err.Error())
+		if fd.Name != nil && fd.Package != nil {
+			err := CheckImportPath(*fd.Name, *fd.Package)
+			if err != nil {
+				checkImportErr = append(checkImportErr, err.Error())
+			}
 		}
 
 		// If it's not in the protoregistry file descriptors, add it.
