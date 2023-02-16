@@ -9,11 +9,13 @@ import (
 	"os"
 	"strings"
 
+	"github.com/google/go-cmp/cmp"
 	"golang.org/x/exp/slices"
 	protov2 "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
+	"google.golang.org/protobuf/testing/protocmp"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
@@ -27,6 +29,17 @@ import (
 // is a mismatch, the final merged file descriptor set will contain the
 // protoregistry file descriptor, and discard the gogo one.
 func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
+	return mergedFileDescriptors(false)
+}
+
+// DebugFileDescriptorsMismatch is a helper function to debug file descriptor
+// mismatches. It returns an error if there are any mismatches.
+func DebugFileDescriptorsMismatch() error {
+	_, err := mergedFileDescriptors(true)
+	return err
+}
+
+func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) {
 	fds := &descriptorpb.FileDescriptorSet{}
 
 	// While combing through the file descriptors, we'll also log any errors
@@ -91,16 +104,29 @@ func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 			// mismatch, then we do nothing, and take the protoregistry file
 			// descriptor as the correct one.
 			if !protov2.Equal(protodesc.ToFileDescriptorProto(protoregFd), fd) {
-				diffErr = append(diffErr, *fd.Name)
+				diff := cmp.Diff(protodesc.ToFileDescriptorProto(protoregFd), fd, protocmp.Transform())
+				diffErr = append(diffErr, fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff))
 			}
 		}
 	}
 
-	if len(checkImportErr) > 0 {
-		fmt.Fprintf(os.Stderr, "Got %d file descriptor import path errors:\n\t%s\n", len(checkImportErr), strings.Join(checkImportErr, "\n\t"))
-	}
-	if diffErr != nil {
-		fmt.Fprintf(os.Stderr, "Got %d file descriptor mismatches:\n\t%s\nMake sure gogoproto and protoregistry use the same .proto files\n", len(diffErr), strings.Join(diffErr, "\n\t"))
+	if debug {
+		errStr := new(bytes.Buffer)
+		if len(checkImportErr) > 0 {
+			fmt.Fprintf(errStr, "Got %d file descriptor import path errors:\n\t%s\n", len(checkImportErr), strings.Join(checkImportErr, "\n\t"))
+		}
+		if len(diffErr) > 0 {
+			fmt.Fprintf(errStr, "Got %d file descriptor mismatches:\n\t%s\nMake sure gogoproto and protoregistry use the same .proto files\n", len(diffErr), strings.Join(diffErr, "\n\t"))
+		}
+		if errStr.Len() > 0 {
+			return nil, fmt.Errorf(errStr.String())
+		}
+	} else {
+		// In production, we just log a warning to StdErr with the number of
+		// linter errors.
+		if len(checkImportErr) > 0 || len(diffErr) > 0 {
+			fmt.Fprintf(os.Stderr, "Got %d file descriptor import path errors and %d file descriptor mismatches. Run `proto.DebugFileDescriptorsMismatch` to debug them.\n", len(checkImportErr), len(diffErr))
+		}
 	}
 
 	slices.SortFunc(fds.File, func(x, y *descriptorpb.FileDescriptorProto) bool {
