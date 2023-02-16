@@ -25,8 +25,8 @@ import (
 // - check that all file descriptors' import paths are correct (i.e. match
 // their fully-qualified package name). A warning is logged if this check fails.
 // - check that if both gogo and protoregistry import the same file descriptor,
-// that these are identical under proto.Equal. Logs a warning if not. If there
-// is a mismatch, the final merged file descriptor set will contain the
+// that these are identical under proto.Equal. A warning is logged if this
+// check fails. If there is a mismatch, the final merged file descriptor set will contain the
 // protoregistry file descriptor, and discard the gogo one.
 func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 	return mergedFileDescriptors(false)
