@@ -23,7 +23,7 @@ import (
 // file descriptors registered with both gogoproto and protoregistry. When
 // merging it also performs the following checks:
 // - check that all file descriptors' import paths are correct (i.e. match
-// their fully-qualified package name). Logs a warning if not.
+// their fully-qualified package name). A warning is logged if this check fails.
 // - check that if both gogo and protoregistry import the same file descriptor,
 // that these are identical under proto.Equal. Logs a warning if not. If there
 // is a mismatch, the final merged file descriptor set will contain the
