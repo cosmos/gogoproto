@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [v1.4.5](https://github.com/cosmos/gogoproto/releases/tag/v1.4.5) - 2023-    02-20
 
 ### Improvements
 

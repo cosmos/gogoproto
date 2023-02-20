@@ -52,10 +52,8 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 	// Add protoregistry file descriptors to our final file descriptor set.
 	protoregistry.GlobalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
 		fd := protodesc.ToFileDescriptorProto(fileDescriptor)
-		if fd.Name != nil && fd.Package != nil {
-			if err := CheckImportPath(*fd.Name, *fd.Package); err != nil {
-				checkImportErr = append(checkImportErr, err.Error())
-			}
+		if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
+			checkImportErr = append(checkImportErr, err.Error())
 		}
 
 		fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
@@ -82,11 +80,9 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 			return nil, err
 		}
 
-		if fd.Name != nil && fd.Package != nil {
-			err := CheckImportPath(*fd.Name, *fd.Package)
-			if err != nil {
-				checkImportErr = append(checkImportErr, err.Error())
-			}
+		err = CheckImportPath(fd.GetName(), fd.GetPackage())
+		if err != nil {
+			checkImportErr = append(checkImportErr, err.Error())
 		}
 
 		// If it's not in the protoregistry file descriptors, add it.
@@ -151,7 +147,8 @@ func MergedRegistry() (*protoregistry.Files, error) {
 }
 
 // CheckImportPath checks that the import path of the given file descriptor
-// matches its fully qualified package name.
+// matches its fully qualified package name. To mimic gogo's old behavior, the
+// fdPackage string can be empty.
 //
 // Example:
 // Proto file "google/protobuf/descriptor.proto" should be imported
