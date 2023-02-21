@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"os"
 	"strings"
 
 	"github.com/google/go-cmp/cmp"
@@ -118,12 +117,6 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 		}
 		if errStr.Len() > 0 {
 			return nil, fmt.Errorf(errStr.String())
-		}
-	} else {
-		// In production, we just log a warning to StdErr with the number of
-		// linter errors.
-		if len(checkImportErr) > 0 || len(diffErr) > 0 {
-			fmt.Fprintf(os.Stderr, "Got %d file descriptor import path errors and %d file descriptor mismatches. Run `proto.DebugFileDescriptorsMismatch` to debug them.\n", len(checkImportErr), len(diffErr))
 		}
 	}
 
