@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.4.6](https://github.com/cosmos/gogoproto/releases/tag/v1.4.6) - 2023-02-21
+
+### Improvements
+
+- [#45](https://github.com/cosmos/gogoproto/pull/45) Remove the StdErr warning about file descriptor mismatches, which was deemed unclear and too invasive.
+
 ## [v1.4.5](https://github.com/cosmos/gogoproto/releases/tag/v1.4.5) - 2023-02-20
 
 ### Improvements
