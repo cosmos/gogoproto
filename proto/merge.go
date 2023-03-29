@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"sync"
 
 	"github.com/google/go-cmp/cmp"
 	"golang.org/x/exp/slices"
@@ -61,50 +62,86 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 	})
 
 	// load gogo proto file descriptors
+	type fdResult struct {
+		Fd  *descriptorpb.FileDescriptorProto
+		Err error
+	}
+	chFd := make(chan *fdResult)
+	wg := new(sync.WaitGroup)
 	gogoFds := AllFileDescriptors()
 	for _, compressedBz := range gogoFds {
-		rdr, err := gzip.NewReader(bytes.NewReader(compressedBz))
-		if err != nil {
-			return nil, err
-		}
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
 
-		bz, err := io.ReadAll(rdr)
-		if err != nil {
-			return nil, err
-		}
+			rdr, err := gzip.NewReader(bytes.NewReader(compressedBz))
+			if err != nil {
+				chFd <- &fdResult{
+					Err: err,
+				}
+				return
+			}
 
-		fd := &descriptorpb.FileDescriptorProto{}
-		err = protov2.Unmarshal(bz, fd)
-		if err != nil {
-			return nil, err
-		}
+			bz, err := io.ReadAll(rdr)
+			if err != nil {
+				chFd <- &fdResult{
+					Err: err,
+				}
+				return
+			}
 
-		err = CheckImportPath(fd.GetName(), fd.GetPackage())
-		if err != nil {
-			checkImportErr = append(checkImportErr, err.Error())
-		}
+			fd := &descriptorpb.FileDescriptorProto{}
+			err = protov2.Unmarshal(bz, fd)
+			if err != nil {
+				chFd <- &fdResult{
+					Err: err,
+				}
+				return
+			}
 
-		// If it's not in the protoregistry file descriptors, add it.
-		protoregFd, err := protoregistry.GlobalFiles.FindFileByPath(*fd.Name)
-		// If we already loaded gogo's file descriptor, compare that the 2
-		// are strictly equal, or else log a warning.
-		if err != nil {
-			// If we have a NotFound error, we add this file descriptor to the
-			// final file descriptor set.
-			if errors.Is(err, protoregistry.NotFound) {
-				fds.File = append(fds.File, fd)
+			err = CheckImportPath(fd.GetName(), fd.GetPackage())
+			if err != nil {
+				checkImportErr = append(checkImportErr, err.Error())
+			}
+
+			// If it's not in the protoregistry file descriptors, add it.
+			protoregFd, err := protoregistry.GlobalFiles.FindFileByPath(*fd.Name)
+			// If we already loaded gogo's file descriptor, compare that the 2
+			// are strictly equal, or else log a warning.
+			if err != nil {
+				// If we have a NotFound error, we add this file descriptor to the
+				// final file descriptor set.
+				if errors.Is(err, protoregistry.NotFound) {
+					chFd <- &fdResult{
+						Fd: fd,
+					}
+				} else {
+					chFd <- &fdResult{
+						Err: err,
+					}
+					return
+				}
 			} else {
-				return nil, err
+				// If there's a mismatch, we log a warning. If there was no
+				// mismatch, then we do nothing, and take the protoregistry file
+				// descriptor as the correct one.
+				if !protov2.Equal(protodesc.ToFileDescriptorProto(protoregFd), fd) {
+					diff := cmp.Diff(protodesc.ToFileDescriptorProto(protoregFd), fd, protocmp.Transform())
+					diffErr = append(diffErr, fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff))
+				}
 			}
-		} else {
-			// If there's a mismatch, we log a warning. If there was no
-			// mismatch, then we do nothing, and take the protoregistry file
-			// descriptor as the correct one.
-			if !protov2.Equal(protodesc.ToFileDescriptorProto(protoregFd), fd) {
-				diff := cmp.Diff(protodesc.ToFileDescriptorProto(protoregFd), fd, protocmp.Transform())
-				diffErr = append(diffErr, fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff))
-			}
+		}()
+	}
+	go func() {
+		wg.Wait()
+		close(chFd)
+	}()
+
+	for r := range chFd {
+		if r.Err != nil {
+			return nil, r.Err
 		}
+		fds.File = append(fds.File, r.Fd)
 	}
 
 	if debug {
