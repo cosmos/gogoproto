@@ -71,7 +71,7 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 	gogoFds := AllFileDescriptors()
 	for _, compressedBz := range gogoFds {
 		wg.Add(1)
-		go func() {
+		go func(compressedBz []byte) {
 			defer wg.Done()
 
 			rdr, err := gzip.NewReader(bytes.NewReader(compressedBz))
@@ -130,7 +130,7 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 					diffErr = append(diffErr, fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff))
 				}
 			}
-		}()
+		}(compressedBz)
 	}
 	go func() {
 		wg.Wait()
