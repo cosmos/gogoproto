@@ -113,7 +113,7 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 				// If there's a mismatch, we log a warning. If there was no
 				// mismatch, then we do nothing, and take the protoregistry file
 				// descriptor as the correct one.
-				if !protov2.Equal(protodesc.ToFileDescriptorProto(protoregFd), fd) {
+				if debug && !protov2.Equal(protodesc.ToFileDescriptorProto(protoregFd), fd) {
 					diff := cmp.Diff(protodesc.ToFileDescriptorProto(protoregFd), fd, protocmp.Transform())
 					diffErr = append(diffErr, fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff))
 				}
