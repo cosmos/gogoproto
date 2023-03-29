@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Improvements
+- [#56](https://github.com/cosmos/gogoproto/pull/56) Merge all file descriptors in parallel and compare diff under debug only.
+
 ## [v1.4.6](https://github.com/cosmos/gogoproto/releases/tag/v1.4.6) - 2023-02-21
 
 ### Improvements
