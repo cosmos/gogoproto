@@ -49,18 +49,6 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 		diffErr        []string
 	)
 
-	// Add protoregistry file descriptors to our final file descriptor set.
-	protoregistry.GlobalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
-		fd := protodesc.ToFileDescriptorProto(fileDescriptor)
-		if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
-			checkImportErr = append(checkImportErr, err.Error())
-		}
-
-		fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
-
-		return true
-	})
-
 	// load gogo proto file descriptors
 	type fdResult struct {
 		Fd  *descriptorpb.FileDescriptorProto
@@ -137,12 +125,25 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 		close(chFd)
 	}()
 
+	haveFileDescriptor := map[string]bool{}
 	for r := range chFd {
 		if r.Err != nil {
 			return nil, r.Err
 		}
 		fds.File = append(fds.File, r.Fd)
+		haveFileDescriptor[*r.Fd.Name] = true
 	}
+	// Add protoregistry file descriptors to our final file descriptor set.
+	protoregistry.GlobalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
+		if !haveFileDescriptor[fileDescriptor.Path()] {
+			fd := protodesc.ToFileDescriptorProto(fileDescriptor)
+			if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
+				checkImportErr = append(checkImportErr, err.Error())
+			}
+			fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
+		}
+		return true
+	})
 
 	if debug {
 		errStr := new(bytes.Buffer)
