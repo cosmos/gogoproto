@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.4.7](https://github.com/cosmos/gogoproto/releases/tag/v1.4.7) - 2023-03-30
+
+### Bug Fixes
+
+- [#55](https://github.com/cosmos/gogoproto/pull/55) Get a file descriptor diff only when debug is enabled.
+
 ## [v1.4.6](https://github.com/cosmos/gogoproto/releases/tag/v1.4.6) - 2023-02-21
 
 ### Improvements
