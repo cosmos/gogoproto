@@ -5,7 +5,6 @@ import (
 	"compress/gzip"
 	"errors"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/google/go-cmp/cmp"
@@ -39,7 +38,11 @@ func DebugFileDescriptorsMismatch() error {
 }
 
 func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) {
-	fds := &descriptorpb.FileDescriptorSet{}
+	fds := &descriptorpb.FileDescriptorSet{
+		// Pre-size the Files since we are going to copy them
+		// when we range over protoregistry.GlobalFiles.
+		File: make([]*descriptorpb.FileDescriptorProto, 0, protoregistry.GlobalFiles.NumFiles()),
+	}
 
 	// While combing through the file descriptors, we'll also log any errors
 	// we encounter.
@@ -60,26 +63,36 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 		return true
 	})
 
-	// load gogo proto file descriptors
-	gogoFds := AllFileDescriptors()
-	for _, compressedBz := range gogoFds {
-		rdr, err := gzip.NewReader(bytes.NewReader(compressedBz))
-		if err != nil {
+	// Reuse a single gzip reader throughout the loop,
+	// so we don't have to repeatedly allocate new readers.
+	gzr := new(gzip.Reader)
+
+	// Also reuse a single byte buffer for each gzip read.
+	buf := new(bytes.Buffer)
+
+	// Load gogo proto file descriptors.
+	// Normal usage would go through the AllFileDescriptors method,
+	// which returns a copy of the package-level map.
+	//
+	// In tests especially, this method can be part of a hot call stack.
+	// Because we are in the same package and we know what we're doing,
+	// we can read from the raw map.
+	for _, compressedBz := range protoFiles {
+		if err := gzr.Reset(bytes.NewReader(compressedBz)); err != nil {
 			return nil, err
 		}
 
-		bz, err := io.ReadAll(rdr)
-		if err != nil {
+		buf.Reset()
+		if _, err := buf.ReadFrom(gzr); err != nil {
 			return nil, err
 		}
 
 		fd := &descriptorpb.FileDescriptorProto{}
-		err = protov2.Unmarshal(bz, fd)
-		if err != nil {
+		if err := protov2.Unmarshal(buf.Bytes(), fd); err != nil {
 			return nil, err
 		}
 
-		err = CheckImportPath(fd.GetName(), fd.GetPackage())
+		err := CheckImportPath(fd.GetName(), fd.GetPackage())
 		if err != nil {
 			checkImportErr = append(checkImportErr, err.Error())
 		}

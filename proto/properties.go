@@ -614,7 +614,7 @@ func FileDescriptor(filename string) []byte { return protoFiles[filename] }
 // FileDescriptorProto.
 func AllFileDescriptors() map[string][]byte {
 	// we clone the map to prevent the caller from mutating it
-	cloned := map[string][]byte{}
+	cloned := make(map[string][]byte, len(protoFiles))
 	for file, bz := range protoFiles {
 		cloned[file] = bz
 	}
