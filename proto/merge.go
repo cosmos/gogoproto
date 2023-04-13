@@ -18,30 +18,29 @@ import (
 )
 
 // MergedFileDescriptors returns a single FileDescriptorSet containing all the
-// file descriptors registered with both gogoproto and protoregistry. When
-// merging it also performs the following checks:
-// - check that all file descriptors' import paths are correct (i.e. match
-// their fully-qualified package name). A warning is logged if this check fails.
-// - check that if both gogo and protoregistry import the same file descriptor,
-// that these are identical under proto.Equal. A warning is logged if this
-// check fails. If there is a mismatch, the final merged file descriptor set will contain the
-// protoregistry file descriptor, and discard the gogo one.
-func MergedFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
-	return mergedFileDescriptors(false)
+// file descriptors registered with the given globalFiles and appFiles.
+//
+// If there are any incorrect import paths that do not match
+// the fully qualified package name, or if there is a common file descriptor
+// that differs accross globalFiles and appFiles, an error is returned.
+func MergedFileDescriptors(globalFiles *protoregistry.Files, appFiles map[string][]byte) (*descriptorpb.FileDescriptorSet, error) {
+	return mergedFileDescriptors(globalFiles, appFiles)
 }
 
-// DebugFileDescriptorsMismatch is a helper function to debug file descriptor
-// mismatches. It returns an error if there are any mismatches.
-func DebugFileDescriptorsMismatch() error {
-	_, err := mergedFileDescriptors(true)
-	return err
+// MergedGlobalFileDescriptors calls MergedGlobalFileDescriptors
+// with [protoregistry.GlobalFiles] and all files
+// registered through [RegisterFile].
+func MergedGlobalFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
+	return MergedFileDescriptors(protoregistry.GlobalFiles, protoFiles)
 }
 
-func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) {
+func mergedFileDescriptors(globalFiles *protoregistry.Files, appFiles map[string][]byte) (*descriptorpb.FileDescriptorSet, error) {
+	const debug = true // TODO: remove this constant
+
 	fds := &descriptorpb.FileDescriptorSet{
 		// Pre-size the Files since we are going to copy them
-		// when we range over protoregistry.GlobalFiles.
-		File: make([]*descriptorpb.FileDescriptorProto, 0, protoregistry.GlobalFiles.NumFiles()),
+		// when we range over globalFiles.
+		File: make([]*descriptorpb.FileDescriptorProto, 0, globalFiles.NumFiles()),
 	}
 
 	// While combing through the file descriptors, we'll also log any errors
@@ -53,7 +52,7 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 	)
 
 	// Add protoregistry file descriptors to our final file descriptor set.
-	protoregistry.GlobalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
+	globalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
 		if debug {
 			fd := protodesc.ToFileDescriptorProto(fileDescriptor)
 			if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
@@ -80,7 +79,7 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 	// In tests especially, this method can be part of a hot call stack.
 	// Because we are in the same package and we know what we're doing,
 	// we can read from the raw map.
-	for _, compressedBz := range protoFiles {
+	for _, compressedBz := range appFiles {
 		if err := gzr.Reset(bytes.NewReader(compressedBz)); err != nil {
 			return nil, err
 		}
@@ -103,7 +102,7 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 		}
 
 		// If it's not in the protoregistry file descriptors, add it.
-		protoregFd, err := protoregistry.GlobalFiles.FindFileByPath(*fd.Name)
+		protoregFd, err := globalFiles.FindFileByPath(*fd.Name)
 		// If we already loaded gogo's file descriptor, compare that the 2
 		// are strictly equal, or else log a warning.
 		if err != nil {
@@ -149,7 +148,7 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 // which contains all the file descriptors registered with both gogoproto and
 // protoregistry (the latter taking precendence if there's a mismatch).
 func MergedRegistry() (*protoregistry.Files, error) {
-	fds, err := MergedFileDescriptors()
+	fds, err := MergedGlobalFileDescriptors()
 	if err != nil {
 		return nil, err
 	}
