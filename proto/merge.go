@@ -45,7 +45,8 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 	}
 
 	// While combing through the file descriptors, we'll also log any errors
-	// we encounter.
+	// we encounter -- only if debug is true. Otherwise, we will skip the work
+	// to check import path or file descriptor differences.
 	var (
 		checkImportErr []string
 		diffErr        []string
@@ -53,9 +54,11 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 
 	// Add protoregistry file descriptors to our final file descriptor set.
 	protoregistry.GlobalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
-		fd := protodesc.ToFileDescriptorProto(fileDescriptor)
-		if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
-			checkImportErr = append(checkImportErr, err.Error())
+		if debug {
+			fd := protodesc.ToFileDescriptorProto(fileDescriptor)
+			if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
+				checkImportErr = append(checkImportErr, err.Error())
+			}
 		}
 
 		fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
@@ -92,9 +95,11 @@ func mergedFileDescriptors(debug bool) (*descriptorpb.FileDescriptorSet, error) 
 			return nil, err
 		}
 
-		err := CheckImportPath(fd.GetName(), fd.GetPackage())
-		if err != nil {
-			checkImportErr = append(checkImportErr, err.Error())
+		if debug {
+			err := CheckImportPath(fd.GetName(), fd.GetPackage())
+			if err != nil {
+				checkImportErr = append(checkImportErr, err.Error())
+			}
 		}
 
 		// If it's not in the protoregistry file descriptors, add it.

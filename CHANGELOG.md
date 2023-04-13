@@ -5,6 +5,7 @@
 ### Improvements
 
 - [#59](https://github.com/cosmos/gogoproto/pull/59) Reuse buffers and gzip readers to reduce memory allocations during MergedFileDescriptors.
+- [#60](https://github.com/cosmos/gogoproto/pull/60) Skip work to check import path and file descriptor differences during MergedFileDescriptors, when not in debug mode.
 
 ## [v1.4.7](https://github.com/cosmos/gogoproto/releases/tag/v1.4.7) - 2023-03-30
 
