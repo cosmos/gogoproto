@@ -212,7 +212,7 @@ func generateAppFiles(size, offset int) map[string][]byte {
 		}
 
 		name := strconv.Itoa(i) // Map key doesn't matter for merging the app files.
-		out[name] = bytes.Clone(buf.Bytes())
+		out[name] = append([]byte(nil), buf.Bytes()...)
 	}
 
 	return out
