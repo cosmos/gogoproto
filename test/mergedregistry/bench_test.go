@@ -21,37 +21,19 @@ func BenchmarkDefaultGlobalMergedFileDescriptors(b *testing.B) {
 	// This benchmark is interesting for allocations,
 	// but with only probably 11 file descriptors, we don't see much concurrency help.
 	b.Run(fmt.Sprintf("%d global, %d app", gf.NumFiles(), len(afd)), func(b *testing.B) {
-		b.Run("sequential", func(b *testing.B) {
-			b.ReportAllocs()
-			b.ResetTimer()
+		b.ReportAllocs()
+		b.ResetTimer()
 
-			for i := 0; i < b.N; i++ {
-				fds, err := proto.MergedGlobalFileDescriptors()
-				if err != nil {
-					b.Fatal(err)
-				}
-
-				if len(fds.File) != wantSize {
-					b.Fatalf("expected %d FDs, got %d", wantSize, len(fds.File))
-				}
+		for i := 0; i < b.N; i++ {
+			fds, err := proto.MergedGlobalFileDescriptors()
+			if err != nil {
+				b.Fatal(err)
 			}
-		})
 
-		b.Run("concurrent", func(b *testing.B) {
-			b.ReportAllocs()
-			b.ResetTimer()
-
-			for i := 0; i < b.N; i++ {
-				fds, err := proto.ConcurrentMergedFileDescriptors(gf, afd)
-				if err != nil {
-					b.Fatal(err)
-				}
-
-				if len(fds.File) != wantSize {
-					b.Fatalf("expected %d FDs, got %d", wantSize, len(fds.File))
-				}
+			if len(fds.File) != wantSize {
+				b.Fatalf("expected %d FDs, got %d", wantSize, len(fds.File))
 			}
-		})
+		}
 	})
 }
 
@@ -153,35 +135,17 @@ SECONDPASS:
 		}
 	}
 
+	b.ReportAllocs()
 	b.ResetTimer()
 
-	b.Run("sequential", func(b *testing.B) {
-		b.ReportAllocs()
-
-		for i := 0; i < b.N; i++ {
-			fds, err := proto.MergedFileDescriptors(gf, allFDs)
-			if err != nil {
-				b.Fatal(err)
-			}
-
-			if len(fds.File) != wantSize {
-				b.Fatalf("expected %d FDs, got %d", wantSize, len(fds.File))
-			}
+	for i := 0; i < b.N; i++ {
+		fds, err := proto.MergedFileDescriptors(gf, allFDs)
+		if err != nil {
+			b.Fatal(err)
 		}
-	})
 
-	b.Run("concurrent", func(b *testing.B) {
-		b.ReportAllocs()
-
-		for i := 0; i < b.N; i++ {
-			fds, err := proto.ConcurrentMergedFileDescriptors(gf, allFDs)
-			if err != nil {
-				b.Fatal(err)
-			}
-
-			if len(fds.File) != wantSize {
-				b.Fatalf("expected %d FDs, got %d", wantSize, len(fds.File))
-			}
+		if len(fds.File) != wantSize {
+			b.Fatalf("expected %d FDs, got %d", wantSize, len(fds.File))
 		}
-	})
+	}
 }

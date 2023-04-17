@@ -38,25 +38,6 @@ func MergedFileDescriptorsWithValidation(globalFiles *protoregistry.Files, appFi
 	return mergedFileDescriptors(globalFiles, appFiles, true)
 }
 
-// ConcurrentMergedFileDescriptors is an alternate implementation of MergedFileDescriptors
-// that spreads work across all available CPU cores.
-//
-// This is intended as an temporary API to benchmark and test both implementations,
-// before only offering the concurrent version.
-func ConcurrentMergedFileDescriptors(globalFiles *protoregistry.Files, appFiles map[string][]byte) (*descriptorpb.FileDescriptorSet, error) {
-	return concurrentMergeFileDescriptors(globalFiles, appFiles, false)
-}
-
-// ConcurrentMergedFileDescriptorsWithValidation is
-// an alternate implementation of MergedFileDescriptorsWithValidation
-// that spreads work across all available CPU cores.
-//
-// This is intended as an temporary API to benchmark and test both implementations,
-// before only offering the concurrent version.
-func ConcurrentMergedFileDescriptorsWithValidation(globalFiles *protoregistry.Files, appFiles map[string][]byte) (*descriptorpb.FileDescriptorSet, error) {
-	return concurrentMergeFileDescriptors(globalFiles, appFiles, true)
-}
-
 // MergedGlobalFileDescriptors calls MergedFileDescriptors
 // with [protoregistry.GlobalFiles] and all files
 // registered through [RegisterFile].
@@ -69,114 +50,6 @@ func MergedGlobalFileDescriptors() (*descriptorpb.FileDescriptorSet, error) {
 // registered through [RegisterFile].
 func MergedGlobalFileDescriptorsWithValidation() (*descriptorpb.FileDescriptorSet, error) {
 	return MergedFileDescriptorsWithValidation(protoregistry.GlobalFiles, protoFiles)
-}
-
-func mergedFileDescriptors(globalFiles *protoregistry.Files, appFiles map[string][]byte, debug bool) (*descriptorpb.FileDescriptorSet, error) {
-	fds := &descriptorpb.FileDescriptorSet{
-		// Pre-size the Files since we are going to copy them
-		// when we range over globalFiles.
-		File: make([]*descriptorpb.FileDescriptorProto, 0, globalFiles.NumFiles()),
-	}
-
-	// While combing through the file descriptors, we'll also log any errors
-	// we encounter -- only if debug is true. Otherwise, we will skip the work
-	// to check import path or file descriptor differences.
-	var (
-		checkImportErr []string
-		diffErr        []string
-	)
-
-	// Add protoregistry file descriptors to our final file descriptor set.
-	globalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
-		if debug {
-			fd := protodesc.ToFileDescriptorProto(fileDescriptor)
-			if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
-				checkImportErr = append(checkImportErr, err.Error())
-			}
-		}
-
-		fds.File = append(fds.File, protodesc.ToFileDescriptorProto(fileDescriptor))
-
-		return true
-	})
-
-	// Reuse a single gzip reader throughout the loop,
-	// so we don't have to repeatedly allocate new readers.
-	gzr := new(gzip.Reader)
-
-	// Also reuse a single byte buffer for each gzip read.
-	buf := new(bytes.Buffer)
-
-	// Load gogo proto file descriptors.
-	// Normal usage would go through the AllFileDescriptors method,
-	// which returns a copy of the package-level map.
-	//
-	// In tests especially, this method can be part of a hot call stack.
-	// Because we are in the same package and we know what we're doing,
-	// we can read from the raw map.
-	for _, compressedBz := range appFiles {
-		if err := gzr.Reset(bytes.NewReader(compressedBz)); err != nil {
-			return nil, err
-		}
-
-		buf.Reset()
-		if _, err := buf.ReadFrom(gzr); err != nil {
-			return nil, err
-		}
-
-		fd := &descriptorpb.FileDescriptorProto{}
-		if err := protov2.Unmarshal(buf.Bytes(), fd); err != nil {
-			return nil, err
-		}
-
-		if debug {
-			err := CheckImportPath(fd.GetName(), fd.GetPackage())
-			if err != nil {
-				checkImportErr = append(checkImportErr, err.Error())
-			}
-		}
-
-		// If it's not in the protoregistry file descriptors, add it.
-		protoregFd, err := globalFiles.FindFileByPath(*fd.Name)
-		// If we already loaded gogo's file descriptor, compare that the 2
-		// are strictly equal, or else log a warning.
-		if err != nil {
-			// If we have a NotFound error, we add this file descriptor to the
-			// final file descriptor set.
-			if errors.Is(err, protoregistry.NotFound) {
-				fds.File = append(fds.File, fd)
-			} else {
-				return nil, err
-			}
-		} else {
-			// If there's a mismatch, we log a warning. If there was no
-			// mismatch, then we do nothing, and take the protoregistry file
-			// descriptor as the correct one.
-			if debug && !protov2.Equal(protodesc.ToFileDescriptorProto(protoregFd), fd) {
-				diff := cmp.Diff(protodesc.ToFileDescriptorProto(protoregFd), fd, protocmp.Transform())
-				diffErr = append(diffErr, fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff))
-			}
-		}
-	}
-
-	if debug {
-		errStr := new(bytes.Buffer)
-		if len(checkImportErr) > 0 {
-			fmt.Fprintf(errStr, "Got %d file descriptor import path errors:\n\t%s\n", len(checkImportErr), strings.Join(checkImportErr, "\n\t"))
-		}
-		if len(diffErr) > 0 {
-			fmt.Fprintf(errStr, "Got %d file descriptor mismatches. Make sure gogoproto and protoregistry use the same .proto files. '-' lines are from protoregistry, '+' lines from gogo's registry.\n\n\t%s\n", len(diffErr), strings.Join(diffErr, "\n\t"))
-		}
-		if errStr.Len() > 0 {
-			return nil, fmt.Errorf(errStr.String())
-		}
-	}
-
-	slices.SortFunc(fds.File, func(x, y *descriptorpb.FileDescriptorProto) bool {
-		return *x.Name < *y.Name
-	})
-
-	return fds, nil
 }
 
 // MergedRegistry returns a *protoregistry.Files that acts as a single registry
@@ -415,14 +288,14 @@ func (p *descriptorProcessor) collectFDs() {
 	})
 }
 
-// concurrentMergeFileDescriptors coordinates an instance of a descriptorProcessor
+// mergedFileDescriptors coordinates an instance of a descriptorProcessor
 // and a descriptorErrorCollector to concurrently merge the file descriptors in globalFiles and appFiles,
 // into a new *descriptorpb.FileDescriptorSet.
 //
 // If validate is true, do extra work to validate that import paths are properly formed
 // and that "duplicated" file descriptors across globalFiles and appFiles
 // are indeed identical, returning an error if either of those conditions are invalidated.
-func concurrentMergeFileDescriptors(globalFiles *protoregistry.Files, appFiles map[string][]byte, validate bool) (*descriptorpb.FileDescriptorSet, error) {
+func mergedFileDescriptors(globalFiles *protoregistry.Files, appFiles map[string][]byte, validate bool) (*descriptorpb.FileDescriptorSet, error) {
 	// GOMAXPROCS is the number of CPU cores available, by default.
 	// Respect that setting as the number of CPU-bound goroutines,
 	// and for channel sizes.
