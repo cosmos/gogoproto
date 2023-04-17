@@ -208,6 +208,8 @@ func CheckImportPath(fdName, fdPackage string) error {
 	return nil
 }
 
+// descriptorErrorCollector collects errors sent on its exported channel fields.
+// If any errors occur, they are collected on the err field.
 type descriptorErrorCollector struct {
 	validate bool
 
@@ -225,6 +227,8 @@ type descriptorErrorCollector struct {
 	err error
 }
 
+// newDescriptorErrorCollector initializes and returns a descriptorErrorCollector.
+// It starts a goroutine running the descriptorErrorCollector's collect method in the background.
 func newDescriptorErrorCollector(chanSize int, validate bool) *descriptorErrorCollector {
 	c := &descriptorErrorCollector{
 		validate: validate,
@@ -248,8 +252,13 @@ func newDescriptorErrorCollector(chanSize int, validate bool) *descriptorErrorCo
 func (c *descriptorErrorCollector) collect() {
 	defer close(c.done)
 
-	var processErrs []error
+	// Write the process errors to buf first -- no need to hold them in a separate slice.
+	var buf bytes.Buffer
+
+	// Don't know the incoming order of any errors, so hold the import and diff errors
+	// in their own slice until the quit signal is received.
 	var importErrMsgs, diffs []string
+
 LOOP:
 	for {
 		select {
@@ -257,8 +266,9 @@ LOOP:
 			break LOOP
 
 		case err := <-c.ProcessErrCh:
-			// Always accept process errors.
-			processErrs = append(processErrs, err)
+			// Always accept process errors (no need to check c.validate).
+			// Accumulate them directly into buf since those always go in the front.
+			fmt.Fprintf(&buf, "Failure during processing: %v\n", err)
 
 		case err := <-c.ImportErrCh:
 			if !c.validate {
@@ -274,15 +284,11 @@ LOOP:
 		}
 	}
 
-	if len(processErrs) == 0 && len(importErrMsgs) == 0 && len(diffs) == 0 {
+	if buf.Len() == 0 && len(importErrMsgs) == 0 && len(diffs) == 0 {
 		// No errors received. Stop here so we don't assign to c.err.
 		return
 	}
 
-	var buf bytes.Buffer
-	for err := range processErrs {
-		fmt.Fprintf(&buf, "Failure during processing: %v\n", err)
-	}
 	if len(importErrMsgs) > 0 {
 		fmt.Fprintf(&buf, "Got %d file descriptor import path errors:\n\t%s\n", len(importErrMsgs), strings.Join(importErrMsgs, "\n\t"))
 	}
@@ -293,6 +299,8 @@ LOOP:
 	c.err = errors.New(buf.String())
 }
 
+// descriptorProcessor runs the heavy lifting for concurrent registry merging.
+// See the concurrentMergeFileDescriptors function for how everything coordinates.
 type descriptorProcessor struct {
 	processWG    sync.WaitGroup
 	globalFileCh chan protoreflect.FileDescriptor
@@ -303,6 +311,15 @@ type descriptorProcessor struct {
 	fds  []*descriptorpb.FileDescriptorProto
 }
 
+// process reads from p.globalFileCh and p.appFileCh, processing each file descriptor as appropriate,
+// and sends the processed file descriptors through p.fdCh for eventual return from concurrentMergeFileDescriptors.
+// Any errors during processing are sent to ec.ProcessErrCh,
+// which collects the errors also for possible return from concurrentMergeFileDescriptors.
+//
+// If validate is true, extra work is performed to validate import paths
+// and to check validity of duplicated file descriptors.
+//
+// process is intended to be run in a goroutine.
 func (p *descriptorProcessor) process(globalFiles *protoregistry.Files, ec *descriptorErrorCollector, validate bool) {
 	defer p.processWG.Done()
 
@@ -312,6 +329,8 @@ func (p *descriptorProcessor) process(globalFiles *protoregistry.Files, ec *desc
 		if validate {
 			if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
 				// Track the import error but don't stop processing.
+				// It is more helpful to present all the import errors,
+				// rather than just stopping on the first one.
 				ec.ImportErrCh <- err
 			}
 		}
@@ -331,18 +350,21 @@ func (p *descriptorProcessor) process(globalFiles *protoregistry.Files, ec *desc
 
 	for compressedBz := range p.appFileCh {
 		if err := gzr.Reset(bytes.NewReader(compressedBz)); err != nil {
-			ec.ProcessErrCh <- err
+			// This should only fail if there is an invalid gzip header in compressedBz.
+			ec.ProcessErrCh <- fmt.Errorf("failed to reset gzip reader: %w", err)
 			continue
 		}
 
 		buf.Reset()
 		if _, err := buf.ReadFrom(gzr); err != nil {
-			ec.ProcessErrCh <- err
+			// This should only fail if there was invalidly gzipped content in compressedBz.
+			ec.ProcessErrCh <- fmt.Errorf("failed to read from gzip reader: %w", err)
 			continue
 		}
 
 		fd := &descriptorpb.FileDescriptorProto{}
 		if err := protov2.Unmarshal(buf.Bytes(), fd); err != nil {
+			// This should only fail if the gzipped data contained invalid bytes for a FileDescriptorProto.
 			ec.ProcessErrCh <- err
 			continue
 		}
@@ -379,6 +401,8 @@ func (p *descriptorProcessor) process(globalFiles *protoregistry.Files, ec *desc
 	}
 }
 
+// collectFDs runs in its own goroutine, exhausing p.fdCh to populate p.fds,
+// and then sorting p.fds in-place.
 func (p *descriptorProcessor) collectFDs() {
 	defer p.fdWG.Done()
 
@@ -391,7 +415,17 @@ func (p *descriptorProcessor) collectFDs() {
 	})
 }
 
+// concurrentMergeFileDescriptors coordinates an instance of a descriptorProcessor
+// and a descriptorErrorCollector to concurrently merge the file descriptors in globalFiles and appFiles,
+// into a new *descriptorpb.FileDescriptorSet.
+//
+// If validate is true, do extra work to validate that import paths are properly formed
+// and that "duplicated" file descriptors across globalFiles and appFiles
+// are indeed identical, returning an error if either of those conditions are invalidated.
 func concurrentMergeFileDescriptors(globalFiles *protoregistry.Files, appFiles map[string][]byte, validate bool) (*descriptorpb.FileDescriptorSet, error) {
+	// GOMAXPROCS is the number of CPU cores available, by default.
+	// Respect that setting as the number of CPU-bound goroutines,
+	// and for channel sizes.
 	nProcs := runtime.GOMAXPROCS(0)
 
 	ec := newDescriptorErrorCollector(nProcs, validate)
@@ -404,40 +438,44 @@ func concurrentMergeFileDescriptors(globalFiles *protoregistry.Files, appFiles m
 		fds:  make([]*descriptorpb.FileDescriptorProto, 0, globalFiles.NumFiles()),
 	}
 
-	// Start one goroutine per available processor.
+	// Start the file-descriptor-processing goroutines.
 	p.processWG.Add(nProcs)
 	for i := 0; i < nProcs; i++ {
 		go p.process(globalFiles, ec, validate)
 	}
 
+	// Start the goroutine that collects all the processed file descriptors.
 	p.fdWG.Add(1)
 	go p.collectFDs()
 
-	// Now synchronously iterate through globalFiles.
+	// Now synchronously iterate through globalFiles,
+	// sending the proto file descriptors to the processor goroutines.
 	globalFiles.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
 		p.globalFileCh <- fileDescriptor
 		return true
 	})
+	// Signal that no more global files will be sent.
 	close(p.globalFileCh)
 
-	// Same for appFiles.
+	// Same for appFiles: send everything then signal app files are finished.
 	for _, bz := range appFiles {
 		p.appFileCh <- bz
 	}
 	close(p.appFileCh)
 
-	// File channels for processor have been closed.
-	// Wait for the goroutine to complete.
+	// Since we are done sending file descriptors and we have closed those channels,
+	// wait for the processor goroutines to complete.
 	p.processWG.Wait()
 
 	// Now close the FD channel since the processors are done,
-	// and no more values will be sent.
+	// and no more processed FD values will be sent.
 	close(p.fdCh)
 
 	// Wait until FD collection is complete.
 	p.fdWG.Wait()
 
-	// Stop the error collector, and if it found an error, return it.
+	// Since FD collection is done, stop the error collector,
+	// and if it found an error, return it.
 	close(ec.quit)
 	<-ec.done
 	if ec.err != nil {
