@@ -47,37 +47,74 @@ var simdAllFDs_c4489d []byte
 //go:embed testdata/simd-globalfd-c4489d.json
 var simdGlobalFDs_c4489d []byte
 
-// This benchmark creates dynamic file descriptors so that we can quantify performance
-// of larger FD sets.
-//
-// Importing jhump/protoreflect brings in default google types,
-// which breaks the primary mergedregistry tests;
-// hence the standalone package.
-func BenchmarkMergedFileDescriptors(b *testing.B) {
+// This benchmark uses the file descriptors we extracted from simapp,
+// doing some gentle cleanup to account for being in this different go module.
+func BenchmarkRepresentativeMergedFileDescriptors(b *testing.B) {
+	// The "allFDs" set appears to always be safe to unmarshal.
 	var allFDs map[string][]byte
 	if err := json.Unmarshal(simdAllFDs_c4489d, &allFDs); err != nil {
 		b.Fatal(err)
 	}
 
+	// But the global FDs are much more touchy.
+	// Some reference files we don't have available in this test package.
+	//
+	// First we have to unmarshal the raw FD protos.
 	var globalFDs []*descriptorpb.FileDescriptorProto
 	if err := json.Unmarshal(simdGlobalFDs_c4489d, &globalFDs); err != nil {
 		b.Fatal(err)
 	}
 
+	// Then we make two passes over what has been deserialized.
+	haveGlobal := map[string]struct{}{}
 	gf := new(protoregistry.Files)
-	if false {
-		// TODO: figure out how to properly deserialize the global FDs.
-		for _, fd := range globalFDs {
-			f, err := protodesc.NewFile(fd, gf)
-			if err != nil {
-				panic(err)
-			}
-			gf.RegisterFile(f)
+
+	// First, add only the files that have no dependencies, as those are safe to add.
+	for _, fd := range globalFDs {
+		if len(fd.Dependency) > 0 {
+			continue
 		}
+
+		f, err := protodesc.NewFile(fd, nil) // No resolver for these.
+		if err != nil {
+			panic(err)
+		}
+		gf.RegisterFile(f)
+
+		haveGlobal[fd.GetName()] = struct{}{}
 	}
 
-	wantSize := len(globalFDs) + len(allFDs)
-	wantSize = len(allFDs) // TODO: don't reassign here.
+	// Now one more pass for those files that do have a dependency.
+	// We won't add every single file in this case,
+	// but we will add enough for a decent representation of the SDK's protobuf files.
+SECONDPASS:
+	for _, fd := range globalFDs {
+		if len(fd.Dependency) == 0 {
+			// Already added this one in the first pass.
+			continue
+		}
+		for _, d := range fd.Dependency {
+			_, have := haveGlobal[d]
+			if !have {
+				continue SECONDPASS
+			}
+		}
+
+		f, err := protodesc.NewFile(fd, gf) // gf is the "self" resolver.
+		if err != nil {
+			panic(err)
+		}
+		gf.RegisterFile(f)
+		haveGlobal[f.Path()] = struct{}{}
+	}
+
+	// Calculate the expected output size, accounting for expected deduplication.
+	wantSize := len(allFDs) + len(haveGlobal)
+	for name := range allFDs {
+		if _, ok := haveGlobal[name]; ok {
+			wantSize--
+		}
+	}
 
 	b.ResetTimer()
 
