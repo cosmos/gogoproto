@@ -369,9 +369,12 @@ func (p *descriptorProcessor) process(globalFiles *protoregistry.Files, ec *desc
 			continue
 		}
 
-		if validate && !protov2.Equal(protodesc.ToFileDescriptorProto(protoregFd), fd) {
-			diff := cmp.Diff(protodesc.ToFileDescriptorProto(protoregFd), fd, protocmp.Transform())
-			ec.DiffCh <- fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff)
+		if validate {
+			fdp := protodesc.ToFileDescriptorProto(protoregFd)
+			if !protov2.Equal(fdp, fd) {
+				diff := cmp.Diff(fdp, fd, protocmp.Transform())
+				ec.DiffCh <- fmt.Sprintf("Mismatch in %s:\n%s", *fd.Name, diff)
+			}
 		}
 	}
 }

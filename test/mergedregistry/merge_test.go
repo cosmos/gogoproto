@@ -27,14 +27,14 @@ func TestMergedRegistry(t *testing.T) {
 	}
 }
 
-func TestMergedFileDescriptors(t *testing.T) {
+func TestMergedFileDescriptorsWithValidation(t *testing.T) {
 	t.Run("correct merge", func(t *testing.T) {
 		t.Parallel()
 
 		appFDs := proto.AllFileDescriptors()
 		globalFiles := protoregistry.GlobalFiles
 
-		fdSet, err := proto.MergedFileDescriptors(globalFiles, appFDs)
+		fdSet, err := proto.ConcurrentMergedFileDescriptorsWithValidation(globalFiles, appFDs)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -88,7 +88,7 @@ func TestMergedFileDescriptors(t *testing.T) {
 		}
 
 		// Merging just this one global should error due to an invalid path.
-		_, err = proto.MergedFileDescriptors(gf, nil)
+		_, err = proto.ConcurrentMergedFileDescriptorsWithValidation(gf, nil)
 		if err == nil {
 			t.Fatal("expected error when merging global with invalid path, but did not get error")
 		}
@@ -108,7 +108,7 @@ func TestMergedFileDescriptors(t *testing.T) {
 		}
 
 		// Merging just this one global should error due to an invalid path.
-		_, err := proto.MergedFileDescriptors(nil, appFDs)
+		_, err := proto.ConcurrentMergedFileDescriptorsWithValidation(nil, appFDs)
 		if err == nil {
 			t.Fatal("expected error when merging app FD with invalid path, but did not get error")
 		}
@@ -151,7 +151,7 @@ func TestMergedFileDescriptors(t *testing.T) {
 		}
 		gf.RegisterFile(modF)
 
-		_, err = proto.MergedFileDescriptors(gf, appFDs) // merged.File is slice of *descriptorpb.FileDescriptorProto
+		_, err = proto.ConcurrentMergedFileDescriptorsWithValidation(gf, appFDs) // merged.File is slice of *descriptorpb.FileDescriptorProto
 		if err == nil {
 			t.Fatal("expected error when merging app FD mismatched with global FD, but did not get error")
 		}
