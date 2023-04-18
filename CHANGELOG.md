@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## [v1.4.8](https://github.com/cosmos/gogoproto/releases/tag/v1.4.8) - 2023-04-18
+
+### Breaking changes
+
+- [#61](https://github.com/cosmos/gogoproto/pull/60) Use all available cores when merging registries.
+  Existing calls to `proto.MergedRegistry()` do not need to change.
+  The signature of `proto.MergedFileDescriptors` has changed to accept explicit arguments for the "global files" and "app files".
+  Calls to `proto.MergedFileDescriptors()` should change to `proto.MergedGlobalFileDescriptors()` or `proto.MergedGlobalFileDescriptorsWithValidation()`.
+
 ### Improvements
 
 - [#59](https://github.com/cosmos/gogoproto/pull/59) Reuse buffers and gzip readers to reduce memory allocations during MergedFileDescriptors.

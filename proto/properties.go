@@ -50,8 +50,6 @@ import (
 	"sync"
 )
 
-const debug bool = false
-
 // Constants that identify the encoding of a value on the wire.
 const (
 	WireVarint     = 0
@@ -437,6 +435,7 @@ func getPropertiesLocked(t reflect.Type) *StructProperties {
 		}
 		prop.Prop[i] = p
 		prop.order[i] = i
+		const debug = false // TODO: enable by default?
 		if debug {
 			print(i, " ", f.Name, " ", t.String(), " ")
 			if p.Tag > 0 {
