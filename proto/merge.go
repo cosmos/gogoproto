@@ -173,7 +173,7 @@ LOOP:
 }
 
 // descriptorProcessor runs the heavy lifting for concurrent registry merging.
-// See the concurrentMergeFileDescriptors function for how everything coordinates.
+// See the mergedFileDescriptors function for how everything coordinates.
 type descriptorProcessor struct {
 	processWG    sync.WaitGroup
 	globalFileCh chan protoreflect.FileDescriptor
@@ -185,9 +185,9 @@ type descriptorProcessor struct {
 }
 
 // process reads from p.globalFileCh and p.appFileCh, processing each file descriptor as appropriate,
-// and sends the processed file descriptors through p.fdCh for eventual return from concurrentMergeFileDescriptors.
+// and sends the processed file descriptors through p.fdCh for eventual return from mergedFileDescriptors.
 // Any errors during processing are sent to ec.ProcessErrCh,
-// which collects the errors also for possible return from concurrentMergeFileDescriptors.
+// which collects the errors also for possible return from mergedFileDescriptors.
 //
 // If validate is true, extra work is performed to validate import paths
 // and to check validity of duplicated file descriptors.
