@@ -41,6 +41,8 @@ package proto
  */
 
 import (
+	"bytes"
+	"compress/gzip"
 	"fmt"
 	"log"
 	"reflect"
@@ -48,6 +50,11 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+
+	protov2 "google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protodesc"
+	"google.golang.org/protobuf/reflect/protoregistry"
+	"google.golang.org/protobuf/types/descriptorpb"
 )
 
 // Constants that identify the encoding of a value on the wire.
@@ -596,13 +603,52 @@ func MessageType(name string) reflect.Type {
 
 // A registry of all linked proto files.
 var (
-	protoFiles = make(map[string][]byte) // file name => fileDescriptor
+	protoFiles        = make(map[string][]byte) // file name => fileDescriptor
+	gogoProtoRegistry = new(protoregistry.Files)
+
+	// Reuse a single gzip reader throughout the loop,
+	// so we don't have to repeatedly allocate new readers.
+	registryGzr = new(gzip.Reader)
+
+	// Also reuse a single byte buffer for each gzip read.
+	registryBuf = new(bytes.Buffer)
 )
 
 // RegisterFile is called from generated code and maps from the
 // full file name of a .proto file to its compressed FileDescriptorProto.
 func RegisterFile(filename string, fileDescriptor []byte) {
 	protoFiles[filename] = fileDescriptor
+
+	if err := registryGzr.Reset(bytes.NewReader(fileDescriptor)); err != nil {
+		panic(err)
+	}
+
+	registryBuf.Reset()
+	if _, err := registryBuf.ReadFrom(registryGzr); err != nil {
+		// This should only fail if there was invalidly gzipped content in compressedBz.
+		panic(err)
+	}
+
+	fd := &descriptorpb.FileDescriptorProto{}
+	if err := protov2.Unmarshal(registryBuf.Bytes(), fd); err != nil {
+		// This should only fail if the gzipped data contained invalid bytes for a FileDescriptorProto.
+		panic(err)
+	}
+
+	// Ensure the import path on the app file is good.
+	if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
+		panic(err)
+	}
+
+	file, err := protodesc.FileOptions{AllowUnresolvable: true}.New(fd, gogoProtoRegistry)
+	if err != nil {
+		panic(err)
+	}
+
+	err = gogoProtoRegistry.RegisterFile(file)
+	if err != nil {
+		panic(err)
+	}
 }
 
 // FileDescriptor returns the compressed FileDescriptorProto for a .proto file.
