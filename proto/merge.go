@@ -185,7 +185,7 @@ type descriptorProcessor struct {
 
 // process reads from p.globalFileCh and p.appFileCh, processing each file descriptor as appropriate,
 // and sends the processed file descriptors through p.fdCh for eventual return from mergedFileDescriptors.
-//  Any errors during processing are sent to ec.ProcessErrCh,
+// Any errors during processing are sent to ec.ProcessErrCh,
 // which collects the errors also for possible return from mergedFileDescriptors.
 //
 // If validate is true, extra work is performed to validate import paths
@@ -360,7 +360,7 @@ func (r *hybridResolver) FindDescriptorByName(name protoreflect.FullName) (proto
 }
 
 func (r *hybridResolver) RangeFiles(f func(fileDescriptor protoreflect.FileDescriptor) bool) {
-	seen := map[protoreflect.FullName]bool{}
+	seen := make(map[protoreflect.FullName]bool, protoregistry.GlobalFiles.NumFiles())
 
 	protoregistry.GlobalFiles.RangeFiles(func(fd protoreflect.FileDescriptor) bool {
 		seen[fd.FullName()] = true
