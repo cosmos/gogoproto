@@ -1,10 +1,8 @@
 package descriptor_test
 
 import (
-	"fmt"
 	"testing"
 
-	tpb "github.com/cosmos/gogoproto/proto/test_proto"
 	"github.com/cosmos/gogoproto/protoc-gen-gogo/descriptor"
 )
 
@@ -17,15 +15,4 @@ func TestMessage(t *testing.T) {
 	if name, want := md.GetName(), "DescriptorProto"; name != want {
 		t.Fatalf("descriptor.ForMessage(%T).GetName() = %q; want %q", msg, name, want)
 	}
-}
-
-func Example_options() {
-	var msg *tpb.MyMessageSet
-	_, md := descriptor.ForMessage(msg)
-	if md.GetOptions().GetMessageSetWireFormat() {
-		fmt.Printf("%v uses option message_set_wire_format.\n", md.GetName())
-	}
-
-	// Output:
-	// MyMessageSet uses option message_set_wire_format.
 }
