@@ -215,6 +215,15 @@ func (p *descriptorProcessor) process(globalFiles *protoregistry.Files, ec *desc
 	for gogoFd := range p.appFileCh {
 		// If the app FD is not in protoregistry, we need to track it.
 		gogoFdp := protodesc.ToFileDescriptorProto(gogoFd)
+		if validate {
+			if err := CheckImportPath(gogoFdp.GetName(), gogoFdp.GetPackage()); err != nil {
+				// Track the import error but don't stop processing.
+				// It is more helpful to present all the import errors,
+				// rather than just stopping on the first one.
+				ec.ImportErrCh <- err
+			}
+		}
+
 		protoregFd, err := globalFiles.FindFileByPath(*gogoFdp.Name)
 		if err != nil {
 			if !errors.Is(err, protoregistry.NotFound) {
@@ -230,6 +239,7 @@ func (p *descriptorProcessor) process(globalFiles *protoregistry.Files, ec *desc
 
 		if validate {
 			fdp := protodesc.ToFileDescriptorProto(protoregFd)
+
 			if !protov2.Equal(fdp, gogoFdp) {
 				diff := cmp.Diff(fdp, gogoFdp, protocmp.Transform())
 				ec.DiffCh <- fmt.Sprintf("Mismatch in %s:\n%s", *gogoFdp.Name, diff)

@@ -224,13 +224,13 @@ func fileDescriptorMapToFiles(tb testing.TB, m map[string][]byte) *protoregistry
 			tb.Fatal(err)
 		}
 
-		bz, err := io.ReadAll(gzr)
+		unzipped, err := io.ReadAll(gzr)
 		if err != nil {
 			tb.Fatal(err)
 		}
 
 		fd := &descriptorpb.FileDescriptorProto{}
-		if err := proto.Unmarshal(bz, fd); err != nil {
+		if err := protov2.Unmarshal(unzipped, fd); err != nil {
 			tb.Fatal(err)
 		}
 
