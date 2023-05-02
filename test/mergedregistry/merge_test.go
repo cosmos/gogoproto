@@ -4,16 +4,18 @@ import (
 	"bytes"
 	"compress/gzip"
 	"fmt"
+	"io"
 	"strings"
 	"testing"
 
-	"github.com/cosmos/gogoproto/proto"
-	_ "github.com/cosmos/gogoproto/types"
 	protov2 "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
 	"google.golang.org/protobuf/types/descriptorpb"
+
+	"github.com/cosmos/gogoproto/proto"
+	_ "github.com/cosmos/gogoproto/types"
 )
 
 func TestMergedRegistry(t *testing.T) {
@@ -31,7 +33,7 @@ func TestMergedFileDescriptorsWithValidation(t *testing.T) {
 	t.Run("correct merge", func(t *testing.T) {
 		t.Parallel()
 
-		appFDs := proto.AllFileDescriptors()
+		appFDs := proto.GogoResolver.(*protoregistry.Files)
 		globalFiles := protoregistry.GlobalFiles
 
 		fdSet, err := proto.MergedFileDescriptorsWithValidation(globalFiles, appFDs)
@@ -41,7 +43,7 @@ func TestMergedFileDescriptorsWithValidation(t *testing.T) {
 
 		// In this case, addition is fine since we know up front
 		// that there is no overlap in globalFiles and appFDs.
-		wantSize := globalFiles.NumFiles() + len(appFDs)
+		wantSize := globalFiles.NumFiles() + appFDs.NumFiles()
 
 		if len(fdSet.File) != wantSize {
 			t.Fatalf("wrong merged fd count: got %d, want %d", len(fdSet.File), wantSize)
@@ -61,12 +63,14 @@ func TestMergedFileDescriptorsWithValidation(t *testing.T) {
 			return false
 		})
 
-		for name := range appFDs {
-			_, ok := gotNames[name]
+		appFDs.RangeFiles(func(fileDescriptor protoreflect.FileDescriptor) bool {
+			_, ok := gotNames[fileDescriptor.Path()]
 			if !ok {
-				t.Fatalf("app fd %s not in merged file descriptor set", name)
+				t.Fatalf("app path %s not in merged file descriptor set", fileDescriptor.Path())
 			}
-		}
+
+			return true
+		})
 	})
 
 	t.Run("debug error on import path for global files", func(t *testing.T) {
@@ -107,8 +111,10 @@ func TestMergedFileDescriptorsWithValidation(t *testing.T) {
 			"example.com/foo/bar": rewriteGzippedFDProto(fdBytes, "example.com/foo/bar"),
 		}
 
+		appFiles := fileDescriptorMapToFiles(t, appFDs)
+
 		// Merging just this one global should error due to an invalid path.
-		_, err := proto.MergedFileDescriptorsWithValidation(nil, appFDs)
+		_, err := proto.MergedFileDescriptorsWithValidation(nil, appFiles)
 		if err == nil {
 			t.Fatal("expected error when merging app FD with invalid path, but did not get error")
 		}
@@ -151,7 +157,7 @@ func TestMergedFileDescriptorsWithValidation(t *testing.T) {
 		}
 		gf.RegisterFile(modF)
 
-		_, err = proto.MergedFileDescriptorsWithValidation(gf, appFDs) // merged.File is slice of *descriptorpb.FileDescriptorProto
+		_, err = proto.MergedFileDescriptorsWithValidation(gf, proto.GogoResolver.(*protoregistry.Files)) // merged.File is slice of *descriptorpb.FileDescriptorProto
 		if err == nil {
 			t.Fatal("expected error when merging app FD mismatched with global FD, but did not get error")
 		}
@@ -208,4 +214,36 @@ func rewriteGzippedFDProto(bz []byte, newName string) []byte {
 	}
 
 	return buf.Bytes()
+}
+
+func fileDescriptorMapToFiles(tb testing.TB, m map[string][]byte) *protoregistry.Files {
+	files := new(protoregistry.Files)
+	for _, bz := range m {
+		gzr, err := gzip.NewReader(bytes.NewReader(bz))
+		if err != nil {
+			tb.Fatal(err)
+		}
+
+		bz, err := io.ReadAll(gzr)
+		if err != nil {
+			tb.Fatal(err)
+		}
+
+		fd := &descriptorpb.FileDescriptorProto{}
+		if err := proto.Unmarshal(bz, fd); err != nil {
+			tb.Fatal(err)
+		}
+
+		file, err := protodesc.FileOptions{AllowUnresolvable: true}.New(fd, files)
+		if err != nil {
+			tb.Fatal(err)
+		}
+
+		err = files.RegisterFile(file)
+		if err != nil {
+			tb.Fatal(err)
+		}
+	}
+
+	return files
 }
