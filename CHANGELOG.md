@@ -2,7 +2,19 @@
 
 ## Unreleased
 
+## [v1.4.9](https://github.com/cosmos/gogoproto/releases/tag/v1.4.9) - 2023-05-03
+
+### Breaking changes
+
+- [#62](https://github.com/cosmos/gogoproto/pull/62) Change public API for `MergedFileDescriptors`, `MergedGlobalFileDescriptors`, etc. introduced in v1.4.8, retracting that release.
+
+### Improvements
+
+- [#62](https://github.com/cosmos/gogoproto/pull/62) Add the `proto.HybridResolver` var  which exposes the merged `*protoregistry.Files` functionality in a high-performance way. Also add the `proto.GogoResolver` var.
+
 ## [v1.4.8](https://github.com/cosmos/gogoproto/releases/tag/v1.4.8) - 2023-04-18
+
+**RETRACTED**
 
 ### Breaking changes
 
