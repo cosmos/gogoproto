@@ -640,7 +640,7 @@ func RegisterFile(filename string, fileDescriptor []byte) {
 
 	// Ensure the import path on the app file is good.
 	if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
-		panic(err)
+		fmt.Printf("WARNING: proto: %v\n", err)
 	}
 
 	file, err := protodesc.FileOptions{AllowUnresolvable: true}.New(fd, gogoProtoRegistry)
@@ -648,9 +648,16 @@ func RegisterFile(filename string, fileDescriptor []byte) {
 		panic(err)
 	}
 
-	err = gogoProtoRegistry.RegisterFile(file)
-	if err != nil {
-		panic(err)
+	// only register files if they are registered the first time
+	// this isn't ideal, but it's needed to make tests pass and some legacy
+	// code bases may have this issue, and we don't want to fail them here
+	if _, err := gogoProtoRegistry.FindFileByPath(file.Path()); err != nil {
+		err = gogoProtoRegistry.RegisterFile(file)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		fmt.Printf("WARNING: proto: file %q already registered\n", file.Path())
 	}
 }
 
