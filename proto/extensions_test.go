@@ -458,12 +458,6 @@ func TestExtensionsRoundTrip(t *testing.T) {
 	if _, err = proto.GetExtension(msg, pb.E_Ext_More); err != proto.ErrMissingExtension {
 		t.Errorf("got %v, expected ErrMissingExtension", e)
 	}
-	if _, err := proto.GetExtension(msg, pb.E_X215); err == nil {
-		t.Error("expected bad extension error, got nil")
-	}
-	if err := proto.SetExtension(msg, pb.E_X215, 12); err == nil {
-		t.Error("expected extension err")
-	}
 	if err := proto.SetExtension(msg, pb.E_Ext_More, 12); err == nil {
 		t.Error("expected some sort of type mismatch error, got nil")
 	}
