@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [v1.4.10](https://github.com/cosmos/gogoproto/releases/tag/v1.4.10) - 2023-05-11
+
+- []() Remove warning about double registration. The Cosmos SDK does purposely double-registration so this warning is not useful.
+
 ## [v1.4.9](https://github.com/cosmos/gogoproto/releases/tag/v1.4.9) - 2023-05-03
 
 ### Breaking changes
