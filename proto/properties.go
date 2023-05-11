@@ -651,13 +651,12 @@ func RegisterFile(filename string, fileDescriptor []byte) {
 	// only register files if they are registered the first time
 	// this isn't ideal, but it's needed to make tests pass and some legacy
 	// code bases may have this issue, and we don't want to fail them here
+	// when the file is already registered, no warning is displayed.
 	if _, err := gogoProtoRegistry.FindFileByPath(file.Path()); err != nil {
 		err = gogoProtoRegistry.RegisterFile(file)
 		if err != nil {
 			panic(err)
 		}
-	} else {
-		fmt.Printf("WARNING: proto: file %q already registered\n", file.Path())
 	}
 }
 
