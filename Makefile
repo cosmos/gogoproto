@@ -155,7 +155,7 @@ tests:
 	(cd test/stdtypes && make test)
 
 vet:
-	go get golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
+	go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
 	go vet ./...
 	go vet -vettool=$(shell which shadow) ./...
 
