@@ -2,7 +2,15 @@
 
 ## Unreleased
 
+## [v1.4.11](https://github.com/cosmos/gogoproto/releases/tag/v1.4.10) - 2023-05-11
+
+### Improvements
+
+- [#83](https://github.com/cosmos/gogoproto/pull/83) Bump `golang.org/x/exp` to latest version. This solves API incompatibilities for users bumping `x/exp` to latest version in their app.
+
 ## [v1.4.10](https://github.com/cosmos/gogoproto/releases/tag/v1.4.10) - 2023-05-11
+
+### Improvements
 
 - [#67](https://github.com/cosmos/gogoproto/pull/67) Remove warning about double registration. The Cosmos SDK does purposely double-registration so this warning is not useful.
 
