@@ -582,6 +582,10 @@ func RegisterMapType(x interface{}, name string) {
 
 // MessageName returns the fully-qualified proto name for the given message type.
 func MessageName(x Message) string {
+	if m, ok := x.(protov2.Message); ok {
+		return string(m.ProtoReflect().Descriptor().FullName())
+	}
+
 	type xname interface {
 		XXX_MessageName() string
 	}
