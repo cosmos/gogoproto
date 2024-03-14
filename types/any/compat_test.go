@@ -1,13 +1,12 @@
 package types_test
 
 import (
+	"github.com/cosmos/gogoproto/test/testdata"
+	types "github.com/cosmos/gogoproto/types/any"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
 	amino "github.com/tendermint/go-amino"
-
-	"github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 )
 
 type TypeWithInterface struct {
@@ -31,7 +30,7 @@ func (s *Suite) SetupTest() {
 	s.spot = &testdata.Dog{Size_: "small", Name: "Spot"}
 	s.a = TypeWithInterface{Animal: s.spot}
 
-	any, err := types.NewAnyWithValue(s.spot)
+	any, err := types.NewAnyWithCacheWithValue(s.spot)
 	s.Require().NoError(err)
 	s.b = testdata.HasAnimal{Animal: any}
 }
@@ -89,10 +88,10 @@ func (s *Suite) TestNested() {
 	s.cdc.RegisterConcrete(&testdata.HasHasAnimal{}, "testdata/HasHasAnimal", nil)
 	s.cdc.RegisterConcrete(&testdata.HasHasHasAnimal{}, "testdata/HasHasHasAnimal", nil)
 
-	any, err := types.NewAnyWithValue(&s.b)
+	any, err := types.NewAnyWithCacheWithValue(&s.b)
 	s.Require().NoError(err)
 	hha := testdata.HasHasAnimal{HasAnimal: any}
-	any2, err := types.NewAnyWithValue(&hha)
+	any2, err := types.NewAnyWithCacheWithValue(&hha)
 	s.Require().NoError(err)
 	hhha := testdata.HasHasHasAnimal{HasHasAnimal: any2}
 

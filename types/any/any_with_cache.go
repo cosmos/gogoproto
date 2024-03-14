@@ -51,11 +51,11 @@ type Any struct {
 	compat *anyCompat
 }
 
-// NewAnyWithValue constructs a new Any packed with the value provided or
+// NewAnyWithCacheWithValue constructs a new Any packed with the value provided or
 // returns an error if that value couldn't be packed. This also caches
 // the packed value so that it can be retrieved from GetCachedValue without
-// unmarshaling
-func NewAnyWithValue(v proto.Message) (*Any, error) {
+// unmarshalling
+func NewAnyWithCacheWithValue(v proto.Message) (*Any, error) {
 	if v == nil {
 		return nil, errors.New("Expecting non nil value to create a new Any, failed packing protobuf message to Any")
 	}
@@ -81,14 +81,14 @@ func NewAnyWithValue(v proto.Message) (*Any, error) {
 	}, nil
 }
 
-// UnsafePackAny packs the value x in the Any and instead of returning the error
+// UnsafePackAnyWithCache packs the value x in the Any and instead of returning the error
 // in the case of a packing failure, keeps the cached value. This should only
 // be used in situations where compatibility is needed with amino. Amino-only
 // values can safely be packed using this method when they will only be
 // marshaled with amino and not protobuf.
-func UnsafePackAny(x interface{}) *Any {
+func UnsafePackAnyWithCache(x interface{}) *Any {
 	if msg, ok := x.(proto.Message); ok {
-		any, err := NewAnyWithValue(msg)
+		any, err := NewAnyWithCacheWithValue(msg)
 		if err == nil {
 			return any
 		}
@@ -98,7 +98,7 @@ func UnsafePackAny(x interface{}) *Any {
 
 // pack packs the value x in the Any or returns an error. This also caches
 // the packed value so that it can be retrieved from GetCachedValue without
-// unmarshaling
+// unmarshalling
 func (any *Any) pack(x proto.Message) error {
 	any.TypeUrl = MsgTypeURL(x)
 

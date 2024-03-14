@@ -1,43 +1,22 @@
 package types
 
 import (
+	"github.com/cosmos/gogoproto/test/testdata"
 	"testing"
 
-	"github.com/cosmos/gogoproto/proto"
 	"github.com/stretchr/testify/require"
-)
-
-type Dog struct {
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-}
-
-func (d Dog) Greet() string { return d.Name }
-
-// We implement a minimal proto.Message interface
-func (d *Dog) Reset()                  { d.Name = "" }
-func (d *Dog) String() string          { return d.Name }
-func (d *Dog) ProtoMessage()           {}
-func (d *Dog) XXX_MessageName() string { return "tests/dog" }
-
-type Animal interface {
-	Greet() string
-}
-
-var (
-	_ Animal        = (*Dog)(nil)
-	_ proto.Message = (*Dog)(nil)
 )
 
 func TestAnyPackUnpack(t *testing.T) {
 	registry := NewInterfaceRegistry()
-	registry.RegisterInterface("Animal", (*Animal)(nil))
+	registry.RegisterInterface("Animal", (*testdata.HasAnimal)(nil))
 	registry.RegisterImplementations(
-		(*Animal)(nil),
-		&Dog{},
+		(*testdata.HasAnimal)(nil),
+		&testdata.Dog{},
 	)
 
-	spot := &Dog{Name: "Spot"}
-	var animal Animal
+	spot := &testdata.Dog{Name: "Spot"}
+	var animal testdata.HasAnimal
 
 	// with cache
 	any, err := NewAnyWithValue(spot)
@@ -56,7 +35,7 @@ func TestAnyPackUnpack(t *testing.T) {
 
 func TestString(t *testing.T) {
 	require := require.New(t)
-	spot := &Dog{Name: "Spot"}
+	spot := &testdata.Dog{Name: "Spot"}
 	any, err := NewAnyWithValue(spot)
 	require.NoError(err)
 

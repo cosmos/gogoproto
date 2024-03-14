@@ -1,25 +1,24 @@
 package types_test
 
 import (
+	"github.com/cosmos/gogoproto/test/testdata"
+	types "github.com/cosmos/gogoproto/types/any"
 	"strings"
 	"testing"
 
 	"github.com/cosmos/gogoproto/jsonpb"
 	"github.com/cosmos/gogoproto/proto"
 	"github.com/stretchr/testify/require"
-
-	"github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 )
 
 func TestAnyPackUnpack(t *testing.T) {
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := types.NewInterfaceRegistry()
 
 	spot := &testdata.Dog{Name: "Spot"}
 	var animal testdata.Animal
 
 	// with cache
-	any, err := types.NewAnyWithValue(spot)
+	any, err := types.NewAnyWithCacheWithValue(spot)
 	require.NoError(t, err)
 	require.Equal(t, spot, any.GetCachedValue())
 	err = registry.UnpackAny(any, &animal)
@@ -89,10 +88,10 @@ func TestRegister(t *testing.T) {
 }
 
 func TestUnpackInterfaces(t *testing.T) {
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := types.NewInterfaceRegistry()
 
 	spot := &testdata.Dog{Name: "Spot"}
-	any, err := types.NewAnyWithValue(spot)
+	any, err := types.NewAnyWithCacheWithValue(spot)
 	require.NoError(t, err)
 
 	hasAny := testdata.HasAnimal{
@@ -113,18 +112,18 @@ func TestUnpackInterfaces(t *testing.T) {
 }
 
 func TestNested(t *testing.T) {
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := types.NewInterfaceRegistry()
 
 	spot := &testdata.Dog{Name: "Spot"}
-	any, err := types.NewAnyWithValue(spot)
+	any, err := types.NewAnyWithCacheWithValue(spot)
 	require.NoError(t, err)
 
 	ha := &testdata.HasAnimal{Animal: any}
-	any2, err := types.NewAnyWithValue(ha)
+	any2, err := types.NewAnyWithCacheWithValue(ha)
 	require.NoError(t, err)
 
 	hha := &testdata.HasHasAnimal{HasAnimal: any2}
-	any3, err := types.NewAnyWithValue(hha)
+	any3, err := types.NewAnyWithCacheWithValue(hha)
 	require.NoError(t, err)
 
 	hhha := testdata.HasHasHasAnimal{HasHasAnimal: any3}
@@ -145,7 +144,7 @@ func TestNested(t *testing.T) {
 
 func TestAny_ProtoJSON(t *testing.T) {
 	spot := &testdata.Dog{Name: "Spot"}
-	any, err := types.NewAnyWithValue(spot)
+	any, err := types.NewAnyWithCacheWithValue(spot)
 	require.NoError(t, err)
 
 	jm := &jsonpb.Marshaler{}
@@ -153,7 +152,7 @@ func TestAny_ProtoJSON(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "{\"@type\":\"/testpb.Dog\",\"name\":\"Spot\"}", json)
 
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := types.NewInterfaceRegistry()
 	jum := &jsonpb.Unmarshaler{}
 	var any2 types.Any
 	err = jum.Unmarshal(strings.NewReader(json), &any2)
