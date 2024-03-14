@@ -146,6 +146,7 @@ regenerate: install
 	make -C test/issue620 regenerate
 	make -C test/protobuffer regenerate
 	make -C test/issue630 regenerate
+	make -C test/testdata regenerate
 
 	make gofmt
 
