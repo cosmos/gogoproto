@@ -27,4 +27,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 regenerate:
-	cd .. && (protoc --proto_path=../:../protobuf/:. --gogo_out=Mgoogle/protobuf/any.proto=github.com/cosmos/gogoproto/types/any:. testdata/testdata.proto)
+	cd .. && \
+	protoc-min-version --version="3.0.0" --proto_path=../:../protobuf/:. --gogo_out=\
+	Mgoogle/protobuf/any.proto=github.com/cosmos/gogoproto/types/any,\
+	Mgoogle/protobuf/duration.proto=github.com/cosmos/gogoproto/types,\
+	Mgoogle/protobuf/struct.proto=github.com/cosmos/gogoproto/types,\
+	Mgoogle/protobuf/timestamp.proto=github.com/cosmos/gogoproto/types,\
+	Mgoogle/protobuf/wrappers.proto=github.com/cosmos/gogoproto/types,\
+	Mgoogle/protobuf/field_mask.proto=github.com/cosmos/gogoproto/types\
+	:. testdata/testdata.proto
