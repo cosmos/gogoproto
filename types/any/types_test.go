@@ -11,6 +11,29 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func NewTestInterfaceRegistry() types.InterfaceRegistry {
+	registry := types.NewInterfaceRegistry()
+	RegisterInterfaces(registry)
+	return registry
+}
+
+func RegisterInterfaces(registry types.InterfaceRegistry) {
+	registry.RegisterInterface("Animal", (*testdata.Animal)(nil))
+	registry.RegisterImplementations(
+		(*testdata.Animal)(nil),
+		&testdata.Dog{},
+		&testdata.Cat{},
+	)
+	registry.RegisterImplementations(
+		(*testdata.HasAnimalI)(nil),
+		&testdata.HasAnimal{},
+	)
+	registry.RegisterImplementations(
+		(*testdata.HasHasAnimalI)(nil),
+		&testdata.HasHasAnimal{},
+	)
+}
+
 func TestAnyPackUnpack(t *testing.T) {
 	registry := types.NewInterfaceRegistry()
 
@@ -47,7 +70,7 @@ func (dog FakeDog) XXX_MessageName() string { return proto.MessageName(&testdata
 func (dog FakeDog) Greet() string           { return "fakedog" }
 
 func TestRegister(t *testing.T) {
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := NewTestInterfaceRegistry()
 	registry.RegisterInterface("Animal", (*testdata.Animal)(nil))
 	registry.RegisterInterface("TestI", (*TestI)(nil))
 
@@ -88,7 +111,7 @@ func TestRegister(t *testing.T) {
 }
 
 func TestUnpackInterfaces(t *testing.T) {
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := NewTestInterfaceRegistry()
 
 	spot := &testdata.Dog{Name: "Spot"}
 	any, err := types.NewAnyWithCacheWithValue(spot)
@@ -112,7 +135,7 @@ func TestUnpackInterfaces(t *testing.T) {
 }
 
 func TestNested(t *testing.T) {
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := NewTestInterfaceRegistry()
 
 	spot := &testdata.Dog{Name: "Spot"}
 	any, err := types.NewAnyWithCacheWithValue(spot)
@@ -152,7 +175,7 @@ func TestAny_ProtoJSON(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "{\"@type\":\"/testdata.Dog\",\"name\":\"Spot\"}", json)
 
-	registry := testdata.NewTestInterfaceRegistry()
+	registry := NewTestInterfaceRegistry()
 	jum := &jsonpb.Unmarshaler{}
 	var any2 types.Any
 	err = jum.Unmarshal(strings.NewReader(json), &any2)

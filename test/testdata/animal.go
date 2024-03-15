@@ -5,7 +5,7 @@ package testdata
 import (
 	"fmt"
 	"github.com/cosmos/gogoproto/proto"
-	types "github.com/cosmos/gogoproto/types/any"
+	"github.com/cosmos/gogoproto/types/any"
 )
 
 type Animal interface {
