@@ -47,7 +47,7 @@ func (dog FakeDog) XXX_MessageName() string { return proto.MessageName(&testdata
 func (dog FakeDog) Greet() string           { return "fakedog" }
 
 func TestRegister(t *testing.T) {
-	registry := types.NewInterfaceRegistry()
+	registry := testdata.NewTestInterfaceRegistry()
 	registry.RegisterInterface("Animal", (*testdata.Animal)(nil))
 	registry.RegisterInterface("TestI", (*TestI)(nil))
 
@@ -79,7 +79,7 @@ func TestRegister(t *testing.T) {
 	// Duplicate registration with different concrete type on same typeURL.
 	require.PanicsWithError(
 		t,
-		"concrete type *testdata.Dog has already been registered under typeURL /testpb.Dog, cannot register *types_test.FakeDog under same typeURL. "+
+		"concrete type *testdata.Dog has already been registered under typeURL /testdata.Dog, cannot register *types_test.FakeDog under same typeURL. "+
 			"This usually means that there are conflicting modules registering different concrete types for a same interface implementation",
 		func() {
 			registry.RegisterImplementations((*testdata.Animal)(nil), &FakeDog{})
@@ -88,7 +88,7 @@ func TestRegister(t *testing.T) {
 }
 
 func TestUnpackInterfaces(t *testing.T) {
-	registry := types.NewInterfaceRegistry()
+	registry := testdata.NewTestInterfaceRegistry()
 
 	spot := &testdata.Dog{Name: "Spot"}
 	any, err := types.NewAnyWithCacheWithValue(spot)
@@ -112,7 +112,7 @@ func TestUnpackInterfaces(t *testing.T) {
 }
 
 func TestNested(t *testing.T) {
-	registry := types.NewInterfaceRegistry()
+	registry := testdata.NewTestInterfaceRegistry()
 
 	spot := &testdata.Dog{Name: "Spot"}
 	any, err := types.NewAnyWithCacheWithValue(spot)
@@ -150,9 +150,9 @@ func TestAny_ProtoJSON(t *testing.T) {
 	jm := &jsonpb.Marshaler{}
 	json, err := jm.MarshalToString(any)
 	require.NoError(t, err)
-	require.Equal(t, "{\"@type\":\"/testpb.Dog\",\"name\":\"Spot\"}", json)
+	require.Equal(t, "{\"@type\":\"/testdata.Dog\",\"name\":\"Spot\"}", json)
 
-	registry := types.NewInterfaceRegistry()
+	registry := testdata.NewTestInterfaceRegistry()
 	jum := &jsonpb.Unmarshaler{}
 	var any2 types.Any
 	err = jum.Unmarshal(strings.NewReader(json), &any2)
@@ -169,7 +169,7 @@ func TestAny_ProtoJSON(t *testing.T) {
 	require.NoError(t, err)
 	json, err = jm.MarshalToString(ha)
 	require.NoError(t, err)
-	require.Equal(t, "{\"animal\":{\"@type\":\"/testpb.Dog\",\"name\":\"Spot\"}}", json)
+	require.Equal(t, "{\"animal\":{\"@type\":\"/testdata.Dog\",\"name\":\"Spot\"}}", json)
 
 	require.NoError(t, err)
 	var ha2 testdata.HasAnimal
