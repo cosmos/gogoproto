@@ -1,8 +1,8 @@
-package types_test
+package test
 
 import (
-	"github.com/cosmos/gogoproto/test/testdata"
 	types "github.com/cosmos/gogoproto/types/any"
+	"github.com/cosmos/gogoproto/types/any/internal"
 	"strings"
 	"testing"
 
@@ -11,34 +11,34 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func NewTestInterfaceRegistry() types.InterfaceRegistry {
-	registry := types.NewInterfaceRegistry()
+func NewTestInterfaceRegistry() internal.InterfaceRegistry {
+	registry := internal.NewInterfaceRegistry()
 	RegisterInterfaces(registry)
 	return registry
 }
 
-func RegisterInterfaces(registry types.InterfaceRegistry) {
-	registry.RegisterInterface("Animal", (*testdata.Animal)(nil))
+func RegisterInterfaces(registry internal.InterfaceRegistry) {
+	registry.RegisterInterface("Animal", (*Animal)(nil))
 	registry.RegisterImplementations(
-		(*testdata.Animal)(nil),
-		&testdata.Dog{},
-		&testdata.Cat{},
+		(*Animal)(nil),
+		&Dog{},
+		&Cat{},
 	)
 	registry.RegisterImplementations(
-		(*testdata.HasAnimalI)(nil),
-		&testdata.HasAnimal{},
+		(*HasAnimalI)(nil),
+		&HasAnimal{},
 	)
 	registry.RegisterImplementations(
-		(*testdata.HasHasAnimalI)(nil),
-		&testdata.HasHasAnimal{},
+		(*HasHasAnimalI)(nil),
+		&HasHasAnimal{},
 	)
 }
 
 func TestAnyPackUnpack(t *testing.T) {
-	registry := types.NewInterfaceRegistry()
+	registry := internal.NewInterfaceRegistry()
 
-	spot := &testdata.Dog{Name: "Spot"}
-	var animal testdata.Animal
+	spot := &Dog{Name: "Spot"}
+	var animal Animal
 
 	// with cache
 	any, err := types.NewAnyWithCacheWithValue(spot)
@@ -53,35 +53,35 @@ type TestI interface {
 	DoSomething()
 }
 
-// A struct that has the same typeURL as testdata.Dog, but is actually another
+// A struct that has the same typeURL as Dog, but is actually another
 // concrete type.
 type FakeDog struct{}
 
 var (
-	_ proto.Message   = &FakeDog{}
-	_ testdata.Animal = &FakeDog{}
+	_ proto.Message = &FakeDog{}
+	_ Animal        = &FakeDog{}
 )
 
-// dummy implementation of proto.Message and testdata.Animal
+// dummy implementation of proto.Message and Animal
 func (dog FakeDog) Reset()                  {}
 func (dog FakeDog) String() string          { return "fakedog" }
 func (dog FakeDog) ProtoMessage()           {}
-func (dog FakeDog) XXX_MessageName() string { return proto.MessageName(&testdata.Dog{}) }
+func (dog FakeDog) XXX_MessageName() string { return proto.MessageName(&Dog{}) }
 func (dog FakeDog) Greet() string           { return "fakedog" }
 
 func TestRegister(t *testing.T) {
 	registry := NewTestInterfaceRegistry()
-	registry.RegisterInterface("Animal", (*testdata.Animal)(nil))
+	registry.RegisterInterface("Animal", (*Animal)(nil))
 	registry.RegisterInterface("TestI", (*TestI)(nil))
 
 	// Happy path.
 	require.NotPanics(t, func() {
-		registry.RegisterImplementations((*testdata.Animal)(nil), &testdata.Dog{})
+		registry.RegisterImplementations((*Animal)(nil), &Dog{})
 	})
 
-	// testdata.Dog doesn't implement TestI
+	// Dog doesn't implement TestI
 	require.Panics(t, func() {
-		registry.RegisterImplementations((*TestI)(nil), &testdata.Dog{})
+		registry.RegisterImplementations((*TestI)(nil), &Dog{})
 	})
 
 	// nil proto message
@@ -91,21 +91,21 @@ func TestRegister(t *testing.T) {
 
 	// Not an interface.
 	require.Panics(t, func() {
-		registry.RegisterInterface("not_an_interface", (*testdata.Dog)(nil))
+		registry.RegisterInterface("not_an_interface", (*Dog)(nil))
 	})
 
 	// Duplicate registration with same concrete type.
 	require.NotPanics(t, func() {
-		registry.RegisterImplementations((*testdata.Animal)(nil), &testdata.Dog{})
+		registry.RegisterImplementations((*Animal)(nil), &Dog{})
 	})
 
 	// Duplicate registration with different concrete type on same typeURL.
 	require.PanicsWithError(
 		t,
-		"concrete type *testdata.Dog has already been registered under typeURL /testdata.Dog, cannot register *types_test.FakeDog under same typeURL. "+
+		"concrete type *test.Dog has already been registered under typeURL /tests/dog, cannot register *test.FakeDog under same typeURL. "+
 			"This usually means that there are conflicting modules registering different concrete types for a same interface implementation",
 		func() {
-			registry.RegisterImplementations((*testdata.Animal)(nil), &FakeDog{})
+			registry.RegisterImplementations((*Animal)(nil), &FakeDog{})
 		},
 	)
 }
@@ -113,18 +113,18 @@ func TestRegister(t *testing.T) {
 func TestUnpackInterfaces(t *testing.T) {
 	registry := NewTestInterfaceRegistry()
 
-	spot := &testdata.Dog{Name: "Spot"}
+	spot := &Dog{Name: "Spot"}
 	any, err := types.NewAnyWithCacheWithValue(spot)
 	require.NoError(t, err)
 
-	hasAny := testdata.HasAnimal{
+	hasAny := HasAnimal{
 		Animal: any,
 		X:      1,
 	}
 	bz, err := hasAny.Marshal()
 	require.NoError(t, err)
 
-	var hasAny2 testdata.HasAnimal
+	var hasAny2 HasAnimal
 	err = hasAny2.Unmarshal(bz)
 	require.NoError(t, err)
 
@@ -137,26 +137,26 @@ func TestUnpackInterfaces(t *testing.T) {
 func TestNested(t *testing.T) {
 	registry := NewTestInterfaceRegistry()
 
-	spot := &testdata.Dog{Name: "Spot"}
+	spot := &Dog{Name: "Spot"}
 	any, err := types.NewAnyWithCacheWithValue(spot)
 	require.NoError(t, err)
 
-	ha := &testdata.HasAnimal{Animal: any}
+	ha := &HasAnimal{Animal: any}
 	any2, err := types.NewAnyWithCacheWithValue(ha)
 	require.NoError(t, err)
 
-	hha := &testdata.HasHasAnimal{HasAnimal: any2}
+	hha := &HasHasAnimal{HasAnimal: any2}
 	any3, err := types.NewAnyWithCacheWithValue(hha)
 	require.NoError(t, err)
 
-	hhha := testdata.HasHasHasAnimal{HasHasAnimal: any3}
+	hhha := HasHasHasAnimal{HasHasAnimal: any3}
 
 	// marshal
 	bz, err := hhha.Marshal()
 	require.NoError(t, err)
 
 	// unmarshal
-	var hhha2 testdata.HasHasHasAnimal
+	var hhha2 HasHasHasAnimal
 	err = hhha2.Unmarshal(bz)
 	require.NoError(t, err)
 	err = types.UnpackInterfaces(hhha2, registry)
@@ -166,36 +166,36 @@ func TestNested(t *testing.T) {
 }
 
 func TestAny_ProtoJSON(t *testing.T) {
-	spot := &testdata.Dog{Name: "Spot"}
+	spot := &Dog{Name: "Spot"}
 	any, err := types.NewAnyWithCacheWithValue(spot)
 	require.NoError(t, err)
 
 	jm := &jsonpb.Marshaler{}
 	json, err := jm.MarshalToString(any)
 	require.NoError(t, err)
-	require.Equal(t, "{\"@type\":\"/testdata.Dog\",\"name\":\"Spot\"}", json)
+	require.Equal(t, "{\"@type\":\"/Dog\",\"name\":\"Spot\"}", json)
 
 	registry := NewTestInterfaceRegistry()
 	jum := &jsonpb.Unmarshaler{}
 	var any2 types.Any
 	err = jum.Unmarshal(strings.NewReader(json), &any2)
 	require.NoError(t, err)
-	var animal testdata.Animal
+	var animal Animal
 	err = registry.UnpackAny(&any2, &animal)
 	require.NoError(t, err)
 	require.Equal(t, spot, animal)
 
-	ha := &testdata.HasAnimal{
+	ha := &HasAnimal{
 		Animal: any,
 	}
 	err = ha.UnpackInterfaces(types.ProtoJSONPacker{JSONPBMarshaler: jm})
 	require.NoError(t, err)
 	json, err = jm.MarshalToString(ha)
 	require.NoError(t, err)
-	require.Equal(t, "{\"animal\":{\"@type\":\"/testdata.Dog\",\"name\":\"Spot\"}}", json)
+	require.Equal(t, "{\"animal\":{\"@type\":\"/Dog\",\"name\":\"Spot\"}}", json)
 
 	require.NoError(t, err)
-	var ha2 testdata.HasAnimal
+	var ha2 HasAnimal
 	err = jum.Unmarshal(strings.NewReader(json), &ha2)
 	require.NoError(t, err)
 	err = ha2.UnpackInterfaces(registry)

@@ -127,6 +127,11 @@ func (any *Any) GetCachedValue() interface{} {
 	return any.cachedValue
 }
 
+// ResetCachedValue seta a nil cachedValue
+func (any *Any) ResetCachedValue() {
+	any.cachedValue = nil
+}
+
 // GoString returns a string representing valid go code to reproduce the current state of
 // the struct.
 func (any *Any) GoString() string {

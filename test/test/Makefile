@@ -35,4 +35,4 @@ regenerate:
 	Mgoogle/protobuf/timestamp.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/wrappers.proto=github.com/cosmos/gogoproto/types,\
 	Mgoogle/protobuf/field_mask.proto=github.com/cosmos/gogoproto/types\
-	:. testdata/testdata.proto
+	:../types/any test/test.proto

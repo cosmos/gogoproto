@@ -1,11 +1,11 @@
-package testdata
+package test
 
 // nolint
 
 import (
 	"fmt"
 	"github.com/cosmos/gogoproto/proto"
-	"github.com/cosmos/gogoproto/types/any"
+	types "github.com/cosmos/gogoproto/types/any"
 )
 
 type Animal interface {
@@ -28,7 +28,7 @@ func (c *Bird) Identify() string {
 	return "This is Tweety."
 }
 
-func (d Dog) Greet() string {
+func (d *Dog) Greet() string {
 	return fmt.Sprintf("Roof, my name is %s", d.Name)
 }
 

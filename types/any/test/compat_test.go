@@ -1,8 +1,8 @@
-package types_test
+package test
 
 import (
-	"github.com/cosmos/gogoproto/test/testdata"
 	types "github.com/cosmos/gogoproto/types/any"
+
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -10,29 +10,29 @@ import (
 )
 
 type TypeWithInterface struct {
-	Animal testdata.Animal `json:"animal"`
-	X      int64           `json:"x,omitempty"`
+	Animal Animal `json:"animal"`
+	X      int64  `json:"x,omitempty"`
 }
 
 type Suite struct {
 	suite.Suite
 	cdc  *amino.Codec
 	a    TypeWithInterface
-	b    testdata.HasAnimal
-	spot *testdata.Dog
+	b    HasAnimal
+	spot *Dog
 }
 
 func (s *Suite) SetupTest() {
 	s.cdc = amino.NewCodec()
-	s.cdc.RegisterInterface((*testdata.Animal)(nil), nil)
-	s.cdc.RegisterConcrete(&testdata.Dog{}, "testdata/Dog", nil)
+	s.cdc.RegisterInterface((*Animal)(nil), nil)
+	s.cdc.RegisterConcrete(&Dog{}, "test/Dog", nil)
 
-	s.spot = &testdata.Dog{Size_: "small", Name: "Spot"}
+	s.spot = &Dog{Size_: "small", Name: "Spot"}
 	s.a = TypeWithInterface{Animal: s.spot}
 
 	any, err := types.NewAnyWithCacheWithValue(s.spot)
 	s.Require().NoError(err)
-	s.b = testdata.HasAnimal{Animal: any}
+	s.b = HasAnimal{Animal: any}
 }
 
 func (s *Suite) TestAminoBinary() {
@@ -50,7 +50,7 @@ func (s *Suite) TestAminoBinary() {
 	s.Require().NoError(err)
 	s.Require().Equal(bz, bz2)
 
-	var c testdata.HasAnimal
+	var c HasAnimal
 	err = s.cdc.UnmarshalBinaryBare(bz, &c)
 	s.Require().NoError(err)
 	err = types.UnpackInterfaces(c, types.AminoUnpacker{Cdc: s.cdc})
@@ -73,7 +73,7 @@ func (s *Suite) TestAminoJSON() {
 	s.Require().NoError(err)
 	s.Require().Equal(string(bz), string(bz2))
 
-	var c testdata.HasAnimal
+	var c HasAnimal
 	err = s.cdc.UnmarshalJSON(bz, &c)
 	s.Require().NoError(err)
 	err = types.UnpackInterfaces(c, types.AminoJSONUnpacker{Cdc: s.cdc})
@@ -82,18 +82,18 @@ func (s *Suite) TestAminoJSON() {
 }
 
 func (s *Suite) TestNested() {
-	s.cdc.RegisterInterface((*testdata.HasAnimalI)(nil), nil)
-	s.cdc.RegisterInterface((*testdata.HasHasAnimalI)(nil), nil)
-	s.cdc.RegisterConcrete(&testdata.HasAnimal{}, "testdata/HasAnimal", nil)
-	s.cdc.RegisterConcrete(&testdata.HasHasAnimal{}, "testdata/HasHasAnimal", nil)
-	s.cdc.RegisterConcrete(&testdata.HasHasHasAnimal{}, "testdata/HasHasHasAnimal", nil)
+	s.cdc.RegisterInterface((*HasAnimalI)(nil), nil)
+	s.cdc.RegisterInterface((*HasHasAnimalI)(nil), nil)
+	s.cdc.RegisterConcrete(&HasAnimal{}, "test/HasAnimal", nil)
+	s.cdc.RegisterConcrete(&HasHasAnimal{}, "test/HasHasAnimal", nil)
+	s.cdc.RegisterConcrete(&HasHasHasAnimal{}, "test/HasHasHasAnimal", nil)
 
 	any, err := types.NewAnyWithCacheWithValue(&s.b)
 	s.Require().NoError(err)
-	hha := testdata.HasHasAnimal{HasAnimal: any}
+	hha := HasHasAnimal{HasAnimal: any}
 	any2, err := types.NewAnyWithCacheWithValue(&hha)
 	s.Require().NoError(err)
-	hhha := testdata.HasHasHasAnimal{HasHasAnimal: any2}
+	hhha := HasHasHasAnimal{HasHasAnimal: any2}
 
 	// marshal
 	err = types.UnpackInterfaces(hhha, types.AminoPacker{Cdc: s.cdc})
@@ -102,7 +102,7 @@ func (s *Suite) TestNested() {
 	s.Require().NoError(err)
 
 	// unmarshal
-	var hhha2 testdata.HasHasHasAnimal
+	var hhha2 HasHasHasAnimal
 	err = s.cdc.UnmarshalBinaryBare(bz, &hhha2)
 	s.Require().NoError(err)
 	err = types.UnpackInterfaces(hhha2, types.AminoUnpacker{Cdc: s.cdc})
@@ -117,7 +117,7 @@ func (s *Suite) TestNested() {
 	s.Require().NoError(err)
 
 	// json unmarshal
-	var hhha3 testdata.HasHasHasAnimal
+	var hhha3 HasHasHasAnimal
 	err = s.cdc.UnmarshalJSON(jsonBz, &hhha3)
 	s.Require().NoError(err)
 	err = types.UnpackInterfaces(hhha3, types.AminoJSONUnpacker{Cdc: s.cdc})
