@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- [#115](https://github.com/cosmos/gogoproto/pull/115) Move any type from `cosmos-sdk/codec/types` to `types/any`. Bump golang version to **v1.21**
+- [#115](https://github.com/cosmos/gogoproto/pull/115) Move any type from `cosmos-sdk/codec/types` to `types/any`.
 
 ## [v1.4.11](https://github.com/cosmos/gogoproto/releases/tag/v1.4.10) - 2023-05-11
 
