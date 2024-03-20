@@ -5,6 +5,7 @@ import (
 	fmt "fmt"
 
 	"github.com/cosmos/gogoproto/proto"
+	"github.com/cosmos/gogoproto/types/any/internal"
 	protov2 "google.golang.org/protobuf/proto"
 )
 
@@ -75,7 +76,7 @@ func NewAnyWithCacheWithValue(v proto.Message) (*Any, error) {
 	}
 
 	return &Any{
-		TypeUrl:     MsgTypeURL(v),
+		TypeUrl:     internal.MsgTypeURL(v),
 		Value:       bz,
 		cachedValue: v,
 	}, nil
@@ -100,7 +101,7 @@ func UnsafePackAnyWithCache(x interface{}) *Any {
 // the packed value so that it can be retrieved from GetCachedValue without
 // unmarshalling
 func (any *Any) pack(x proto.Message) error {
-	any.TypeUrl = MsgTypeURL(x)
+	any.TypeUrl = internal.MsgTypeURL(x)
 
 	var (
 		bz  []byte
