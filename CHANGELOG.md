@@ -2,9 +2,13 @@
 
 ## Unreleased
 
+## [v1.4.12](https://github.com/cosmos/gogoproto/releases/tag/v1.4.12) - 2024-03-20
+
+### Improvements
+
 - [#115](https://github.com/cosmos/gogoproto/pull/115) Move any type from `cosmos-sdk/codec/types` to `types/any`.
 
-## [v1.4.11](https://github.com/cosmos/gogoproto/releases/tag/v1.4.10) - 2023-05-11
+## [v1.4.11](https://github.com/cosmos/gogoproto/releases/tag/v1.4.11) - 2023-08-18
 
 ### Improvements
 
