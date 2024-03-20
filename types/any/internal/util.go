@@ -1,4 +1,4 @@
-package types
+package internal
 
 import (
 	"github.com/cosmos/gogoproto/proto"
