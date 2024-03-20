@@ -30,5 +30,6 @@ jobs:
       - name: Protoc version
         run: PATH=$HOME/bin:$PATH protoc --version
 
-      - name: Build server all
+      - name: Build server allgo version
+
         run: PATH=$HOME/bin:$PATH make buildserverall
