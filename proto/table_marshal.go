@@ -2947,7 +2947,7 @@ func Marshal(pb Message) ([]byte, error) {
 		return m.Marshal()
 	}
 	if m, ok := pb.(protov2.Message); ok {
-		return protov2.Marshal(m)
+		return protov2.MarshalOptions{Deterministic: true}.Marshal(m)
 	}
 	// in case somehow we didn't generate the wrapper
 	if pb == nil {
