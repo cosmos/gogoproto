@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## [v1.4.13](https://github.com/cosmos/gogoproto/releases/tag/v1.4.13) - 2024-06-05
+## [v1.5.0](https://github.com/cosmos/gogoproto/releases/tag/v1.5.0) - 2024-06-05
 
 ### Improvements
 
