@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [v1.4.13](https://github.com/cosmos/gogoproto/releases/tag/v1.4.13) - 2024-06-05
+
 ### Improvements
 
 - [#119](https://github.com/cosmos/gogoproto/pull/119) The functions `proto.Marshal`, `proto.Unmarshal`, and `proto.MessageName`, as well as the `jsonpb` marshaling and unmarshaling methods now all support official `google.golang.org/protobuf` types. This allows users to gradually start using these types instead of gogo proto without needing to refactor all of their code with type switch statements.
