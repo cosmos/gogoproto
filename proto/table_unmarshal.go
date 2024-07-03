@@ -415,13 +415,14 @@ func (u *unmarshalInfo) computeUnmarshalInfo() {
 	}
 
 	// Get extension ranges, if any.
-	fn := reflect.Zero(reflect.PtrTo(t)).MethodByName("ExtensionRangeArray")
-	if fn.IsValid() {
-		if !u.extensions.IsValid() && !u.oldExtensions.IsValid() && !u.bytesExtensions.IsValid() {
-			panic("a message with extensions, but no extensions field in " + t.Name())
-		}
-		u.extensionRanges = fn.Call(nil)[0].Interface().([]ExtensionRange)
-	}
+	panic("removed refelction for testing")
+	// fn := reflect.Zero(reflect.PtrTo(t)).MethodByName("ExtensionRangeArray")
+	// if fn.IsValid() {
+	// 	if !u.extensions.IsValid() && !u.oldExtensions.IsValid() && !u.bytesExtensions.IsValid() {
+	// 		panic("a message with extensions, but no extensions field in " + t.Name())
+	// 	}
+	// 	u.extensionRanges = fn.Call(nil)[0].Interface().([]ExtensionRange)
+	// }
 
 	// Explicitly disallow tag 0. This will ensure we flag an error
 	// when decoding a buffer of all zeros. Without this code, we
