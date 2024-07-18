@@ -27,7 +27,7 @@ func anyCompatError(errType string, x interface{}) error {
 	if Debug {
 		debug.PrintStack()
 	} else {
-		msg += "To see a stacktrace of where the error is coming from, set the var Debug = true in github.com/cosmos/gogoproto/types/any/compat.go"
+		msg += " To see a stacktrace of where the error is coming from, set the var Debug = true in github.com/cosmos/gogoproto/types/any/compat.go"
 	}
 
 	return fmt.Errorf(msg, errType, x)
