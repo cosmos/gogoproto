@@ -58,7 +58,7 @@ type Any struct {
 // unmarshalling
 func NewAnyWithCacheWithValue(v proto.Message) (*Any, error) {
 	if v == nil {
-		return nil, errors.New("Expecting non nil value to create a new Any, failed packing protobuf message to Any")
+		return nil, errors.New("expecting non nil value to create a new Any, failed packing protobuf message to Any")
 	}
 
 	var (
