@@ -4,7 +4,7 @@
 
 ## [v1.6.0](https://github.com/cosmos/gogoproto/releases/tag/v1.6.0) - 2024-08-08
 
-- []() Update code generator to make grpc `ServiceDesc` public.
+- [#142](https://github.com/cosmos/gogoproto/pull/142) Update code generator to make grpc `ServiceDesc` public.
 
 ## [v1.5.0](https://github.com/cosmos/gogoproto/releases/tag/v1.5.0) - 2024-06-05
 

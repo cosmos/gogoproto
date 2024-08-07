@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        protobuf_version: [3.19.4]
+        protobuf_version: [27.3]
       fail-fast: false
     steps:
       - name: Checkout branch
