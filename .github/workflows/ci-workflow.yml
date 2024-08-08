@@ -7,11 +7,9 @@ on:
 
 jobs:
   build_and_test:
-    name: pb-${{ matrix.protobuf_version }}
+    name: make buildserverall
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        protobuf_version: [3.19.4]
       fail-fast: false
     steps:
       - name: Checkout branch
@@ -21,15 +19,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.19
-
-      - name: Setup protoc
-        env:
-          PROTOBUF_VERSION: ${{ matrix.protobuf_version }}
-        run: ./install-protobuf.sh
-
-      - name: Protoc version
-        run: PATH=$HOME/bin:$PATH protoc --version
-
+      - uses: arduino/setup-protoc@v1
       - name: Build server allgo version
-
-        run: PATH=$HOME/bin:$PATH make buildserverall
+        run: make buildserverall
