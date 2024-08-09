@@ -2,7 +2,13 @@
 
 ## Unreleased
 
+### Improvements
+
+- []() Improve `gogoproto` compatibility with old versions of the SDK by removing `x/exp` dep
+
 ## [v1.6.0](https://github.com/cosmos/gogoproto/releases/tag/v1.6.0) - 2024-08-08
+
+### Features
 
 - [#142](https://github.com/cosmos/gogoproto/pull/142) Update code generator to make grpc `ServiceDesc` public.
 
