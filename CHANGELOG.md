@@ -2,9 +2,11 @@
 
 ## Unreleased
 
+## [v1.7.0](https://github.com/cosmos/gogoproto/releases/tag/v1.7.0) - 2024-08-12
+
 ### Improvements
 
-- [#145](https://github.com/cosmos/gogoproto/pull/145) Removing `x/exp` depencency for greater compatibility
+- [#145](https://github.com/cosmos/gogoproto/pull/145) Remove `x/exp` dependency for greater compatibility.
 - [#144](https://github.com/cosmos/gogoproto/pull/144) Change proto.Message and jsonpb.Anyresolver to aliased types to allow different implementations of the same interface.
 
 ## [v1.6.0](https://github.com/cosmos/gogoproto/releases/tag/v1.6.0) - 2024-08-08
