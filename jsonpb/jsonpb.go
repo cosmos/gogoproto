@@ -88,7 +88,7 @@ type Marshaler struct {
 
 // AnyResolver takes a type URL, present in an Any message, and resolves it into
 // an instance of the associated message.
-type AnyResolver interface {
+type AnyResolver = interface {
 	Resolve(typeUrl string) (proto.Message, error)
 }
 
