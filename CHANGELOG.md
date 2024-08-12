@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Improvments
+
+[#144](https://github.com/cosmos/gogoproto/pull/144) Change proto.Message and jsonpb.Anyresolver to aliased types to allow different implementations of the same interface.
+
 ## [v1.6.0](https://github.com/cosmos/gogoproto/releases/tag/v1.6.0) - 2024-08-08
 
 - [#142](https://github.com/cosmos/gogoproto/pull/142) Update code generator to make grpc `ServiceDesc` public.
