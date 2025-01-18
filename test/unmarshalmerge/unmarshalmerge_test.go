@@ -94,6 +94,6 @@ func TestInt64Merge(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !p.Equal(p2) {
-		t.Fatalf("exptected %#v but got %#v", p2, p)
+		t.Fatalf("expected %#v but got %#v", p2, p)
 	}
 }
