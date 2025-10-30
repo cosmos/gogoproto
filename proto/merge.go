@@ -151,7 +151,7 @@ LOOP:
 		case err := <-c.ProcessErrCh:
 			// Always accept process errors (no need to check c.validate).
 			// Accumulate them directly into buf since those always go in the front.
-			fmt.Fprintf(&buf, "Failure during processing: %v\n", err)
+			_, _ = fmt.Fprintf(&buf, "Failure during processing: %v\n", err)
 
 		case err := <-c.ImportErrCh:
 			if !c.validate {
@@ -173,10 +173,10 @@ LOOP:
 	}
 
 	if len(importErrMsgs) > 0 {
-		fmt.Fprintf(&buf, "Got %d file descriptor import path errors:\n\t%s\n", len(importErrMsgs), strings.Join(importErrMsgs, "\n\t"))
+		_, _ = fmt.Fprintf(&buf, "Got %d file descriptor import path errors:\n\t%s\n", len(importErrMsgs), strings.Join(importErrMsgs, "\n\t"))
 	}
 	if len(diffs) > 0 {
-		fmt.Fprintf(&buf, "Got %d file descriptor mismatches. Make sure gogoproto and protoregistry use the same .proto files. '-' lines are from protoregistry, '+' lines from gogo's registry.\n\n\t%s\n", len(diffs), strings.Join(diffs, "\n\t"))
+		_, _ = fmt.Fprintf(&buf, "Got %d file descriptor mismatches. Make sure gogoproto and protoregistry use the same .proto files. '-' lines are from protoregistry, '+' lines from gogo's registry.\n\n\t%s\n", len(diffs), strings.Join(diffs, "\n\t"))
 	}
 
 	c.err = errors.New(buf.String())
