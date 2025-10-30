@@ -46,6 +46,7 @@ import (
 	"io"
 	"math"
 	"reflect"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -1134,13 +1135,20 @@ func (u *Unmarshaler) unmarshalValue(target reflect.Value, inputValue json.RawMe
 			}
 		}
 		if !u.AllowUnknownFields && len(jsonFields) > 0 {
-			// Pick any field to be the scapegoat.
-			var f string
+			// Pick the first (sorted by key) field to be the scapegoat.
+			// This differs from the original implementation, but eliminates non-determinism.
+			fieldNames := make([]string, 0, len(jsonFields))
 			for fname := range jsonFields {
-				f = fname
-				break
+				fieldNames = append(fieldNames, fname)
 			}
-			return fmt.Errorf("unknown field %q in %v", f, targetType)
+
+			slices.Sort(fieldNames)
+			var fname string
+			if len(fieldNames) > 0 {
+				fname = fieldNames[0]
+			}
+
+			return fmt.Errorf("unknown field %q in %v", fname, targetType)
 		}
 		return nil
 	}
