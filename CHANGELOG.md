@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Improvements
+
+- [#156](https://github.com/cosmos/gogoproto/pull/156) Improve jsonb scapegoat field selection by sorting the fields.
+
 ## [v1.7.0](https://github.com/cosmos/gogoproto/releases/tag/v1.7.0) - 2024-08-12
 
 ### Improvements
