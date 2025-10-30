@@ -44,8 +44,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"math"
 	"reflect"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -1136,12 +1138,8 @@ func (u *Unmarshaler) unmarshalValue(target reflect.Value, inputValue json.RawMe
 		if !u.AllowUnknownFields && len(jsonFields) > 0 {
 			// Pick the first (sorted by key asc) field to be the scapegoat.
 			// This differs from the original implementation, but eliminates non-determinism.
-			fieldNames := make([]string, 0, len(jsonFields))
-			for fname := range jsonFields {
-				fieldNames = append(fieldNames, fname)
-			}
-
-			sort.Strings(fieldNames)
+			fieldNames := slices.Collect(maps.Keys(jsonFields))
+			slices.Sort(fieldNames)
 			var fname string
 			if len(fieldNames) > 0 {
 				fname = fieldNames[0]
