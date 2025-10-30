@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"runtime"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -72,6 +73,16 @@ func MergedRegistry() (*protoregistry.Files, error) {
 // from OS path ./google/protobuf/descriptor.proto, relatively to a protoc
 // path folder (-I flag).
 func CheckImportPath(fdName, fdPackage string) error {
+	// Skip validation for known protobuf runtime files that don't follow the convention.
+	// go_features.proto was introduced in protobuf v1.36+ and has package "pb" but
+	// is located at google/protobuf/go_features.proto.
+	exceptions := []string{
+		"google/protobuf/go_features.proto",
+	}
+	if slices.Contains(exceptions, fdName) {
+		return nil
+	}
+
 	expectedPrefix := strings.ReplaceAll(fdPackage, ".", "/") + "/"
 	if !strings.HasPrefix(fdName, expectedPrefix) {
 		return fmt.Errorf("file name %s does not start with expected %s; please make sure your folder structure matches the proto files fully-qualified names", fdName, expectedPrefix)
@@ -140,7 +151,7 @@ LOOP:
 		case err := <-c.ProcessErrCh:
 			// Always accept process errors (no need to check c.validate).
 			// Accumulate them directly into buf since those always go in the front.
-			fmt.Fprintf(&buf, "Failure during processing: %v\n", err)
+			_, _ = fmt.Fprintf(&buf, "Failure during processing: %v\n", err)
 
 		case err := <-c.ImportErrCh:
 			if !c.validate {
@@ -162,10 +173,10 @@ LOOP:
 	}
 
 	if len(importErrMsgs) > 0 {
-		fmt.Fprintf(&buf, "Got %d file descriptor import path errors:\n\t%s\n", len(importErrMsgs), strings.Join(importErrMsgs, "\n\t"))
+		_, _ = fmt.Fprintf(&buf, "Got %d file descriptor import path errors:\n\t%s\n", len(importErrMsgs), strings.Join(importErrMsgs, "\n\t"))
 	}
 	if len(diffs) > 0 {
-		fmt.Fprintf(&buf, "Got %d file descriptor mismatches. Make sure gogoproto and protoregistry use the same .proto files. '-' lines are from protoregistry, '+' lines from gogo's registry.\n\n\t%s\n", len(diffs), strings.Join(diffs, "\n\t"))
+		_, _ = fmt.Fprintf(&buf, "Got %d file descriptor mismatches. Make sure gogoproto and protoregistry use the same .proto files. '-' lines are from protoregistry, '+' lines from gogo's registry.\n\n\t%s\n", len(diffs), strings.Join(diffs, "\n\t"))
 	}
 
 	c.err = errors.New(buf.String())
