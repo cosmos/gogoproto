@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"runtime"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -72,6 +73,16 @@ func MergedRegistry() (*protoregistry.Files, error) {
 // from OS path ./google/protobuf/descriptor.proto, relatively to a protoc
 // path folder (-I flag).
 func CheckImportPath(fdName, fdPackage string) error {
+	// Skip validation for known protobuf runtime files that don't follow the convention.
+	// go_features.proto was introduced in protobuf v1.36+ and has package "pb" but
+	// is located at google/protobuf/go_features.proto.
+	exceptions := []string{
+		"google/protobuf/go_features.proto",
+	}
+	if slices.Contains(exceptions, fdName) {
+		return nil
+	}
+
 	expectedPrefix := strings.ReplaceAll(fdPackage, ".", "/") + "/"
 	if !strings.HasPrefix(fdName, expectedPrefix) {
 		return fmt.Errorf("file name %s does not start with expected %s; please make sure your folder structure matches the proto files fully-qualified names", fdName, expectedPrefix)
