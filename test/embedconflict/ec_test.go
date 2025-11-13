@@ -53,7 +53,7 @@ func TestEmbedMarshaler(t *testing.T) {
 	dataStr := string(data)
 	t.Logf("received error = %v and output = %v", err, dataStr)
 	if !strings.Contains(dataStr, "WARNING: found non-") || !strings.Contains(dataStr, "unsafe_marshaler") {
-		t.Errorf("Expected WARNING: found non-[marshaler unsafe_marshaler] C with embedded marshaler D")
+		t.Error("Expected WARNING: found non-[marshaler unsafe_marshaler] C with embedded marshaler D")
 	}
 	if err = os.Remove("test/embedconflict/em.pb.go"); err != nil {
 		t.Error(err)
@@ -97,7 +97,7 @@ func TestRepeatedEmbed(t *testing.T) {
 	t.Logf("received error = %v and output = %v", err, dataStr)
 	warning := "ERROR: found repeated embedded field B in message A"
 	if !strings.Contains(dataStr, warning) {
-		t.Errorf("Expected " + warning)
+		t.Error("Expected " + warning)
 	}
 }
 
@@ -114,6 +114,6 @@ func TestTakesTooLongToDebug(t *testing.T) {
 	t.Logf("received error = %v and output = %v", err, dataStr)
 	warning := "ERROR: found embedded bytes field"
 	if !strings.Contains(dataStr, warning) {
-		t.Errorf("Expected " + warning)
+		t.Error("Expected " + warning)
 	}
 }
