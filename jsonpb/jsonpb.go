@@ -1103,13 +1103,26 @@ func (u *Unmarshaler) unmarshalValue(target reflect.Value, inputValue json.RawMe
 		}
 		// Check for any oneof fields.
 		if len(jsonFields) > 0 {
-			for _, oop := range sprops.OneofTypes {
+			oneofKeys := make([]string, 0, len(sprops.OneofTypes))
+			for k := range sprops.OneofTypes {
+				oneofKeys = append(oneofKeys, k)
+			}
+			slices.Sort(oneofKeys)
+
+			setOneofFields := make(map[int]bool)
+			for _, key := range oneofKeys {
+				oop := sprops.OneofTypes[key]
 				raw, ok := consumeField(oop.Prop)
 				if !ok {
 					continue
 				}
+				if setOneofFields[oop.Field] {
+					return fmt.Errorf("field %q would overwrite already-set oneof %q in %v",
+						oop.Prop.OrigName, targetType.Field(oop.Field).Name, targetType)
+				}
 				nv := reflect.New(oop.Type.Elem())
 				target.Field(oop.Field).Set(nv)
+				setOneofFields[oop.Field] = true
 				if err := u.unmarshalValue(nv.Elem().Field(0), raw, oop.Prop); err != nil {
 					return err
 				}
@@ -1118,7 +1131,14 @@ func (u *Unmarshaler) unmarshalValue(target reflect.Value, inputValue json.RawMe
 		// Handle proto2 extensions.
 		if len(jsonFields) > 0 {
 			if ep, ok := target.Addr().Interface().(proto.Message); ok {
-				for _, ext := range proto.RegisteredExtensions(ep) {
+				extensions := proto.RegisteredExtensions(ep)
+				extIDs := make([]int32, 0, len(extensions))
+				for id := range extensions {
+					extIDs = append(extIDs, id)
+				}
+				sort.Sort(int32Slice(extIDs))
+				for _, id := range extIDs {
+					ext := extensions[id]
 					name := fmt.Sprintf("[%s]", ext.Name)
 					raw, ok := jsonFields[name]
 					if !ok {
