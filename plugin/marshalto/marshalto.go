@@ -91,6 +91,9 @@ given to the marshalto plugin, will generate the following code:
 	}
 
 	func (m *B) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+			if m == nil {
+				return 0, nil
+			}
 	        i := len(dAtA)
 	        _ = i
 	        var l int
@@ -955,6 +958,13 @@ func (p *marshalto) Generate(file *generator.FileDescriptor) {
 		p.P(``)
 		p.P(`func (m *`, ccTypeName, `) MarshalToSizedBuffer(dAtA []byte) (int, error) {`)
 		p.In()
+		// m can nil when using proto3 optional fields
+		p.P(`if m == nil {`)
+		p.In()
+		p.P(`return 0, nil`)
+		p.Out()
+		p.P(`}`)
+
 		p.P(`i := len(dAtA)`)
 		p.P(`_ = i`)
 		p.P(`var l int`)
@@ -1034,6 +1044,12 @@ func (p *marshalto) Generate(file *generator.FileDescriptor) {
 			p.P(``)
 			p.P(`func (m *`, ccTypeName, `) MarshalToSizedBuffer(dAtA []byte) (int, error) {`)
 			p.In()
+			// m can nil when using proto3 optional fields
+			p.P(`if m == nil {`)
+			p.In()
+			p.P(`return 0, nil`)
+			p.Out()
+			p.P(`}`)
 			p.P(`i := len(dAtA)`)
 			vanity.TurnOffNullableForNativeTypes(field)
 			p.generateField(false, numGen, file, message, field)
